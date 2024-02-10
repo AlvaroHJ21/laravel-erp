@@ -107,7 +107,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'img' => [
             'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
             'alt' => 'AdminLTE Preloader Image',
@@ -317,7 +317,7 @@ return [
         // ],
         [
             'text'        => 'Dasboard',
-            'url'         => 'admin/pages',
+            'route'         => 'home',
             'icon'        => 'far fa-fw fa-chart-bar',
             // 'label'       => 4,
             // 'label_color' => 'success',
@@ -335,7 +335,7 @@ return [
                 [
                     'text' => 'Usuarios',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
             ],
         ],
@@ -353,17 +353,17 @@ return [
                 [
                     'text' => 'Órdenes de venta',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
                 [
                     'text' => 'Ventas',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
                 [
                     'text' => 'Notas',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
             ],
         ],
@@ -380,17 +380,17 @@ return [
                 [
                     'text' => 'Vehículos',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
                 [
                     'text' => 'Conductores',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
                 [
                     'text' => 'Transportistas',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
             ],
         ],
@@ -407,7 +407,7 @@ return [
                 [
                     'text' => 'Compras',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
             ],
         ],
@@ -424,22 +424,22 @@ return [
                 [
                     'text' => 'Categorías',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
                 [
                     'text' => 'Productos',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
                 [
                     'text' => 'Impuestos',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
                 [
                     'text' => 'Almacenes',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
             ],
         ],
@@ -456,20 +456,48 @@ return [
                 [
                     'text' => 'Compras',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
                 [
                     'text' => 'Clientes',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
                 [
                     'text' => 'Proveedores',
                     'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-arrow-right',
+                    'icon' => 'fas fa-fw fa-arrow-right',
                 ],
             ],
         ],
+
+        [
+            'text'    => 'Configuración',
+            'icon'    => 'fas fa-fw fa-cogs',
+            'submenu' => [
+                [
+                    'text'    => 'Series',
+                    'url'     => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text'    => 'Empresas',
+                    'route'   => 'empresas.index',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Monedas',
+                    'url'  => '#',
+                    'icon' => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Tipo de cambio',
+                    'url'  => '#',
+                    'icon' => 'fas fa-fw fa-arrow-right',
+                ],
+            ],
+        ],
+
 
 
         ['header' => 'account_settings'],
@@ -575,7 +603,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -620,7 +648,7 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
