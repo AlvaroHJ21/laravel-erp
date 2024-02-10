@@ -15,7 +15,7 @@ return [
     */
 
     'title' => 'AdminLTE 3',
-    'title_prefix' => '',
+    'title_prefix' => 'MiniERP - ',
     'title_postfix' => '',
 
     /*
@@ -63,9 +63,9 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => 'Mini<b>ERP</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo_img_class' => 'brand-image img-circle elevation-3 d-none',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
@@ -150,8 +150,8 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -194,7 +194,7 @@ return [
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-white navbar-light',
+    'classes_topnav' => 'navbar-dark navbar-dark',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -300,24 +300,178 @@ return [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-
+        [
+            'type'         => 'darkmode-widget',
+            'topnav_right' => true, // Or "topnav => true" to place on the left.
+        ],
+        ['header' => 'DASHBOARD'],
         // Sidebar items:
+        // [
+        //     'type' => 'sidebar-menu-search',
+        //     'text' => 'search',
+        // ],
+        // [
+        //     'text' => 'blog',
+        //     'url'  => 'admin/blog',
+        //     'can'  => 'manage-blog',
+        // ],
         [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
-            'text'        => 'pages',
+            'text'        => 'Dasboard',
             'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'icon'        => 'far fa-fw fa-chart-bar',
+            // 'label'       => 4,
+            // 'label_color' => 'success',
         ],
+
+        [
+            'text'    => 'Entidades',
+            'icon'    => 'fas fa-fw fa-user',
+            'submenu' => [
+                [
+                    'text'    => 'Clientes/Proveedores',
+                    'url'     => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Usuarios',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+            ],
+        ],
+
+        [
+            'text'    => 'Ventas',
+            'icon'    => 'fas fa-fw fa-dollar-sign',
+            'submenu_icon' => 'fas fa-fw fa-angle-right',
+            'submenu' => [
+                [
+                    'text'    => 'Cotizaciones',
+                    'url'     => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Órdenes de venta',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Ventas',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Notas',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+            ],
+        ],
+
+        [
+            'text'    => 'Guias',
+            'icon'    => 'fas fa-fw fa-car',
+            'submenu' => [
+                [
+                    'text'    => 'Guías de Remisión',
+                    'url'     => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Vehículos',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Conductores',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Transportistas',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+            ],
+        ],
+
+        [
+            'text'    => 'Compras',
+            'icon'    => 'fas fa-fw fa-shopping-bag',
+            'submenu' => [
+                [
+                    'text'    => 'Ordenes de compra',
+                    'url'     => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Compras',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+            ],
+        ],
+
+        [
+            'text'    => 'Almacén',
+            'icon'    => 'fas fa-fw fa-warehouse',
+            'submenu' => [
+                [
+                    'text'    => 'Unidades',
+                    'url'     => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Categorías',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Productos',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Impuestos',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Almacenes',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+            ],
+        ],
+
+        [
+            'text'    => 'Reportes',
+            'icon'    => 'fas fa-fw fa-chart-line',
+            'submenu' => [
+                [
+                    'text'    => 'Ventas',
+                    'url'     => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Compras',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Clientes',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+                [
+                    'text' => 'Proveedores',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-arrow-right',
+                ],
+            ],
+        ],
+
+
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -329,60 +483,60 @@ return [
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
         ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
-        ],
+        // [
+        //     'text'    => 'multilevel',
+        //     'icon'    => 'fas fa-fw fa-share',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'level_one',
+        //             'url'  => '#',
+        //         ],
+        //         [
+        //             'text'    => 'level_one',
+        //             'url'     => '#',
+        //             'submenu' => [
+        //                 [
+        //                     'text' => 'level_two',
+        //                     'url'  => '#',
+        //                 ],
+        //                 [
+        //                     'text'    => 'level_two',
+        //                     'url'     => '#',
+        //                     'submenu' => [
+        //                         [
+        //                             'text' => 'level_three',
+        //                             'url'  => '#',
+        //                         ],
+        //                         [
+        //                             'text' => 'level_three',
+        //                             'url'  => '#',
+        //                         ],
+        //                     ],
+        //                 ],
+        //             ],
+        //         ],
+        //         [
+        //             'text' => 'level_one',
+        //             'url'  => '#',
+        //         ],
+        //     ],
+        // ],
+        // ['header' => 'labels'],
+        // [
+        //     'text'       => 'important',
+        //     'icon_color' => 'red',
+        //     'url'        => '#',
+        // ],
+        // [
+        //     'text'       => 'warning',
+        //     'icon_color' => 'yellow',
+        //     'url'        => '#',
+        // ],
+        // [
+        //     'text'       => 'information',
+        //     'icon_color' => 'cyan',
+        //     'url'        => '#',
+        // ],
     ],
 
     /*

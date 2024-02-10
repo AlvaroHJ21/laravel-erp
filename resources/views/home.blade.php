@@ -12,6 +12,7 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    @vite('resources/js/app.js')
 @stop
 
 @section('js')
