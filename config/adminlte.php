@@ -329,7 +329,7 @@ return [
             'submenu' => [
                 [
                     'text'    => 'Clientes/Proveedores',
-                    'url'     => '#',
+                    'route'   => 'entidades.index',
                     'icon'    => 'fas fa-fw fa-arrow-right',
                 ],
                 [
@@ -653,7 +653,7 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
                 ],
             ],
         ],

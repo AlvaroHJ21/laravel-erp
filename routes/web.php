@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\EntidadController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+/**
+ * Empresa
+ */
 Route::get("/empresas", [EmpresaController::class, "index"])->name("empresas.index");
 Route::get("/empresas/create", [EmpresaController::class, "create"])->name("empresas.create");
 Route::get("/empresas/{empresa}/edit", [EmpresaController::class, "edit"])->name("empresas.edit");
@@ -30,3 +34,13 @@ Route::post("/empresas", [EmpresaController::class, "store"])->name("empresas.st
 Route::put("/empresas/{empresa}", [EmpresaController::class, "update"])->name("empresas.update");
 Route::put("/empresas/{empresa}/toggle-mode", [EmpresaController::class, "toggleMode"])->name("empresas.toggle_mode");
 Route::delete("/empresas/{empresa}", [EmpresaController::class, "destroy"])->name("empresas.destroy");
+
+/**
+ * Entidades
+ */
+Route::get("/entidades", [EntidadController::class, "index"])->name("entidades.index");
+Route::get("/entidades/create", [EntidadController::class, "create"])->name("entidades.create");
+Route::get("/entidades/{entidad}/edit", [EntidadController::class, "edit"])->name("entidades.edit");
+Route::post("/entidades", [EntidadController::class, "store"])->name("entidades.store");
+Route::put("/entidades/{entidad}", [EntidadController::class, "update"])->name("entidades.update");
+Route::delete("/entidades/{entidad}", [EntidadController::class, "destroy"])->name("entidades.destroy");
