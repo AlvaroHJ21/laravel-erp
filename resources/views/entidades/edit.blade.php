@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.app')
 
 @section('title', 'Editar Entidad')
 
@@ -7,7 +7,7 @@
         <a href="{{ route('entidades.index') }}"
             class="btn"
             style="color:inherit">
-            <i class="fa fa-arrow-left"></i>
+            <i data-feather="arrow-left" style="scale: 1.5"></i>
         </a>
         <h1>Editar Cliente Proveedor</h1>
     </div>
@@ -41,7 +41,7 @@
                 novalidate>
                 @csrf
                 @method('PUT')
-                <div class="form-group row mb-6">
+                <div class="form-group row mb-3">
                     <div class="col-sm-6">
                         <label for="tipo_documento_id"
                             class="form-label">Tipo de Documento</label>

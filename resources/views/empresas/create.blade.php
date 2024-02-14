@@ -1,11 +1,11 @@
-@extends('adminlte::page')
+@extends('layouts.app')
 
 @section('title', 'Editar Empresa')
 
 @section('content_header')
     <div class="d-flex align-items-center">
         <a href="{{ route('empresas.index') }}" class="btn" style="color:inherit">
-            <i class="fa fa-arrow-left"></i>
+            <i data-feather="arrow-left" style="scale: 1.5"></i>
         </a>
         <h1>Crear Empresa</h1>
     </div>

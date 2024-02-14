@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -147,6 +146,6 @@ class EmpresaController extends Controller
 
         Storage::disk('public')->delete("empresas/$empresa->logo");
 
-        return redirect()->route('empresas.index');
+        return response()->noContent();
     }
 }

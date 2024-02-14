@@ -1,13 +1,12 @@
-@extends('adminlte::page')
+@extends('layouts.app')
 
 @section('title', 'Crear Entidad')
 
 @section('content_header')
     <div class="d-flex align-items-center">
         <a href="{{ route('entidades.index') }}"
-            class="btn"
-            style="color:inherit">
-            <i class="fa fa-arrow-left"></i>
+            class="btn">
+            <i data-feather="arrow-left" style="scale: 1.5"></i>
         </a>
         <h1>Crear Cliente Proveedor</h1>
     </div>

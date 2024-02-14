@@ -1,0 +1,83 @@
+body[data-theme="dark"] .content .h4,
+body[data-theme="dark"] .modal-title,
+body[data-theme="dark"] .text-dark,
+body[data-theme="dark"] .btn-close,
+body[data-theme="dark"] .dropdown-toggle:after,
+body[data-theme="dark"] .dropdown-menu-header,
+body[data-theme="dark"] .content button,
+body[data-theme="dark"] .content td,
+body[data-theme="dark"] .content th,
+body[data-theme="dark"] .content label,
+body[data-theme="dark"] .content h1,
+body[data-theme="dark"] .content h2,
+/* body[data-theme="dark"] .content svg, */
+body[data-theme="dark"] .content .dropdown-toggle:before,
+body[data-theme="dark"] [role="option"] {
+    color: #dddddd !important;
+}
+
+body[data-theme="dark"] .dropdown-menu a {
+    color: #dddddd;
+}
+
+body[data-theme="dark"] .dropdown-menu a:hover {
+    background-color: #19222c;
+}
+
+body[data-theme="dark"] .navbar-bg {
+    background-color: #19222c;
+}
+
+body[data-theme="dark"] .card,
+body[data-theme="dark"] .card-header,
+body[data-theme="dark"] footer.footer,
+body[data-theme="dark"] .dropdown-menu,
+body[data-theme="dark"] [role="listbox"],
+body[data-theme="dark"] [role="option"] {
+    background-color: #222e3c;
+}
+
+body[data-theme="dark"] .content {
+    background-color: #19222c;
+}
+
+/* Form */
+body[data-theme="dark"] .form-control,
+body[data-theme="dark"] .form-select,
+body[data-theme="dark"] input,
+body[data-theme="dark"] .input-group-text {
+    background-color: #222e3c;
+    color: #dddddd !important;
+    border: 1px solid #415163;
+}
+
+body[data-theme="dark"] .form-control:disabled,
+body[data-theme="dark"] .form-select:disabled,
+body[data-theme="dark"] .form-control:read-only {
+    background-color: #374555;
+}
+
+body[data-theme="dark"] button.btn-light {
+    color: #19222c !important;
+}
+
+/* Modal */
+body[data-theme="dark"] .modal-content {
+    background-color: #222e3c;
+}
+
+/* Notificaciones */
+body[data-theme="dark"] .dropdown-menu .list-group .list-group-item {
+    background-color: #222e3c;
+}
+
+/* Table */
+body[data-theme="dark"] .page-link {
+    background-color: #222e3c;
+    border: none;
+    color: #dddddd !important;
+}
+
+body[data-theme="dark"] .page-item.disabled .page-link {
+    background-color: #374555;
+}

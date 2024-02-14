@@ -188,3 +188,7 @@ export const datatableOptions = {
 $("#table-empresas").DataTable({
     ...datatableOptions,
 });
+
+$("#table-entidades").DataTable({
+    ...datatableOptions,
+});

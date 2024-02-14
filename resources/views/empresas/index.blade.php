@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.app')
 
 @section('title', 'Empresas')
 
@@ -30,18 +30,18 @@
                     <tbody>
                         @foreach ($empresas as $empresa)
                             <tr>
-                                <td>{{ $empresa['id'] }}</td>
-                                <td>{{ $empresa['razon_social'] }}</td>
-                                <td>{{ $empresa['nombre_comercial'] }}</td>
-                                <td>{{ $empresa['ruc'] }}</td>
-                                <td>{{ $empresa['domicilio_fiscal'] }}</td>
+                                <td>{{ $empresa->id }}</td>
+                                <td>{{ $empresa->razon_social }}</td>
+                                <td>{{ $empresa->nombre_comercial }}</td>
+                                <td>{{ $empresa->ruc }}</td>
+                                <td>{{ $empresa->domicilio_fiscal }}</td>
                                 <td>
                                     <form action="{{ route('empresas.toggle_mode', $empresa) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <button
                                             class="btn btn-sm {{ $empresa['modo'] == '1' ? 'btn-success' : 'btn-secondary' }}">
-                                            {{ $empresa['modo'] == '1' ? 'Producción' : 'Prueba' }}
+                                            {{ $empresa->modo == '1' ? 'Producción' : 'Prueba' }}
                                         </button>
                                     </form>
                                 </td>
@@ -49,19 +49,13 @@
                                     <td>
                                         <a href="{{ route('empresas.edit', $empresa) }}"
                                             class="btn btn-outline-secondary btn-sm" type="button">
-                                            <i class="fa fa-edit"></i>
+                                            <i data-feather="edit"></i>
                                         </a>
 
-                                        <form id="form-delete-{{ $empresa['id'] }}"
-                                            action="{{ route('empresas.destroy', $empresa) }}" class="d-inline"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="button" class="btn btn-outline-danger btn-sm"
-                                                onclick="confirmDelete({{ $empresa['id'] }})">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </form>
+                                        <button class="btn-delete btn btn-outline-danger btn-sm"
+                                            data-url="{{ route('empresas.destroy', $empresa) }}">
+                                            <i data-feather="trash"></i>
+                                        </button>
 
                                     </td>
                                 @endif

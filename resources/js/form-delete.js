@@ -35,6 +35,9 @@ btnsDelete.forEach((btn) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 const url = btn.getAttribute("data-url");
+
+                console.log(url);
+
                 const csrf = document
                     .querySelector('meta[name="csrf-token"]')
                     .getAttribute("content");
