@@ -103,6 +103,7 @@ $options = [
             [
                 'name' => 'Categorías',
                 'url' => 'almacen/categorias',
+                'route' => 'categorias.index',
             ],
             [
                 'name' => 'Productos',

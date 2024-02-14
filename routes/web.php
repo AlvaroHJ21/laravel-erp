@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EntidadController;
 use App\Http\Controllers\MonedaController;
@@ -85,4 +86,12 @@ Route::middleware("auth")->group(function () {
      */
     Route::get("/almacen/tipos-igv", [TipoIgvController::class, "index"])->name("tipos_igv.index");
     Route::put("/almacen/tipos-igv/{tipo}/toggle-active", [TipoIgvController::class, "toggleActive"])->name("tipos_igv.toggle_active");
+
+    /**
+     * Categorias
+     */
+    Route::get("/almacen/categorias", [CategoriaController::class, "index"])->name("categorias.index");
+    Route::post("/almacen/categorias", [CategoriaController::class, "store"])->name("categorias.store");
+    Route::put("/almacen/categorias/{categoria}", [CategoriaController::class, "update"])->name("categorias.update");
+    Route::put("/almacen/categorias/{categoria}/toggle-active", [CategoriaController::class, "toggleActive"])->name("categorias.toggle_active");
 });
