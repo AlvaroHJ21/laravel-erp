@@ -107,5 +107,16 @@ class DatabaseSeeder extends Seeder
             'simbolo' => '$',
             'activo' => 1,
         ]);
+
+        // Unidades
+
+        DB::table('unidades')->insert([
+            'codigo' => 'NIU',
+            'unidad' => 'UNIDAD (BIENES)',
+        ]);
+        DB::table('unidades')->insert([
+            'codigo' => 'ZZ',
+            'unidad' => 'UNIDAD (SERVICIOS)',
+        ]);
     }
 }

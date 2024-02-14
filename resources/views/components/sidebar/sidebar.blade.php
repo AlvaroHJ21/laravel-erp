@@ -98,6 +98,7 @@ $options = [
             [
                 'name' => 'Unidades',
                 'url' => 'almacen/unidades',
+                'route' => 'unidades.index',
             ],
             [
                 'name' => 'Categorías',

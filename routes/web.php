@@ -6,6 +6,7 @@ use App\Http\Controllers\EntidadController;
 use App\Http\Controllers\MonedaController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\TipoCambioController;
+use App\Http\Controllers\UnidadController;
 // use App\Http\Controllers\HomeController;
 // use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -65,4 +66,7 @@ Route::middleware("auth")->group(function () {
 
     Route::get("/configuracion/tipos-cambio", [TipoCambioController::class, "index"])->name("tipos_cambio.index");
     Route::post("/tipos-cambio", [TipoCambioController::class, "store"])->name("tipos_cambio.store");
+
+    Route::get("/almacen/unidades", [UnidadController::class, "index"])->name("unidades.index");
+    Route::put("/almacen/{unidad}/toggle-active", [UnidadController::class, "toggleActive"])->name("unidades.toggle_active");
 });
