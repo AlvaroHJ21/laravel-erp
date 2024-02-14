@@ -90,5 +90,22 @@ class DatabaseSeeder extends Seeder
             'nombre' => 'Boleta',
             'abreviado' => 'BOL',
         ]);
+
+        // Monedas
+
+        DB::table('monedas')->insert([
+            'nombre' => 'Soles',
+            'abreviado' => 'sol',
+            'abrstandar' => 'PEN',
+            'simbolo' => 'S/',
+            'activo' => 1,
+        ]);
+        DB::table('monedas')->insert([
+            'nombre' => 'Dólares',
+            'abreviado' => 'dol',
+            'abrstandar' => 'USD',
+            'simbolo' => '$',
+            'activo' => 1,
+        ]);
     }
 }

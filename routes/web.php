@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EntidadController;
+use App\Http\Controllers\MonedaController;
 use App\Http\Controllers\SerieController;
 // use App\Http\Controllers\HomeController;
 // use Illuminate\Support\Facades\Auth;
@@ -34,9 +35,9 @@ Route::middleware("auth")->group(function () {
     /**
      * Empresa
      */
-    Route::get("/empresas", [EmpresaController::class, "index"])->name("empresas.index");
-    Route::get("/empresas/create", [EmpresaController::class, "create"])->name("empresas.create");
-    Route::get("/empresas/{empresa}/edit", [EmpresaController::class, "edit"])->name("empresas.edit");
+    Route::get("/configuracion/empresas", [EmpresaController::class, "index"])->name("empresas.index");
+    Route::get("/configuracion/empresas/create", [EmpresaController::class, "create"])->name("empresas.create");
+    Route::get("/configuracion/empresas/{empresa}/edit", [EmpresaController::class, "edit"])->name("empresas.edit");
     Route::post("/empresas", [EmpresaController::class, "store"])->name("empresas.store");
     Route::put("/empresas/{empresa}", [EmpresaController::class, "update"])->name("empresas.update");
     Route::put("/empresas/{empresa}/toggle-mode", [EmpresaController::class, "toggleMode"])->name("empresas.toggle_mode");
@@ -57,4 +58,7 @@ Route::middleware("auth")->group(function () {
      */
     Route::get("/configuracion/series", [SerieController::class, "index"])->name("series.index");
     Route::post("/series", [SerieController::class, "create"])->name("series.create");
+
+    Route::get("/monedas", [MonedaController::class, "index"])->name("monedas.index");
+    Route::put("/monedas/{moneda}/change-status", [MonedaController::class, "changeStatus"])->name("monedas.change_status");
 });

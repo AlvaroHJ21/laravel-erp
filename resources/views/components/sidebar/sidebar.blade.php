@@ -162,6 +162,7 @@ $options = [
             [
                 'name' => 'Monedas',
                 'url' => 'configuracion/monedas',
+                'route' => 'monedas.index',
             ],
             [
                 'name' => 'Tipo de cambio',
