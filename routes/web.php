@@ -59,6 +59,6 @@ Route::middleware("auth")->group(function () {
     Route::get("/configuracion/series", [SerieController::class, "index"])->name("series.index");
     Route::post("/series", [SerieController::class, "create"])->name("series.create");
 
-    Route::get("/monedas", [MonedaController::class, "index"])->name("monedas.index");
+    Route::get("/configuracion/monedas", [MonedaController::class, "index"])->name("monedas.index");
     Route::put("/monedas/{moneda}/change-status", [MonedaController::class, "changeStatus"])->name("monedas.change_status");
 });
