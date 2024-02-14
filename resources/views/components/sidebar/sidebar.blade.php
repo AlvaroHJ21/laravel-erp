@@ -111,6 +111,7 @@ $options = [
             [
                 'name' => 'Impuestos',
                 'url' => 'almacen/impuestos',
+                'route' => 'tipos_igv.index',
             ],
             [
                 'name' => 'Almacenes',

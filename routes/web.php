@@ -6,6 +6,7 @@ use App\Http\Controllers\EntidadController;
 use App\Http\Controllers\MonedaController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\TipoCambioController;
+use App\Http\Controllers\TipoIgvController;
 use App\Http\Controllers\UnidadController;
 // use App\Http\Controllers\HomeController;
 // use Illuminate\Support\Facades\Auth;
@@ -61,12 +62,27 @@ Route::middleware("auth")->group(function () {
     Route::get("/configuracion/series", [SerieController::class, "index"])->name("series.index");
     Route::post("/series", [SerieController::class, "create"])->name("series.store");
 
+    /**
+     * Monedas
+     */
     Route::get("/configuracion/monedas", [MonedaController::class, "index"])->name("monedas.index");
     Route::put("/monedas/{moneda}/change-status", [MonedaController::class, "changeStatus"])->name("monedas.change_status");
 
+    /**
+     * Tipos de cambio
+     */
     Route::get("/configuracion/tipos-cambio", [TipoCambioController::class, "index"])->name("tipos_cambio.index");
     Route::post("/tipos-cambio", [TipoCambioController::class, "store"])->name("tipos_cambio.store");
 
+    /**
+     * Unidades
+     */
     Route::get("/almacen/unidades", [UnidadController::class, "index"])->name("unidades.index");
-    Route::put("/almacen/{unidad}/toggle-active", [UnidadController::class, "toggleActive"])->name("unidades.toggle_active");
+    Route::put("/almacen/unidades/{unidad}/toggle-active", [UnidadController::class, "toggleActive"])->name("unidades.toggle_active");
+
+    /**
+     * Tipos de igv
+     */
+    Route::get("/almacen/tipos-igv", [TipoIgvController::class, "index"])->name("tipos_igv.index");
+    Route::put("/almacen/tipos-igv/{tipo}/toggle-active", [TipoIgvController::class, "toggleActive"])->name("tipos_igv.toggle_active");
 });

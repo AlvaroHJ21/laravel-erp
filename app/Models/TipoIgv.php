@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TipoIgv extends Model
 {
     use HasFactory;
+
+    protected $table = "tipos_igv";
+
+    public $timestamps = false;
 }

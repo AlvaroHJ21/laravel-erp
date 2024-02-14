@@ -113,10 +113,30 @@ class DatabaseSeeder extends Seeder
         DB::table('unidades')->insert([
             'codigo' => 'NIU',
             'unidad' => 'UNIDAD (BIENES)',
+            'activo' => 1,
         ]);
         DB::table('unidades')->insert([
             'codigo' => 'ZZ',
             'unidad' => 'UNIDAD (SERVICIOS)',
+            'activo' => 1,
+        ]);
+
+        // Tipos igv
+
+        DB::table('tipos_igv')->insert([
+            'codigo' => 1,
+            'tipo_igv' => 'Gravado',
+            'codigo_de_tributo' => '1000',
+            'activo' => 1,
+            'porcentaje' => 18,
+        ]);
+
+        DB::table('tipos_igv')->insert([
+            'codigo' => 2,
+            'tipo_igv' => 'Exonerado',
+            'codigo_de_tributo' => '9997',
+            'activo' => 1,
+            'porcentaje' => 0,
         ]);
     }
 }

@@ -190,7 +190,8 @@ $(`
 #table-entidades,
 #table-series,
 #table-tipo-cambio-sunnat,
-#table-tipo-cambio-empresa
+#table-tipo-cambio-empresa,
+#table-tipo-igv
 `).DataTable({
     ...datatableOptions,
 });

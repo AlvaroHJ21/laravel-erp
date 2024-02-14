@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipo_igvs', function (Blueprint $table) {
+        Schema::create('tipos_igv', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->char('codigo', 2)->nullable();
+            $table->string('tipo_igv', 60)->nullable();
+            $table->char('codigo_de_tributo', 4)->nullable();
+            $table->boolean('activo')->default(0);
+            $table->decimal('porcentaje', 10, 3)->nullable();
         });
     }
 
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipo_igvs');
+        Schema::dropIfExists('tipos_igv');
     }
 };
