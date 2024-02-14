@@ -14,23 +14,6 @@
 
 @section('content')
 
-    @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show">
-            <h5><i class="icon fas fa-ban"></i> Error!</h5>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button type="button"
-                class="close"
-                data-dismiss="alert"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
     <div class="card">
         <div class="card-body">
             <!-- <h5 class="card-title">Agregar Cliente / Proveedor</h5> -->
@@ -49,7 +32,7 @@
                         </label>
                         <select id="tipo_documento_id"
                             name="tipo_documento_id"
-                            class="form-control">
+                            class="form-select">
                             @foreach ($tiposDocumentosIdentidad as $tipo)
                                 <option value="{{ $tipo->id }}"
                                     {{ old('tipo_documento_id') == $tipo->id ? 'selected' : '' }}>{{ $tipo->nombre }}
@@ -131,7 +114,7 @@
                         <label for="tipo"
                             class="form-label">Seleccione tipo</label>
                         <select name="tipo"
-                            class="form-control">
+                            class="form-select">
                             <option value="1"
                                 {{ old('tipo') == '1' ? 'selected' : '' }}>CLIENTE</option>
                             <option value="2"

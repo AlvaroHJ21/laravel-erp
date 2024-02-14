@@ -39,6 +39,9 @@
             <!-- CONTENT -->
             <main class="content">
                 <div class="container-fluid p-0">
+
+                    <x-alert.alert />
+
                     <div class="mb-2">
                         @yield('content_header')
                     </div>
