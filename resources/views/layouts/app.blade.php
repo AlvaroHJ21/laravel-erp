@@ -49,6 +49,8 @@
             </main>
             <!-- FOOTER: DEBUG INFO + COPYRIGHTS -->
 
+            <x-footer.footer />
+
         </div>
     </div>
 
