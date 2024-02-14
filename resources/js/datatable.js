@@ -185,7 +185,12 @@ export const datatableOptions = {
     ],
 };
 
-$("#table-empresas, #table-entidades, #table-series").DataTable({
+$(`
+#table-empresas,
+#table-entidades,
+#table-series,
+#table-tipo-cambio-sunnat,
+#table-tipo-cambio-empresa
+`).DataTable({
     ...datatableOptions,
 });
-

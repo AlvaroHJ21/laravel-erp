@@ -167,6 +167,7 @@ $options = [
             [
                 'name' => 'Tipo de cambio',
                 'url' => 'configuracion/tipos_cambio',
+                'route' => 'tipos_cambio.index',
             ],
         ],
     ],

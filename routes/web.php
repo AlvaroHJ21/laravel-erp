@@ -5,6 +5,7 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EntidadController;
 use App\Http\Controllers\MonedaController;
 use App\Http\Controllers\SerieController;
+use App\Http\Controllers\TipoCambioController;
 // use App\Http\Controllers\HomeController;
 // use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -57,8 +58,11 @@ Route::middleware("auth")->group(function () {
      * Series
      */
     Route::get("/configuracion/series", [SerieController::class, "index"])->name("series.index");
-    Route::post("/series", [SerieController::class, "create"])->name("series.create");
+    Route::post("/series", [SerieController::class, "create"])->name("series.store");
 
     Route::get("/configuracion/monedas", [MonedaController::class, "index"])->name("monedas.index");
     Route::put("/monedas/{moneda}/change-status", [MonedaController::class, "changeStatus"])->name("monedas.change_status");
+
+    Route::get("/configuracion/tipos-cambio", [TipoCambioController::class, "index"])->name("tipos_cambio.index");
+    Route::post("/tipos-cambio", [TipoCambioController::class, "store"])->name("tipos_cambio.store");
 });

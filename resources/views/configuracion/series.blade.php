@@ -52,7 +52,7 @@
                     <h5 class="modal-title" id="formUserModalLabel">Crear nueva serie</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('series.create') }}" method="POST">
+                <form action="{{ route('series.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <input type="hidden" name="userID" id="userID">
