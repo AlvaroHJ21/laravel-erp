@@ -152,6 +152,7 @@ $options = [
             [
                 'name' => 'Series',
                 'url' => 'configuracion/series',
+                'route' => 'series.index',
             ],
             [
                 'name' => 'Empresas',

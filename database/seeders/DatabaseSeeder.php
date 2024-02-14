@@ -77,5 +77,18 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        // Tipos de documento
+
+        DB::table('tipos_documento')->insert([
+            'codigo' => 1,
+            'nombre' => 'Factura',
+            'abreviado' => 'FAC',
+        ]);
+        DB::table('tipos_documento')->insert([
+            'codigo' => 3,
+            'nombre' => 'Boleta',
+            'abreviado' => 'BOL',
+        ]);
     }
 }

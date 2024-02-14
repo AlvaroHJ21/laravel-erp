@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EntidadController;
+use App\Http\Controllers\SerieController;
 // use App\Http\Controllers\HomeController;
 // use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -50,4 +51,10 @@ Route::middleware("auth")->group(function () {
     Route::post("/entidades", [EntidadController::class, "store"])->name("entidades.store");
     Route::put("/entidades/{entidad}", [EntidadController::class, "update"])->name("entidades.update");
     Route::delete("/entidades/{entidad}", [EntidadController::class, "destroy"])->name("entidades.destroy");
+
+    /**
+     * Series
+     */
+    Route::get("/configuracion/series", [SerieController::class, "index"])->name("series.index");
+    Route::post("/series", [SerieController::class, "create"])->name("series.create");
 });

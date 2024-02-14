@@ -185,10 +185,7 @@ export const datatableOptions = {
     ],
 };
 
-$("#table-empresas").DataTable({
+$("#table-empresas, #table-entidades, #table-series").DataTable({
     ...datatableOptions,
 });
 
-$("#table-entidades").DataTable({
-    ...datatableOptions,
-});
