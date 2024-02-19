@@ -162,5 +162,13 @@ class DatabaseSeeder extends Seeder
             "created_at" => now(),
             "updated_at" => now(),
         ]);
+
+        //Almacen
+        DB::table('almacenes')->insert([
+            "nombre" => "Principal",
+            "user_id" => 1,
+            "created_at" => now(),
+            "updated_at" => now(),
+        ]);
     }
 }

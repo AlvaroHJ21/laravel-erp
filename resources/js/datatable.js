@@ -192,7 +192,8 @@ $(`
 #table-tipo-cambio-sunnat,
 #table-tipo-cambio-empresa,
 #table-tipo-igv,
-#table-productos
+#table-productos,
+#table-almacenes
 `).DataTable({
     ...datatableOptions,
 });

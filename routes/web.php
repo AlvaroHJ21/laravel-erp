@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\EmpresaController;
@@ -105,4 +106,12 @@ Route::middleware("auth")->group(function () {
     Route::post("/productos", [ProductoController::class, "store"])->name("productos.store");
     Route::put("/productos/{producto}", [ProductoController::class, "update"])->name("productos.update");
     Route::delete("/productos/{producto}", [ProductoController::class, "destroy"])->name("productos.destroy");
+
+    /**
+     * Almacenes
+     */
+    Route::get("/almacen/almacenes", [AlmacenController::class, "index"])->name("almacenes.index");
+    Route::post("/almacen/almacenes", [AlmacenController::class, "store"])->name("almacenes.store");
+    Route::put("/almacen/almacenes/{almacen}", [AlmacenController::class, "update"])->name("almacenes.update");
+    Route::put("/almacen/almacenes/{almacen}/toggle-active", [AlmacenController::class, "toggleActive"])->name("almacenes.toggle_active");
 });
