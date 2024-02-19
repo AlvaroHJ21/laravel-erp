@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EntidadController;
 use App\Http\Controllers\MonedaController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\TipoCambioController;
 use App\Http\Controllers\TipoIgvController;
@@ -94,4 +95,14 @@ Route::middleware("auth")->group(function () {
     Route::post("/almacen/categorias", [CategoriaController::class, "store"])->name("categorias.store");
     Route::put("/almacen/categorias/{categoria}", [CategoriaController::class, "update"])->name("categorias.update");
     Route::put("/almacen/categorias/{categoria}/toggle-active", [CategoriaController::class, "toggleActive"])->name("categorias.toggle_active");
+
+    /**
+     * Productos
+     */
+    Route::get("/almacen/productos", [ProductoController::class, "index"])->name("productos.index");
+    Route::get("/almacen/productos/create", [ProductoController::class, "create"])->name("productos.create");
+    Route::get("/almacen/productos/{producto}/edit", [ProductoController::class, "edit"])->name("productos.edit");
+    Route::post("/productos", [ProductoController::class, "store"])->name("productos.store");
+    Route::put("/productos/{producto}", [ProductoController::class, "update"])->name("productos.update");
+    Route::delete("/productos/{producto}", [ProductoController::class, "destroy"])->name("productos.destroy");
 });

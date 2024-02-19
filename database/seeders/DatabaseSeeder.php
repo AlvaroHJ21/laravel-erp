@@ -138,5 +138,29 @@ class DatabaseSeeder extends Seeder
             'activo' => 1,
             'porcentaje' => 0,
         ]);
+
+        // Categoria
+        DB::table('categorias')->insert([
+            "codigo" => "S01",
+            'nombre' => 'Sensores',
+            "created_at" => now(),
+            "updated_at" => now(),
+        ]);
+
+        //Producto
+        DB::table('productos')->insert([
+            "codigo" => "P001",
+            "nombre" => "Sensor de temperatura",
+            "precio_compra" => 80,
+            "precio_venta" => 100,
+            "valor_venta" => 180,
+            "categoria_id" => 1,
+            "unidad_id" => 1,
+            "moneda_id" => 1,
+            "tipo_igv_id" => 1,
+            "user_id" => 1,
+            "created_at" => now(),
+            "updated_at" => now(),
+        ]);
     }
 }

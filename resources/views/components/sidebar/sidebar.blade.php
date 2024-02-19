@@ -108,6 +108,7 @@ $options = [
             [
                 'name' => 'Productos',
                 'url' => 'almacen/productos',
+                'route' => 'productos.index',
             ],
             [
                 'name' => 'Impuestos',

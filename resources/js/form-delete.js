@@ -36,11 +36,20 @@ btnsDelete.forEach((btn) => {
             if (result.isConfirmed) {
                 const url = btn.getAttribute("data-url");
 
-                console.log(url);
+                if (!url) {
+                    console.log("No se encontró el atributo data-url");
+                    return;
+                }
 
                 const csrf = document
                     .querySelector('meta[name="csrf-token"]')
                     .getAttribute("content");
+
+                if (!csrf) {
+                    console.log("No se encontró el token csrf");
+                    return;
+                }
+
                 fetch(url, {
                     method: "DELETE",
                     headers: {
