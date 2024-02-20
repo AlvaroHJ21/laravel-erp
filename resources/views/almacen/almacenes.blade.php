@@ -21,12 +21,6 @@
                         <button class="btn btn-primary btn-sm btnAdd" data-bs-toggle="modal"
                             data-bs-target="#formModalMove">Realizar movimiento</button>
                     </div>
-                    <div class="">
-                        <button class="btn btn-primary btn-sm btnAdd" data-bs-toggle="modal"
-                            data-bs-target="#formUserModal">Nuevo</button>
-                        <button class="btn btn-primary btn-sm btnAdd" data-bs-toggle="modal"
-                            data-bs-target="#formModalMove">Realizar movimiento</button>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
