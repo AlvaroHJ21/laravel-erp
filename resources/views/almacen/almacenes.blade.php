@@ -21,6 +21,12 @@
                         <button class="btn btn-primary btn-sm btnAdd" data-bs-toggle="modal"
                             data-bs-target="#formModalMove">Realizar movimiento</button>
                     </div>
+                    <div class="">
+                        <button class="btn btn-primary btn-sm btnAdd" data-bs-toggle="modal"
+                            data-bs-target="#formUserModal">Nuevo</button>
+                        <button class="btn btn-primary btn-sm btnAdd" data-bs-toggle="modal"
+                            data-bs-target="#formModalMove">Realizar movimiento</button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -30,6 +36,7 @@
                                     <th>N.</th>
                                     <th>Nombre</th>
                                     <th>Estado</th>
+                                    <th>Inventarios</th>
                                     <th>Inventarios</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -52,6 +59,14 @@
                                                     </span>
                                                 </button>
                                             </form>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#formAlmacenInventarios{{ $almacen->id }}">
+                                                <i data-feather="eye"></i>
+                                            </button>
+                                            @include('almacen.partials.almacenes-inventarios')
                                         </td>
                                         <td>
                                             <button class="btn btn-sm"
@@ -87,7 +102,9 @@
     </div>
 
 
+
     @include('almacen.partials.almacenes-form-create')
+    @include('almacen.partials.modalform-movement')
     @include('almacen.partials.modalform-movement')
 @stop
 
