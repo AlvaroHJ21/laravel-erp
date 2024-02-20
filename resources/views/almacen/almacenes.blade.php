@@ -15,8 +15,12 @@
                     <h5 class="card-title mb-0">
                         Almacenes
                     </h5>
-                    <button class="btn btn-primary btn-sm btnAdd" data-bs-toggle="modal"
-                        data-bs-target="#formUserModal">Nuevo</button>
+                    <div class="">
+                        <button class="btn btn-primary btn-sm btnAdd" data-bs-toggle="modal"
+                            data-bs-target="#formUserModal">Nuevo</button>
+                        <button class="btn btn-primary btn-sm btnAdd" data-bs-toggle="modal"
+                            data-bs-target="#formModalMove">Realizar movimiento</button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -26,6 +30,7 @@
                                     <th>N.</th>
                                     <th>Nombre</th>
                                     <th>Estado</th>
+                                    <th>Inventarios</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -47,6 +52,14 @@
                                                     </span>
                                                 </button>
                                             </form>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#formAlmacenInventarios{{ $almacen->id }}">
+                                                <i data-feather="eye"></i>
+                                            </button>
+                                            @include('almacen.partials.almacenes-inventarios')
                                         </td>
                                         <td>
                                             <button
@@ -73,9 +86,16 @@
         </div>
     </div>
 
-    @include('almacen.partials.almacenes-form-create')
 
+    @include('almacen.partials.almacenes-form-create')
+    @include('almacen.partials.modalform-movement')
 @stop
 
-@push('scripts')
-@endpush
+
+
+@section('js')
+    <script>
+        const inventarios = @json($inventarios);
+    </script>
+    <script src="/js/almacenes.js" type="module"></script>
+@stop

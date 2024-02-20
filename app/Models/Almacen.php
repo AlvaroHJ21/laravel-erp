@@ -16,4 +16,9 @@ class Almacen extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function inventarios()
+    {
+        return $this->hasMany(Inventario::class);
+    }
 }
