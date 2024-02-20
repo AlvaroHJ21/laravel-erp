@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EntidadController;
+use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\MonedaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\SerieController;
@@ -114,4 +115,5 @@ Route::middleware("auth")->group(function () {
     Route::post("/almacen/almacenes", [AlmacenController::class, "store"])->name("almacenes.store");
     Route::put("/almacen/almacenes/{almacen}", [AlmacenController::class, "update"])->name("almacenes.update");
     Route::put("/almacen/almacenes/{almacen}/toggle-active", [AlmacenController::class, "toggleActive"])->name("almacenes.toggle_active");
+    Route::post("/almacenes/move", [AlmacenController::class, "move"])->name("almacenes.move");
 });

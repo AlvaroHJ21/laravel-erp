@@ -170,5 +170,14 @@ class DatabaseSeeder extends Seeder
             "created_at" => now(),
             "updated_at" => now(),
         ]);
+
+        //Inventario
+        DB::table('inventarios')->insert([
+            "producto_id" => 1,
+            "almacen_id" => 1,
+            "cantidad" => 100,
+            "created_at" => now(),
+            "updated_at" => now(),
+        ]);
     }
 }

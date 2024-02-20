@@ -120,11 +120,6 @@ $options = [
                 'url' => 'almacen/inventario',
                 'route' => 'almacenes.index',
             ],
-            [
-                'name' => 'Inventario',
-                'url' => 'almacen/inventario',
-                // 'route' => 'inventario.index',
-            ],
         ],
     ],
     [
