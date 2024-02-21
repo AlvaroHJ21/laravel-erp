@@ -18,4 +18,9 @@ class Moneda extends Model
     ];
 
     public $timestamps = false;
+
+    public static function active()
+    {
+        return Moneda::where("activo", 1)->get();
+    }
 }

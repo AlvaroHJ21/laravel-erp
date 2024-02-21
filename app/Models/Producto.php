@@ -7,45 +7,56 @@ use Illuminate\Database\Eloquent\Model;
 
 class Producto extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = 'productos';
-    protected $fillable = [
-        "codigo",
-        "nombre",
-        "precio_compra",
-        "precio_venta",
-        "valor_venta",
-        "imagen",
-        "categoria_id",
-        "unidad_id",
-        "moneda_id",
-        "tipo_igv_id",
-        "user_id",
-    ];
+  protected $table = 'productos';
+  protected $fillable = [
+    "codigo",
+    "nombre",
+    "precio_compra",
+    "precio_venta",
+    "valor_venta",
+    "imagen",
+    "categoria_id",
+    "unidad_id",
+    "moneda_id",
+    "tipo_igv_id",
+    "user_id",
+  ];
 
-    public function categoria()
-    {
-        return $this->belongsTo(Categoria::class);
-    }
+  public function categoria()
+  {
+    return $this->belongsTo(Categoria::class);
+  }
 
-    public function unidad()
-    {
-        return $this->belongsTo(Unidad::class);
-    }
+  public function unidad()
+  {
+    return $this->belongsTo(Unidad::class);
+  }
 
-    public function moneda()
-    {
-        return $this->belongsTo(Moneda::class);
-    }
+  public function moneda()
+  {
+    return $this->belongsTo(Moneda::class);
+  }
 
-    public function tipoIgv()
-    {
-        return $this->belongsTo(TipoIgv::class);
-    }
+  public function tipoIgv()
+  {
+    return $this->belongsTo(TipoIgv::class);
+  }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+
+  public static function getAutocompleteData()
+  {
+    return Producto::all()->map(function ($producto) {
+      return [
+        "value" => $producto->id,
+        "text" => "$producto->nombre - $producto->codigo",
+        "data" => $producto
+      ];
+    });
+  }
 }

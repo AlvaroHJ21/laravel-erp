@@ -7,25 +7,35 @@ use Illuminate\Database\Eloquent\Model;
 
 class Entidad extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = "entidades";
+  protected $table = "entidades";
 
-    protected $fillable = [
-        'nombre',
-        'tipo_documento_id',
-        'numero_documento',
-        'direccion',
-        'tipo',
-        'telefono',
-        'correo',
-        'porcentaje_descuento',
-        'retencion',
-        'ubigeo',
-    ];
+  protected $fillable = [
+    'nombre',
+    'tipo_documento_id',
+    'numero_documento',
+    'direccion',
+    'tipo',
+    'telefono',
+    'correo',
+    'porcentaje_descuento',
+    'retencion',
+    'ubigeo',
+  ];
 
-    public function documento_identidad()
-    {
-        return $this->belongsTo(TipoDocumentoIdentidad::class, 'tipo_documento_id');
-    }
+  public function documento_identidad()
+  {
+    return $this->belongsTo(TipoDocumentoIdentidad::class, 'tipo_documento_id');
+  }
+
+  public static function getAutocompleteData()
+  {
+    return Entidad::all()->map(function ($entidad) {
+      return [
+        "value" => $entidad->id,
+        "text" => $entidad->nombre,
+      ];
+    });
+  }
 }
