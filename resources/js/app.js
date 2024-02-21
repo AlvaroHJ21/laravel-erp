@@ -3,4 +3,3 @@ import "./darkmode";
 import "./form-delete";
 import "./datatable";
 import "./sidebar";
-import "./autocomplete";

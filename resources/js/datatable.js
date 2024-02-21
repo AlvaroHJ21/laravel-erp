@@ -193,7 +193,8 @@ $(`
 #table-tipo-cambio-empresa,
 #table-tipo-igv,
 #table-productos,
-#table-almacenes
+#table-almacenes,
+#table-cotizaciones
 `).DataTable({
     ...datatableOptions,
 });
