@@ -12,11 +12,17 @@ class AlmacenController extends Controller
     public function index()
     {
         $almacenes = Almacen::all();
-        $inventarios = Inventario::with(
+        $inventarioACD = Inventario::with(
             'producto',
             'almacen'
-        )->get();
-        return view('almacen.almacenes', compact('almacenes', 'inventarios'));
+        )->get()->map(function ($inventario) {
+            $data["value"] = $inventario->id;
+            $data["text"] = $inventario->producto->nombre . ' - ' . $inventario->almacen->nombre . ' - ' . $inventario->cantidad;
+            $data["filter"] = $inventario->almacen->id;
+            $data["meta"] = $inventario->cantidad;
+            return $data;
+        });
+        return view('almacen.almacenes', compact('almacenes', 'inventarioACD'));
     }
 
     public function store(Request $request)
@@ -85,7 +91,7 @@ class AlmacenController extends Controller
         // if ($inventario->cantidad - $request->cantidad == 0) {
         //     $inventario->delete();
         // } else {
-            $inventario->decrement('cantidad', $request->cantidad);
+        $inventario->decrement('cantidad', $request->cantidad);
         // }
 
         // Buscamos si ya existe un inventario con el almacen de destino y el producto del inventario
