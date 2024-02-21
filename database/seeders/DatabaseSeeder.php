@@ -179,5 +179,24 @@ class DatabaseSeeder extends Seeder
             "created_at" => now(),
             "updated_at" => now(),
         ]);
+
+        // Tipo de cambio
+        DB::table('tipos_cambio')->insert([
+            "moneda_id" => 2,
+            "tipo_cambio_compra" => 3.5,
+            "tipo_cambio_venta" => 3.6,
+            "proveniente" => 1,
+            "created_at" => now(),
+            "updated_at" => now(),
+        ]);
+
+        DB::table('tipos_cambio')->insert([
+            "moneda_id" => 2,
+            "tipo_cambio_compra" => 3.7,
+            "tipo_cambio_venta" => 3.7,
+            "proveniente" => 2,
+            "created_at" => now(),
+            "updated_at" => now(),
+        ]);
     }
 }

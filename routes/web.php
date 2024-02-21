@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CotizacionController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EntidadController;
 use App\Http\Controllers\InventarioController;
@@ -116,4 +117,13 @@ Route::middleware("auth")->group(function () {
     Route::put("/almacen/almacenes/{almacen}", [AlmacenController::class, "update"])->name("almacenes.update");
     Route::put("/almacen/almacenes/{almacen}/toggle-active", [AlmacenController::class, "toggleActive"])->name("almacenes.toggle_active");
     Route::post("/almacenes/move", [AlmacenController::class, "move"])->name("almacenes.move");
+
+    /**
+     * Cotizaciones
+     */
+    Route::get("/ventas/cotizaciones", [CotizacionController::class, "index"])->name("cotizaciones.index");
+    Route::get("/ventas/cotizaciones/create", [CotizacionController::class, "create"])->name("cotizaciones.create");
+    Route::post("/cotizaciones", [CotizacionController::class, "storeJSON"])->name("cotizaciones.store");
+    Route::post("/cotizaciones/{cotizacion}", [CotizacionController::class, "show"])->name("cotizaciones.show");
+    Route::post("/cotizaciones/{cotizacion}/pdf", [CotizacionController::class, "show"])->name("cotizaciones.pdf");
 });
