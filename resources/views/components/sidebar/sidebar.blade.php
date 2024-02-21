@@ -31,6 +31,7 @@ $options = [
             [
                 'name' => 'Cotizaciones',
                 'url' => 'ventas/cotizaciones',
+                'route' => 'cotizaciones.index'
             ],
             [
                 'name' => 'Órdenes de venta',
