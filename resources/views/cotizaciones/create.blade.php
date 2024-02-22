@@ -4,10 +4,9 @@
 
 @section('content_header')
   <div class="d-flex align-items-center">
-    <a href="{{ route('cotizaciones.index') }}"
-       class="btn">
+    <button onclick="window.history.back()" class="btn">
       <i data-feather="arrow-left" style="scale: 1.5"></i>
-    </a>
+    </button>
     <h1>Crear Cotización</h1>
   </div>
 @stop
