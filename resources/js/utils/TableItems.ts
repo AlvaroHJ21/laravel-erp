@@ -177,7 +177,7 @@ export class TableItems {
         <div>
           <input type="text" value="${
             item.producto.nombre
-          }" class="form-control" />
+          }" class="form-control" readOnly/>
           <textarea class="descripcion-adicional form-control text-sm mt-1" placeholder="Descripción Adicional">${
             item.descripcion_adicional
           }</textarea>
@@ -189,7 +189,7 @@ export class TableItems {
         </button>
       </td>
       <td>
-        <input type="text" class="form-control text-sm" style="max-width: 100px;" placeholder="T001" value="${
+        <input type="text" class="codigo form-control text-sm" style="max-width: 100px;" placeholder="T001" value="${
           item.codigo
         }">
       </td>
@@ -249,13 +249,13 @@ export class TableItems {
       if (!id) return;
 
       // Descripcion Adicional
-      const $descipcionAdd = $row.querySelector(
+      const $descripcionAdd = $row.querySelector(
         ".descripcion-adicional"
       ) as HTMLInputElement;
 
-      $descipcionAdd.addEventListener("keyup", (e) => {
+      $descripcionAdd.addEventListener("keyup", (e) => {
         this.updateItem(+id, {
-          descripcion_adicional: $descipcionAdd.value,
+          descripcion_adicional: $descripcionAdd.value,
         });
       });
 
@@ -266,6 +266,14 @@ export class TableItems {
           ".modal-content #imagen"
         ) as HTMLImageElement;
         $img?.setAttribute("src", $image.src);
+      });
+
+      // Codigo
+      const $codigo = $row.querySelector(".codigo") as HTMLInputElement;
+      $codigo.addEventListener("keyup", (e) => {
+        this.updateItem(+id, {
+          codigo: $codigo.value,
+        });
       });
 
       // Cantidad

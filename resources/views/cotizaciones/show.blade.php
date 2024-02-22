@@ -45,7 +45,9 @@
                   <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $detalle->codigo }}</td>
-                    <td>{{ $detalle->producto->nombre }}</td>
+                    <td>{{ $detalle->producto->nombre }}
+                      - {{ $detalle->producto->codigo }}.
+                      {{ $detalle->descripcion_adicional }}</td>
                     <td>
                       @php
                         $image = $detalle->producto->imagen ? '/storage/productos/' . $detalle->producto->imagen : '/img/default-image.png';
