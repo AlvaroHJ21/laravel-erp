@@ -152,6 +152,7 @@ export class TableItems {
             <th class="" style="text-align: end; width: 80px;">Valor Venta</th>
             <th class="" style="text-align: end; width: 60px;">Desc (%)</th>
             <th class="" style="text-align: end; width: 80px;">Sub Total</th>
+            <th class="" style="width: 50px;"></th>
           </tr>
         </thead>
         <tbody>

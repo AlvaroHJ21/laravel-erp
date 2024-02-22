@@ -22,4 +22,14 @@ class CotizacionDetalle extends Model
     'porcentaje_descuento',
     'subtotal',
   ];
+
+  public function producto()
+  {
+    return $this->belongsTo(Producto::class);
+  }
+
+  public function tipoIgv()
+  {
+    return $this->belongsTo(TipoIgv::class);
+  }
 }

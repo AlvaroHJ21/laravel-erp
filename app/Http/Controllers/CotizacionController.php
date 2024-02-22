@@ -118,6 +118,7 @@ class CotizacionController extends Controller
 
   public function show(Cotizacion $cotizacion)
   {
+    $cotizacion->load('cliente', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipoIgv');
     return view('cotizaciones.show', compact("cotizacion"));
   }
 
