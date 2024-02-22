@@ -106,42 +106,40 @@
         </h5>
       </div>
       <div class="card-body">
-        {{-- @include('ventas.partials.items', ['ver' => $ver]) --}}
-        <div id="autocomplete-productos"
-             data-placeholder="Buscar producto por nombre o código" class="mb-3"></div>
+
+        <div id="autocomplete-productos" data-placeholder="Buscar producto por nombre o código" class="mb-3"></div>
         <table id="tabla-items" class="table table-hover table-sm mb-3"></table>
 
       </div>
     </div>
     <!-- MONTOS-->
-    @include('ventas.partials.montos')
+    @include('partials.montos')
     <!-- NOTAS DEL COMPROBANTE -->
-    <div class="card flex-fill">
+    <div class="card flex-fill" x-data="{ open: false }">
       <div class="card-header d-flex gap-2">
-        <label class="card-title mb-0" for="check_nota_comprobante">
+        <label class="card-title mb-0 d-flex gap-2">
           NOTAS DEL COMPROBANTE
+          <div class="form-check form-switch">
+            <input type="checkbox" class="form-check-input" x-model="open">
+          </div>
         </label>
-        <div class="form-check form-switch">
-          <input type="checkbox" id="check_nota_comprobante" class="form-check-input">
-        </div>
       </div>
-      <div id="nota_comprobante_body" class="card-body d-none">
+      <div class="card-body" x-show="open">
         <textarea name="nota" id="nota" class="form-control">{{ old('nota') }}</textarea>
       </div>
     </div>
     <!-- SUBMIT -->
     @if (!$ver)
       <div class="card flex-fill">
-        <button id="btn_generar" class="btn btn-success">Generar cotizacion</button>
+        <button id="btn_generar" class="btn btn-success">Generar</button>
       </div>
     @endif
   </form>
 
-  <!-- Modal para visualizar imagen #modal-imagen-->
+  <!-- Imagen Modal-->
   <div class="modal fade" id="modal-imagen" tabindex="-1" aria-labelledby="modal-imagen-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg justify-content-center">
       <div class="modal-content" style="width: 500px;">
-        <!-- <h1>Hola</h1> -->
         <img id="imagen" src="" alt="" width="">
       </div>
     </div>
