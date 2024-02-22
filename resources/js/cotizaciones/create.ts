@@ -1,18 +1,25 @@
 import { TableItems } from "../utils/TableItems";
 import { Autocomplete } from "../utils/Autocomplete";
+import type { Entidad, Producto } from "../interfaces";
 
 //Funcion de agregar nuevos items
 declare global {
   interface Window {
-    productosACD: [any];
+    entidades: [Entidad];
+    productos: [Producto];
     tiposIGV: [any];
     tipoCambioDolar: string;
   }
 }
 
 //Entidades
-new Autocomplete({
+new Autocomplete<Entidad>({
   id: "autocomplete-entidades",
+  allOptions: window.entidades.map((entidad) => ({
+    value: entidad.id,
+    text: entidad.nombre,
+    data: entidad,
+  })),
 });
 
 // Tabla de items
@@ -22,12 +29,16 @@ const tableItems = new TableItems({
   tipoCambioDolar: parseFloat(window.tipoCambioDolar),
 });
 
-new Autocomplete({
+new Autocomplete<Producto>({
   id: "autocomplete-productos",
   preserve: false,
-  data: window.productosACD,
-  onSelect(item) {
-    tableItems.addItem(item.data);
+  allOptions: window.productos.map((producto) => ({
+    value: producto.id,
+    text: ` ${producto.codigo} - ${producto.nombre}`,
+    data: producto,
+  })),
+  onSelect(data) {
+    tableItems.addItem(data);
   },
 });
 

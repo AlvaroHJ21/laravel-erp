@@ -45,7 +45,6 @@
             <div id="inventario-autocomplete"
                  data-name="inventario_id"
                  data-placeholder="Buscar inventario"
-                 data-data="{{ $inventarioACD }}"
                  data-old-value="{{ old('inventario_id') }}">
             </div>
           </div>

@@ -1,5 +1,11 @@
+import type { Inventario } from "../interfaces";
 import { Autocomplete } from "../utils/Autocomplete";
-// import { renderAutocomplete } from "../utils/renderAutocomplete";
+
+declare global {
+  interface Window {
+    inventarios: [Inventario];
+  }
+}
 
 //AUTOCOMPLETE ALMACEN
 const $almacenOrigenSelect = document.getElementById(
@@ -15,15 +21,26 @@ $almacenOrigenSelect?.addEventListener("change", (e) => {
 });
 
 function renderAutocompleteByAlmacenId(almacenId) {
-  new Autocomplete({
+  new Autocomplete<Inventario>({
     id: "inventario-autocomplete",
     filter: almacenId,
-    onSelect(selected) {
-      const cantidadInput = document.getElementById(
+    allOptions: window.inventarios.map((inventario) => ({
+      value: inventario.id,
+      text: inventario.producto.nombre,
+      filter: inventario.almacen_id,
+      data: inventario,
+    })),
+    onSelect(data) {
+      const $cantidad = document.getElementById(
         "cantidad_actual"
       ) as HTMLInputElement;
-      cantidadInput.value = selected.meta;
+      $cantidad.value = data.cantidad.toString();
     },
-    onDiselect() {},
+    onDiselect() {
+      const $cantidad = document.getElementById(
+        "cantidad_actual"
+      ) as HTMLInputElement;
+      $cantidad.value = "";
+    },
   });
 }

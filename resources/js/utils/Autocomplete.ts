@@ -1,33 +1,35 @@
-interface Props {
+import { AutocompleteOption } from "../interfaces";
+
+interface Props<T = any> {
   id: string;
-  data?: any[];
+  allOptions?: AutocompleteOption<T>[];
   filter?: string;
-  onSelect?: (item: any, data: any[]) => void;
+  onSelect?: (data: T) => void;
   onDiselect?: () => void;
   selected?: any;
   preserve?: boolean;
 }
 
-export class Autocomplete {
+export class Autocomplete<T = any> {
   private $component: HTMLElement | null;
   private $input: HTMLInputElement | null;
   private $dropdown: HTMLElement | null;
   private $dropdownBody: HTMLElement | null;
-  public data: any[];
-  private results: any[];
-  private value: string;
+  private allOptions: AutocompleteOption<T>[];
+  private resultsOptions: AutocompleteOption<T>[];
+  private value: string | number;
   private selected: any;
-  private onSelect?: (item: any, data: any[]) => void;
+  private onSelect?: (data: T) => void;
   private onDiselect?: () => void;
   private name: string;
   private placeholder: string;
   private oldValue: string;
   private preserve: boolean;
 
-  constructor(props: Props) {
+  constructor(props: Props<T>) {
     const {
       id,
-      data,
+      allOptions,
       onSelect,
       onDiselect,
       selected = null,
@@ -42,17 +44,13 @@ export class Autocomplete {
       return;
     }
 
-    this.data = data
-      ? data
-      : this.$component?.dataset.data
-      ? JSON.parse(this.$component?.dataset.data)
-      : [];
+    this.allOptions = allOptions ? allOptions : [];
 
     if (filter) {
-      this.data = this.data.filter((item) => item.filter == filter);
+      this.allOptions = this.allOptions.filter((item) => item.filter == filter);
     }
 
-    this.results = [];
+    this.resultsOptions = [];
     this.value = "";
     this.selected = selected;
     this.onSelect = onSelect;
@@ -64,34 +62,32 @@ export class Autocomplete {
     this.oldValue = this.$component.getAttribute("data-old-value") || "";
 
     if (this.oldValue) {
-      this.selected = this.data.find((item) => item.value == this.oldValue);
+      this.selected = this.allOptions.find(
+        (item) => item.value == this.oldValue
+      );
     }
 
     this.render();
   }
 
-  private handleSelect(item: any) {
+  private handleSelect(autocompleteOption: AutocompleteOption) {
     if (this.preserve) {
-      this.value = item.name;
-      this.selected = item;
+      this.value = autocompleteOption.value;
+      this.selected = autocompleteOption;
     }
 
     if (!this.$input) return;
     if (!this.$dropdown) return;
-    this.$input.value = this.value;
+    this.$input.value = this.value.toString();
     this.$dropdown.style.display = "none";
 
-    this.onSelect?.(item, this.data);
+    this.onSelect?.(autocompleteOption.data);
     this.render();
   }
 
   private handleDiselect() {
-    console.log("clcik");
     this.value = "";
     this.selected = null;
-
-    console.log(this.$input);
-    console.log(this.$dropdown);
 
     if (!this.$input) return;
     if (!this.$dropdown) return;
@@ -154,14 +150,14 @@ export class Autocomplete {
       if (!this.$dropdown) return;
 
       if (value.length < 1) {
-        this.results = [];
+        this.resultsOptions = [];
         this.renderResults();
 
         this.$dropdown.style.display = "none";
         return;
       }
 
-      this.results = this.data.filter((item) => {
+      this.resultsOptions = this.allOptions.filter((item) => {
         return item.text.toLowerCase().includes(value.toLowerCase());
       });
 
@@ -186,7 +182,7 @@ export class Autocomplete {
 
     this.$dropdownBody.innerHTML = "";
 
-    if (this.results.length === 0) {
+    if (this.resultsOptions.length === 0) {
       const btn = document.createElement("button");
 
       btn.className = "dropdown-menu-item btn";
@@ -198,7 +194,7 @@ export class Autocomplete {
       this.$dropdownBody?.appendChild(btn);
     }
 
-    this.results.forEach((result) => {
+    this.resultsOptions.forEach((result) => {
       const btn = document.createElement("button");
 
       btn.className = "dropdown-menu-item btn";

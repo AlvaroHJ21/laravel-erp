@@ -29,8 +29,8 @@ class CotizacionController extends Controller
     $tiposDocumentoIdentidad = TipoDocumentoIdentidad::all();
     $tipoCambioDolar = TipoCambio::obtenerTipoCambioDolarDelDia();
     $monedas = Moneda::active();
-    $productosACD = Producto::getAutocompleteData();
-    $entidadesACD = Entidad::getAutocompleteData();
+    $productos = Producto::all();
+    $entidades = Entidad::all();
 
     $cotizacionId = $request->query('cotizacionId');
 
@@ -49,8 +49,8 @@ class CotizacionController extends Controller
       "tiposDocumentoIdentidad",
       "tipoCambioDolar",
       "monedas",
-      "productosACD",
-      "entidadesACD",
+      "productos",
+      "entidades",
       "cotizacionBase"
     ));
   }

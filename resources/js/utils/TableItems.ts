@@ -1,14 +1,4 @@
-interface Item {
-  id: string;
-  producto: any;
-  inventario: any;
-  cantidad: number;
-  impuesto_id: number;
-  impuesto_portcentaje: number;
-  precio_venta: number;
-  descripcion_adicional: string;
-  subtotal: number;
-}
+import type { Item, Producto } from "../interfaces";
 
 interface Props {
   id: string;
@@ -48,7 +38,7 @@ export class TableItems {
     this.render();
   }
 
-  public addItem(producto: any) {
+  public addItem(producto: Producto) {
     const exitItem = this.items.find((item) => item.id == producto.id);
 
     if (exitItem) {
@@ -72,12 +62,13 @@ export class TableItems {
     this.render();
   }
 
-  public quitItem(id: string) {
+  public quitItem(id: number) {
     this.items = this.items.filter((item) => item.id != id);
+    this.calcMontos();
     this.render();
   }
 
-  public updateItem(id: string, data: Partial<Item>) {
+  public updateItem(id: number, data: Partial<Item>) {
     this.items = this.items.map((item) => {
       if (item.id == id) {
         return { ...item, ...data };
@@ -259,7 +250,7 @@ export class TableItems {
       ) as HTMLInputElement;
 
       $descipcionAdd.addEventListener("keyup", (e) => {
-        this.updateItem(id, {
+        this.updateItem(+id, {
           descripcion_adicional: $descipcionAdd.value,
         });
       });
@@ -283,7 +274,7 @@ export class TableItems {
           return;
         }
 
-        this.updateItem(id, {
+        this.updateItem(+id, {
           cantidad: value,
         });
 
@@ -298,7 +289,7 @@ export class TableItems {
 
         const impuesto = this.tiposIGV.find((tipo) => tipo.id == impuestoId);
 
-        this.updateItem(id, {
+        this.updateItem(+id, {
           impuesto_id: impuestoId,
           impuesto_portcentaje: impuesto.porcentaje,
         });
@@ -310,7 +301,7 @@ export class TableItems {
       // Eliminar item
       const $btnQuitar = $row.querySelector(".btn-quitar") as HTMLButtonElement;
       $btnQuitar.addEventListener("click", () => {
-        this.quitItem(id);
+        this.quitItem(+id);
       });
     });
   }

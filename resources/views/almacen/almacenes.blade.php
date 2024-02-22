@@ -105,5 +105,8 @@
 
 
 @section('js')
+  <script>
+    window.inventarios = @json($inventarios);
+  </script>
   @vite('resources/js/almacenes/index.ts')
 @stop

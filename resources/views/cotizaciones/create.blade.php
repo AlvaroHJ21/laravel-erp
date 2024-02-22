@@ -30,8 +30,10 @@
             <div class="d-flex gap-2">
               {{-- <input type="text" class="form-control flex-grow-1" name="cliente" id="cliente"
                      placeholder="Ej. John Doe" autocomplete="off" value="{{ old('cliente') }}"> --}}
-              <div id="autocomplete-entidades" class="autocomplete" data-data="{{ $entidadesACD }}"
-                   data-name="entidad_id"></div>
+              <div id="autocomplete-entidades"
+                   class="autocomplete"
+                   data-name="entidad_id">
+              </div>
               @if (!$ver)
                 <div class="d-flex gap-2">
                   <button class="d-none"></button>
@@ -105,7 +107,7 @@
       </div>
       <div class="card-body">
         {{-- @include('ventas.partials.items', ['ver' => $ver]) --}}
-        <div id="autocomplete-productos" data-data="{{ $productosACD }}"
+        <div id="autocomplete-productos"
              data-placeholder="Buscar producto por nombre o código" class="mb-3"></div>
         <table id="tabla-items" class="table table-hover table-sm mb-3"></table>
 
@@ -151,11 +153,8 @@
 @section('js')
 
   <script>
-    const baseUrl = "{{ url('/') }}";
-
-    const unidades = @json($unidades);
-
-    window.productosACD = @json($productosACD);
+    window.entidades = @json($entidades);
+    window.productos = @json($productos);
     window.tiposIGV = @json($tiposIGV);
     window.tipoCambioDolar = @json($tipoCambioDolar->tipo_cambio_venta);
   </script>
