@@ -1,4 +1,5 @@
-import { renderAutocomplete } from "../utils/renderAutocomplete";
+import { Autocomplete } from "../utils/Autocomplete";
+// import { renderAutocomplete } from "../utils/renderAutocomplete";
 
 //AUTOCOMPLETE ALMACEN
 const $almacenOrigenSelect = document.getElementById(
@@ -14,7 +15,7 @@ $almacenOrigenSelect?.addEventListener("change", (e) => {
 });
 
 function renderAutocompleteByAlmacenId(almacenId) {
-  renderAutocomplete({
+  new Autocomplete({
     id: "inventario-autocomplete",
     filter: almacenId,
     onSelect(selected) {

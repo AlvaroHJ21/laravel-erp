@@ -82,7 +82,8 @@
           </div>
           <!-- Moneda -->
           <div class="col-12 col-md-3">
-            <label for="moneda" class="form-label">Moneda</label>
+            <label for="moneda" class="form-label">Moneda
+              <span>({{ $tipoCambioDolar->tipo_cambio_venta }})</span></label>
             <select name="moneda" id="moneda" class="form-select mb-3">
               @foreach ($monedas as $moneda)
                 <option value="{{ $moneda->id }}" data-simbolo="{{ $moneda->simbolo }}"
@@ -103,7 +104,11 @@
         </h5>
       </div>
       <div class="card-body">
-        @include('ventas.partials.items', ['ver' => $ver])
+        {{-- @include('ventas.partials.items', ['ver' => $ver]) --}}
+        <div id="autocomplete-productos" data-data="{{ $productosACD }}"
+             data-placeholder="Buscar producto por nombre o código" class="mb-3"></div>
+        <table id="tabla-items" class="table table-hover table-sm mb-3"></table>
+
       </div>
     </div>
     <!-- MONTOS-->
@@ -150,26 +155,9 @@
 
     const unidades = @json($unidades);
 
-    // const productosACD = @json($productosACD);
     window.productosACD = @json($productosACD);
-
-    const tiposIGV = @json($tiposIGV);
-
-    const ver = {{ $ver ? 'true' : 'false' }};
-
-    const currentDate = "{{ date('Y-m-d') }}";
-
-    const tipoCambioDolar = @json(isset($tipoCambioDolar) ? $tipoCambioDolar : null);
-    const tipoCambioSunat = @json(isset($tipoCambioSunat) ? $tipoCambioSunat : null);
-
-    const cotizacionActual = @json(isset($cotizacionActual) ? $cotizacionActual : null);
-    const cotizacionItems = @json(isset($cotizacionItems) ? $cotizacionItems : []);
-
-    const cotizacionCliente = @json(isset($cotizacionCliente) ? $cotizacionCliente : null);
-
-    const cotizacionBase = @json(isset($cotizacionBase) ? $cotizacionBase : null);
-    const cotizacionBaseCliente = @json(isset($cotizacionBaseCliente) ? $cotizacionBaseCliente : null);
-    const cotizacionBaseItems = @json(isset($cotizacionBaseItems) ? $cotizacionBaseItems : []);
+    window.tiposIGV = @json($tiposIGV);
+    window.tipoCambioDolar = @json($tipoCambioDolar->tipo_cambio_venta);
   </script>
 
   @vite(['resources/js/cotizaciones/create.ts'])
