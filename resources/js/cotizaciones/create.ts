@@ -1,16 +1,19 @@
 import { TableItems } from "../utils/TableItems";
 import { Autocomplete } from "../utils/Autocomplete";
+import { showError, showSuccess } from "../utils/Swal";
 import type { Entidad, Producto } from "../interfaces";
 
 //Funcion de agregar nuevos items
 declare global {
   interface Window {
-    entidades: [Entidad];
     productos: [Producto];
     tiposIGV: [any];
     tipoCambioDolar: string;
+    entidades: [Entidad];
   }
 }
+
+console.log(window.entidades);
 
 //Entidades
 new Autocomplete<Entidad>({
@@ -20,6 +23,29 @@ new Autocomplete<Entidad>({
     text: entidad.nombre,
     data: entidad,
   })),
+  onSelect(data) {
+    console.log(data);
+
+    const $cliente = document.getElementById("cliente") as HTMLDivElement;
+    $cliente.classList.remove("d-none");
+
+    const $nombre = $cliente.querySelector(".nombre") as HTMLInputElement;
+    const $documento = $cliente.querySelector(".documento") as HTMLInputElement;
+    const $direccion = $cliente.querySelector(".direccion") as HTMLInputElement;
+    const $descuento = $cliente.querySelector(".descuento") as HTMLInputElement;
+    const $retencion = $cliente.querySelector(".retencion") as HTMLInputElement;
+
+    $nombre.value = data.nombre;
+    $documento.value = data.numero_documento;
+    $direccion.value = data.direccion;
+    $descuento.value = data.porcentaje_descuento;
+    $retencion.value = data.retencion ? "Sí" : "No";
+  },
+  onDiselect() {
+    const $cliente = document.getElementById("cliente") as HTMLDivElement;
+
+    $cliente.classList.add("d-none");
+  },
 });
 
 // Tabla de items
@@ -42,7 +68,8 @@ new Autocomplete<Producto>({
   },
 });
 
-const $moneda = document.getElementById("moneda") as HTMLSelectElement;
+// Moneda
+const $moneda = document.getElementById("moneda_id") as HTMLSelectElement;
 const $simboloMoneda = document.querySelectorAll(
   ".simbolo_moneda"
 ) as NodeListOf<HTMLElement>;
@@ -56,7 +83,7 @@ $moneda?.addEventListener("change", () => {
 
 // Formulario
 const $form = document.getElementById("form") as HTMLFormElement;
-$form.addEventListener("submit", (e) => {
+$form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData($form);
@@ -66,6 +93,20 @@ $form.addEventListener("submit", (e) => {
     items: tableItems.getItems(),
   };
 
-  console.log(data);
-  //TODO: Enviar los datos al backend
+  const resp = await fetch("/cotizaciones", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const json = await resp.json();
+
+  if (json.ok) {
+    showSuccess(json.message, () => {
+      window.location.href = "/ventas/cotizaciones";
+    });
+  } else {
+    showError(json.error);
+  }
 });

@@ -43,14 +43,14 @@
                   </button>
                 </td>
                 <td class="text-sm"
-                    style="white-space: nowrap;">{{ $cotizacion->fecha_emision }}
+                    style="white-space: nowrap;">{{ $cotizacion->created_at }}
                 </td>
-                <td style="white-space: nowrap;">{{ $cotizacion->moneda_simbolo }}
+                <td style="white-space: nowrap;">{{ $cotizacion->moneda->simbolo }}
                   {{ $cotizacion->total_gravada }}</td>
-                <td style="white-space: nowrap;">{{ $cotizacion->moneda_simbolo }}
+                <td style="white-space: nowrap;">{{ $cotizacion->moneda->simbolo }}
                   {{ $cotizacion->total_igv }}</td>
-                <td style="white-space: nowrap;">{{ $cotizacion->moneda_simbolo }}
-                  {{ $cotizacion->total_a_pagar }}</td>
+                <td style="white-space: nowrap;">{{ $cotizacion->moneda->simbolo }}
+                  {{ $cotizacion->total_pagar }}</td>
                 <td>
                   <a href="{{ route('cotizaciones.pdf', $cotizacion) }}"
                      target="_blank"

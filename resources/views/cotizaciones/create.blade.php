@@ -3,7 +3,13 @@
 @section('title', 'Crear Cotización')
 
 @section('content_header')
-  <h1>Crear Cotización</h1>
+  <div class="d-flex align-items-center">
+    <a href="{{ route('cotizaciones.index') }}"
+       class="btn">
+      <i data-feather="arrow-left" style="scale: 1.5"></i>
+    </a>
+    <h1>Crear Cotización</h1>
+  </div>
 @stop
 
 @section('content')
@@ -25,71 +31,18 @@
       <div class="card-body">
         <div class="row">
           <!-- CLIENTE -->
-          <div class="mb-3">
-            <label for="cliente" class="form-label">Cliente</label>
-            <div class="d-flex gap-2">
-              {{-- <input type="text" class="form-control flex-grow-1" name="cliente" id="cliente"
-                     placeholder="Ej. John Doe" autocomplete="off" value="{{ old('cliente') }}"> --}}
-              <div id="autocomplete-entidades"
-                   class="autocomplete"
-                   data-name="entidad_id">
-              </div>
-              @if (!$ver)
-                <div class="d-flex gap-2">
-                  <button class="d-none"></button>
-                  <button id="btn_quitar_cliente" class="btn btn-danger d-none"><i class="align-middle"
-                       data-feather="user-x"></i></button>
-                  <a href="{{ route('entidades.create') }}"
-                     class="btn btn-primary">Nuevo</a>
-                </div>
-              @endif
-            </div>
-            <!-- Informacion del nuevo cliente -->
-            <div id="seccion_cliente_seleccionado"
-                 class="mt-3 @if (old('cliente_seleccionado')) d-flex @else d-none @endif">
-              <input id="id_cliente_seleccionado" type="hidden" name="">
-              <div class="d-flex gap-2 mb-3">
-                <i class="align-middle" data-feather="user"></i>
-                <label style="min-width: 140px;">Nombre: </label>
-                <input id="nombre_cliente_seleccionado" type="text" class="flex-grow-1" style="all: unset;" readonly
-                       value="{{ old('nombre_cliente_seleccionado') }}">
-              </div>
-              <div class="d-flex gap-2 mb-3">
-                <i class="align-middle" data-feather="file-text"></i>
-                <label style="min-width: 140px;">Documento: </label>
-                <input id="documento_cliente_seleccionado" type="text" class="flex-grow-1" style="all: unset;" readonly
-                       value="{{ old('documento_cliente_seleccionado') }}">
-              </div>
-              <div class="d-flex gap-2 mb-3">
-                <i class="align-middle" data-feather="map-pin"></i>
-                <label style="min-width: 140px;">Direccion: </label>
-                <input id="direccion_cliente_seleccionado" type="text" class="flex-grow-1" style="all: unset;" readonly
-                       value="{{ old('direccion_cliente_seleccionado') }}">
-              </div>
-              <div class="d-flex gap-2 mb-3">
-                <i class="align-middle" data-feather="percent"></i>
-                <label style="min-width: 140px;">Descuento: </label>
-                <input id="porcentaje_descuento_cliente_seleccionado" type="text" class="flex-grow-1"
-                       style="all: unset;" readonly value="{{ old('porcentaje_descuento_cliente_seleccionado') }}">
-              </div>
-              <div class="d-flex gap-2 mb-3">
-                <i class="align-middle" data-feather="info"></i>
-                <label style="min-width: 140px;">Agente de retención: </label>
-                <input id="agente_retencion_texto" type="text" class="flex-grow-1" style="all: unset;" readonly
-                       value="{{ old('agente_retencion_texto') }}">
-                <input type="hidden" id="agente_retencion_cliente_seleccionado"
-                       value="{{ old('agente_retencion_cliente_seleccionado') }}">
-              </div>
-            </div>
-          </div>
+
+          @include('entidades.partials.autocomplete', ['ver' => $ver])
+
           <!-- Moneda -->
           <div class="col-12 col-md-3">
-            <label for="moneda" class="form-label">Moneda
-              <span>({{ $tipoCambioDolar->tipo_cambio_venta }})</span></label>
-            <select name="moneda" id="moneda" class="form-select mb-3">
+            <label for="moneda_id" class="form-label">Moneda
+              <span>({{ $tipoCambioDolar->tipo_cambio_venta }})</span>
+            </label>
+            <select name="moneda_id" id="moneda_id" class="form-select mb-3">
               @foreach ($monedas as $moneda)
                 <option value="{{ $moneda->id }}" data-simbolo="{{ $moneda->simbolo }}"
-                        {{ old('moneda') == $moneda->id ? 'selected' : '' }}>
+                        {{ old('moneda_id') == $moneda->id ? 'selected' : '' }}>
                   {{ $moneda->abrstandar }} - {{ $moneda->nombre }}
                 </option>
               @endforeach

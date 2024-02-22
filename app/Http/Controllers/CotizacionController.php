@@ -18,7 +18,7 @@ class CotizacionController extends Controller
 {
   public function index()
   {
-    $cotizaciones = Cotizacion::all();
+    $cotizaciones = Cotizacion::orderBy('created_at', 'desc')->get();
     return view('cotizaciones.index', compact("cotizaciones"));
   }
 
@@ -59,12 +59,11 @@ class CotizacionController extends Controller
   {
 
     $validator = Validator::make($request->all(), [
-      "cliente_id" => "required",
-      "cliente_direccion" => "required",
+      "entidad_id" => "required",
       "moneda_id" => "required",
       "total_gravada" => "required",
       "total_igv" => "required",
-      "total_a_pagar" => "required",
+      "total_pagar" => "required",
       "items" => "required",
     ]);
 
@@ -74,6 +73,10 @@ class CotizacionController extends Controller
       return response()->json(compact("ok", "error"));
     }
 
+    $request->merge([
+      "user_id" => auth()->id(),
+    ]);
+
     DB::beginTransaction();
 
     try {
@@ -81,14 +84,12 @@ class CotizacionController extends Controller
 
       $itemValidator = Validator::make($request->items, [
         "*.producto_id" => "required",
-        "*.inventario_id" => "required",
-        "*.descripcion" => "required",
-        "*.descripcion_adicional" => "required",
+        "*.descripcion_adicional" => "nullable|string",
         "*.codigo" => "required",
         "*.cantidad" => "required",
         "*.valor_venta" => "required",
+        "*.subtotal" => "required",
         "*.tipo_igv_id" => "required",
-        "*.unidad_id" => "required",
         "*.porcentaje_descuento" => "required",
       ]);
 
@@ -100,12 +101,6 @@ class CotizacionController extends Controller
       }
 
       $cotizacionCreada->detalles()->createMany($request->items);
-
-      // foreach ($request->items as $item) {
-
-      // $cotizacionCreada->detalles()->create($item);
-
-      // }
 
       DB::commit();
       $ok = true;

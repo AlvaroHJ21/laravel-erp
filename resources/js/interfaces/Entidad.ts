@@ -6,10 +6,10 @@ export interface Entidad {
   nombre: string;
   numero_documento: string;
   porcentaje_descuento: string;
-  retencion: null;
+  retencion?: string;
   telefono: string;
   tipo: number;
   tipo_documento_id: number;
-  ubigeo: null;
+  ubigeo: string;
   updated_at: string;
 }

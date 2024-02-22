@@ -47,15 +47,18 @@ export class TableItems {
       });
     } else {
       this.items.push({
+        id: producto.id,
+        codigo: producto.codigo,
         cantidad: 1,
         descripcion_adicional: "",
-        id: producto.id,
-        impuesto_id: 1,
-        impuesto_portcentaje: 18,
-        inventario: null,
-        producto,
-        precio_venta: producto.precio_venta,
+        tipo_igv_id: 1,
+        tipo_igv_porcentaje: 18,
+        producto: producto,
+        valor_venta: producto.precio_venta,
         subtotal: producto.precio_venta,
+        producto_id: producto.id,
+        porcentaje_descuento: 0,
+        inventario_id: 0,
       });
     }
     this.calcMontos();
@@ -89,7 +92,7 @@ export class TableItems {
       if (item.producto.moneda_id == 2 && this.monedaId == 1) {
         return {
           ...item,
-          precio_venta: item.producto.precio_venta * this.tipoCambioDolar,
+          valor_venta: item.producto.valor_venta * this.tipoCambioDolar,
         };
       }
 
@@ -97,14 +100,14 @@ export class TableItems {
       if (item.producto.moneda_id == 1 && this.monedaId == 2) {
         return {
           ...item,
-          precio_venta: item.producto.precio_venta / this.tipoCambioDolar,
+          valor_venta: item.producto.valor_venta / this.tipoCambioDolar,
         };
       }
 
       // si son la misma moneda
       return {
         ...item,
-        precio_venta: item.producto.precio_venta,
+        valor_venta: item.producto.valor_venta,
       };
     });
 
@@ -114,23 +117,23 @@ export class TableItems {
         ...item,
         subtotal:
           item.cantidad *
-          item.precio_venta *
-          (1 + Number(item.impuesto_portcentaje) / 100),
+          item.valor_venta *
+          (1 + Number(item.tipo_igv_porcentaje) / 100),
       };
     });
   }
 
   public calcMontosTotales() {
     this.totalGravada = this.items.reduce(
-      (acc, item) => acc + item.precio_venta * item.cantidad,
+      (acc, item) => acc + item.valor_venta * item.cantidad,
       0
     );
     this.totalImpuesto = this.items.reduce(
       (acc, item) =>
         acc +
-        item.precio_venta *
+        item.valor_venta *
           item.cantidad *
-          (Number(item.impuesto_portcentaje) / 100),
+          (Number(item.tipo_igv_porcentaje) / 100),
       0
     );
     this.totalPago = this.totalGravada + this.totalImpuesto;
@@ -186,7 +189,7 @@ export class TableItems {
       </td>
       <td>
         <input type="text" class="form-control text-sm" style="max-width: 100px;" placeholder="T001" value="${
-          item.producto.codigo
+          item.codigo
         }">
       </td>
       <td>
@@ -206,7 +209,7 @@ export class TableItems {
         .map((tipo) => {
           return `
           <option value="${tipo.id}" ${
-            tipo.id == item.impuesto_id ? "selected" : ""
+            tipo.id == item.tipo_igv_id ? "selected" : ""
           }>
           ${tipo.porcentaje}% ${tipo.tipo_igv}
           </option>`;
@@ -216,7 +219,7 @@ export class TableItems {
       </td>
       <td>
         <input type="number" class="form-control text-sm" style="text-align: right; width: 80px" placeholder="" step="0.01" min="0" value="${Number(
-          item.precio_venta
+          item.valor_venta
         ).toFixed(2)}" disabled>
       </td>
       <td>
@@ -290,8 +293,8 @@ export class TableItems {
         const impuesto = this.tiposIGV.find((tipo) => tipo.id == impuestoId);
 
         this.updateItem(+id, {
-          impuesto_id: impuestoId,
-          impuesto_portcentaje: impuesto.porcentaje,
+          tipo_igv_id: impuestoId,
+          tipo_igv_porcentaje: impuesto.porcentaje,
         });
 
         this.calcMontos();
@@ -303,6 +306,8 @@ export class TableItems {
       $btnQuitar.addEventListener("click", () => {
         this.quitItem(+id);
       });
+
+      //TODO: completar
     });
   }
 
@@ -311,7 +316,7 @@ export class TableItems {
       "total_gravada"
     ) as HTMLInputElement;
     const $total_igv = document.getElementById("total_igv") as HTMLInputElement;
-    const $total = document.getElementById("total") as HTMLInputElement;
+    const $total = document.getElementById("total_pagar") as HTMLInputElement;
 
     if (!$totalGravada || !$total_igv || !$total) return;
 

@@ -7,21 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class CotizacionDetalle extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = "cotizacion_detalles";
+  protected $table = "cotizacion_detalles";
 
-    protected $fillable = [
-        'cotizacion_id',
-        'producto_id',
-        'inventario_id',
-        'descripcion',
-        'descripcion_adicional',
-        'codigo',
-        'cantidad',
-        'valor_venta',
-        'tipo_igv_id',
-        'unidad_id',
-        'porcentaje_descuento'
-    ];
+  protected $fillable = [
+    'cotizacion_id',
+    'producto_id',
+    'descripcion_adicional',
+    'codigo',
+    'cantidad',
+    'tipo_igv_id',
+    'valor_venta',
+    'porcentaje_descuento',
+    'subtotal',
+  ];
 }

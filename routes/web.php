@@ -124,6 +124,6 @@ Route::middleware("auth")->group(function () {
     Route::get("/ventas/cotizaciones", [CotizacionController::class, "index"])->name("cotizaciones.index");
     Route::get("/ventas/cotizaciones/create", [CotizacionController::class, "create"])->name("cotizaciones.create");
     Route::post("/cotizaciones", [CotizacionController::class, "storeJSON"])->name("cotizaciones.store");
-    Route::post("/cotizaciones/{cotizacion}", [CotizacionController::class, "show"])->name("cotizaciones.show");
+    Route::get("/cotizaciones/{cotizacion}", [CotizacionController::class, "show"])->name("cotizaciones.show");
     Route::post("/cotizaciones/{cotizacion}/pdf", [CotizacionController::class, "show"])->name("cotizaciones.pdf");
 });
