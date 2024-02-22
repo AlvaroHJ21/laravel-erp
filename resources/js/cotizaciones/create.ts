@@ -1,7 +1,7 @@
 import { TableItems } from "../utils/TableItems";
 import { Autocomplete } from "../utils/Autocomplete";
 import { showError, showSuccess } from "../utils/Swal";
-import type { Entidad, Producto } from "../interfaces";
+import type { Cotizacion, Entidad, Producto } from "../interfaces";
 
 //Funcion de agregar nuevos items
 declare global {
@@ -10,11 +10,12 @@ declare global {
     tiposIGV: [any];
     tipoCambioDolar: string;
     entidades: [Entidad];
+    cotizacionBase?: Cotizacion;
   }
 }
 
-//Entidades
-new Autocomplete<Entidad>({
+//* ENTIDAD
+const entidadAutocomplete = new Autocomplete<Entidad>({
   id: "autocomplete-entidades",
   allOptions: window.entidades.map((entidad) => ({
     value: entidad.id,
@@ -22,7 +23,6 @@ new Autocomplete<Entidad>({
     data: entidad,
   })),
   onSelect(data) {
-    console.log(data);
 
     const $cliente = document.getElementById("cliente") as HTMLDivElement;
     $cliente.classList.remove("d-none");
@@ -46,7 +46,7 @@ new Autocomplete<Entidad>({
   },
 });
 
-// Tabla de items
+//* ITEMS
 const tableItems = new TableItems({
   id: "tabla-items",
   tiposIGV: window.tiposIGV,
@@ -66,20 +66,24 @@ new Autocomplete<Producto>({
   },
 });
 
-// Moneda
+//* MONEDA
 const $moneda = document.getElementById("moneda_id") as HTMLSelectElement;
-const $simboloMoneda = document.querySelectorAll(
-  ".simbolo_moneda"
-) as NodeListOf<HTMLElement>;
-tableItems.setMonedaId(parseInt($moneda.value));
+handleChangeMoneda();
 $moneda?.addEventListener("change", () => {
-  tableItems.setMonedaId(parseInt($moneda.value));
-  $simboloMoneda.forEach((el) => {
-    el.innerHTML = $moneda.value === "1" ? "S/" : "$";
-  });
+  handleChangeMoneda();
 });
+function handleChangeMoneda() {
+  tableItems.setMonedaId(parseInt($moneda.value));
+  const simbolo = $moneda.options[$moneda.selectedIndex].dataset.simbolo;
+  const $simbolos = document.querySelectorAll(
+    ".simbolo_moneda"
+  ) as NodeListOf<HTMLElement>;
+  $simbolos.forEach((el) => {
+    el.innerHTML = simbolo ?? "";
+  });
+}
 
-// Formulario
+//* FORMULARIO
 const $form = document.getElementById("form") as HTMLFormElement;
 $form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -108,3 +112,35 @@ $form.addEventListener("submit", async (e) => {
     showError(json.error);
   }
 });
+
+//* CARGAR COTIZACION BASE
+if (window.cotizacionBase) {
+  const cliente = window.cotizacionBase.cliente;
+  entidadAutocomplete.handleSelect({
+    value: cliente.id,
+    text: cliente.nombre + " - " + cliente.numero_documento,
+    data: cliente,
+  });
+
+  tableItems.setItems(
+    window.cotizacionBase.detalles.map((detalle) => ({
+      id: detalle.producto_id,
+      cantidad: detalle.cantidad,
+      codigo: detalle.codigo,
+      descripcion_adicional: detalle.descripcion_adicional ?? "",
+      inventario_id: 0,
+      porcentaje_descuento: detalle.porcentaje_descuento,
+      producto: detalle.producto,
+      producto_id: detalle.producto_id,
+      subtotal: detalle.subtotal,
+      tipo_igv_id: detalle.tipo_igv_id,
+      tipo_igv_porcentaje: 18,
+      valor_venta: detalle.valor_venta,
+    }))
+  );
+
+  if (window.cotizacionBase.nota) {
+    const $nota = document.getElementById("nota") as HTMLTextAreaElement;
+    $nota.value = window.cotizacionBase.nota;
+  }
+}

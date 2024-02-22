@@ -74,6 +74,20 @@ class DatabaseSeeder extends Seeder
       'tipo' => 1,
       'telefono' => '123456789',
       'correo' => 'alvaro@gmail.com',
+      'ubigeo' => '010101',
+      'created_at' => now(),
+      'updated_at' => now(),
+    ]);
+
+    DB::table('entidades')->insert([
+      'nombre' => 'CHOCOLATE S.A.C.',
+      'tipo_documento_id' => 2,
+      'numero_documento' => '12312312312',
+      'direccion' => 'Calle de Prueba 321',
+      'tipo' => 1,
+      'telefono' => '123456789',
+      'correo' => 'chocolate@gmail.com',
+      'ubigeo' => '010101',
       'created_at' => now(),
       'updated_at' => now(),
     ]);

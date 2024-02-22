@@ -14,7 +14,8 @@ export function showSuccess(message: string, onConfirm?: () => void) {
     title: "Correcto",
     text: message,
   }).then((e) => {
-    if (e.isConfirmed) {
+    console.log(e);
+    if (e.isConfirmed || e.isDismissed) {
       onConfirm?.();
     }
   });

@@ -1,8 +1,8 @@
-import type { Item, Producto } from "../interfaces";
+import type { TableRow as TableRow, Producto } from "../interfaces";
 
 interface Props {
   id: string;
-  items?: Item[];
+  items?: TableRow[];
   disabled?: boolean;
   limited?: boolean;
   unidades?: any[];
@@ -12,7 +12,7 @@ interface Props {
 
 export class TableItems {
   private $table: HTMLElement | null;
-  private items: Item[];
+  private items: TableRow[];
   private tiposIGV: any[];
   private totalGravada: number = 0;
   private totalImpuesto: number = 0;
@@ -71,7 +71,7 @@ export class TableItems {
     this.render();
   }
 
-  public updateItem(id: number, data: Partial<Item>) {
+  public updateItem(id: number, data: Partial<TableRow>) {
     this.items = this.items.map((item) => {
       if (item.id == id) {
         return { ...item, ...data };
@@ -166,7 +166,7 @@ export class TableItems {
     this.renderMontosTotales();
   }
 
-  public renderItem(item: Item) {
+  public renderItem(item: TableRow) {
     const image = item.producto.imagen
       ? `/storage/productos/${item.producto.imagen}`
       : "/img/default-image.png";
@@ -334,5 +334,11 @@ export class TableItems {
 
   public getItems() {
     return this.items;
+  }
+
+  public setItems(items: TableRow[]) {
+    this.items = items;
+    this.calcMontos();
+    this.render();
   }
 }

@@ -6,7 +6,7 @@ interface Props<T = any> {
   filter?: string;
   onSelect?: (data: T) => void;
   onDiselect?: () => void;
-  selected?: any;
+  selected?: AutocompleteOption;
   preserve?: boolean;
 }
 
@@ -18,7 +18,7 @@ export class Autocomplete<T = any> {
   private allOptions: AutocompleteOption<T>[];
   private resultsOptions: AutocompleteOption<T>[];
   private value: string | number;
-  private selected: any;
+  private selected?: AutocompleteOption;
   private onSelect?: (data: T) => void;
   private onDiselect?: () => void;
   private name: string;
@@ -32,7 +32,7 @@ export class Autocomplete<T = any> {
       allOptions,
       onSelect,
       onDiselect,
-      selected = null,
+      selected,
       preserve = true,
       filter,
     } = props;
@@ -70,7 +70,7 @@ export class Autocomplete<T = any> {
     this.render();
   }
 
-  private handleSelect(autocompleteOption: AutocompleteOption) {
+  public handleSelect(autocompleteOption: AutocompleteOption) {
     if (this.preserve) {
       this.value = autocompleteOption.value;
       this.selected = autocompleteOption;
@@ -85,9 +85,9 @@ export class Autocomplete<T = any> {
     this.render();
   }
 
-  private handleDiselect() {
+  public handleDiselect() {
     this.value = "";
-    this.selected = null;
+    this.selected = undefined;
 
     if (!this.$input) return;
     if (!this.$dropdown) return;

@@ -36,7 +36,7 @@
           </div>
         </div>
         <!-- NOTAS -->
-        <div class="card" x-data="{ open: false }">
+        <div class="card" x-data="{ open: {{ $cotizacionBase?->nota ? 'true' : 'false' }} }">
           <div class="card-header d-flex gap-2">
             <h5 class="card-title mb-0 d-flex gap-2">
               NOTA
@@ -74,8 +74,10 @@
                 </label>
                 <select name="moneda_id" id="moneda_id" class="form-select mb-3">
                   @foreach ($monedas as $moneda)
-                    <option value="{{ $moneda->id }}" data-simbolo="{{ $moneda->simbolo }}"
-                            {{ old('moneda_id') == $moneda->id ? 'selected' : '' }}>
+                    <option
+                            value="{{ $moneda->id }}"
+                            data-simbolo="{{ $moneda->simbolo }}"
+                            {{ $cotizacionBase?->moneda_id == $moneda->id ? 'selected' : '' }}>
                       {{ $moneda->abrstandar }} - {{ $moneda->nombre }}
                     </option>
                   @endforeach
@@ -110,6 +112,7 @@
     window.productos = @json($productos);
     window.tiposIGV = @json($tiposIGV);
     window.tipoCambioDolar = @json($tipoCambioDolar->tipo_cambio_venta);
+    window.cotizacionBase = @json($cotizacionBase);
   </script>
 
   @vite(['resources/js/cotizaciones/create.ts'])

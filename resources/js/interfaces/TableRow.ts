@@ -1,7 +1,7 @@
 import { Inventario } from "./Inventario";
 import { Producto } from "./Producto";
 
-export interface Item {
+export interface TableRow {
   id: number;
   codigo: string;
   producto_id: number;

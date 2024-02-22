@@ -36,9 +36,8 @@ class CotizacionController extends Controller
 
     if ($cotizacionId) {
 
-      $cotizacionBase = Cotizacion::with('cliente', 'moneda', 'detalles')->find($cotizacionId);
+      $cotizacionBase = Cotizacion::with('cliente', 'moneda', 'detalles', 'detalles.producto')->find($cotizacionId);
 
-      dd($cotizacionBase);
     }
 
     $cotizacionBase = isset($cotizacionBase) ? $cotizacionBase : null;
