@@ -1,14 +1,17 @@
 @if (isset($cotizacion))
   <div class="dropdown dropstart">
-    <button class="btn dropdown-toggle"
+    <button class="btn dropdown-toggle btn-sm"
             type="button"
             id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
             aria-expanded="false">
-      Opciones
+      <!-- <i class="" data-feather="settings"></i> -->
     </button>
     <ul class="dropdown-menu"
         aria-labelledby="dropdownMenuButton1">
+      <li>
+        <a class="dropdown-item" href="{{ route('cotizaciones.show', $cotizacion) }}">Ver</a>
+      </li>
       <li>
         <a class="dropdown-item"
            href="{{ route('cotizaciones.pdf', $cotizacion) }}"
@@ -25,7 +28,7 @@
       </li>
       <li>
         <a class="dropdown-item"
-           href="{{ route('cotizaciones.create', $cotizacion) }}">
+           href="{{ route('cotizaciones.create', ['cotizacionId' => $cotizacion->id]) }}">
           Duplicar cotización
         </a>
       </li>

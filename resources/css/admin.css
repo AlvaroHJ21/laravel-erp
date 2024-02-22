@@ -11916,7 +11916,7 @@ aa.badge-dark-light:focus {
   color: #343a40;
 }
 .card {
-  margin-bottom: 24px;
+  margin-bottom: 8px;
   box-shadow: 0 0 0.875rem 0 rgba(33, 37, 41, 0.05);
 }
 .card-header {

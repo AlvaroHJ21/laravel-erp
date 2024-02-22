@@ -1,48 +1,26 @@
-<div class="row px-3 justify-content-end">
+<div class="d-flex justify-content-end">
+  <div>
+    <div class="row">
+      <label class="col">Total Gravado:</label>
+      <label class="col-1 simbolo_moneda">S/</label>
+      <div class="col">
+        <input id="total_gravada" name="total_gravada" type="text" class="form-control" readonly>
+      </div>
+    </div>
 
-  <div class="card col-12 col-md-6 col-xxl-4">
-    <div class="card-body">
-      <div class="">
-        <div class="input-group">
-          <span class="input-group-text"
-                id="basic-addon3"
-                style="min-width: 200px; justify-content: flex-end;">
-            Total Gravada:&nbsp;<span class="simbolo_moneda">S/</span></span>
-          <input class="form-control flex-grow-1"
-                 style="text-align: end;"
-                 id="total_gravada"
-                 name="total_gravada"
-                 value="00.00"
-                 readonly>
-        </div>
+    <div class="row">
+      <label class="col">Total IGV:</label>
+      <label class="col-1"><span class="simbolo_moneda">S/</span></label>
+      <div class="col">
+        <input id="total_igv" name="total_igv" type="text" class="form-control" readonly>
       </div>
-      <div class="">
-        <div class="input-group">
-          <span class="input-group-text"
-                id="basic-addon3"
-                style="min-width: 200px; justify-content: flex-end;">
-            Total Impuesto:&nbsp;<span class="simbolo_moneda">S/</span></span>
-          <input class="form-control flex-grow-1"
-                 style="text-align: end;"
-                 id="total_igv"
-                 name="total_igv"
-                 value="00.00"
-                 readonly>
-        </div>
-      </div>
-      <div class="">
-        <div class="input-group">
-          <span class="input-group-text"
-                id="basic-addon3"
-                style="min-width: 200px; justify-content: flex-end;">
-            Pago Total:&nbsp;<span class="simbolo_moneda">S/</span></span>
-          <input class="form-control flex-grow-1"
-                 style="text-align: end;"
-                 id="total_pagar"
-                 name="total_pagar"
-                 value="00.00"
-                 readonly>
-        </div>
+    </div>
+
+    <div class="row">
+      <label class="col">Total a Pagar:</label>
+      <label class="col-1"><span class="simbolo_moneda">S/</span></label>
+      <div class="col">
+        <input id="total_pagar" name="total_pagar" type="text" class="form-control" readonly>
       </div>
     </div>
   </div>

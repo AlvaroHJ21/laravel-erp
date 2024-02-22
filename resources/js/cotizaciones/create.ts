@@ -13,14 +13,12 @@ declare global {
   }
 }
 
-console.log(window.entidades);
-
 //Entidades
 new Autocomplete<Entidad>({
   id: "autocomplete-entidades",
   allOptions: window.entidades.map((entidad) => ({
     value: entidad.id,
-    text: entidad.nombre,
+    text: entidad.nombre + " - " + entidad.numero_documento,
     data: entidad,
   })),
   onSelect(data) {
@@ -29,17 +27,17 @@ new Autocomplete<Entidad>({
     const $cliente = document.getElementById("cliente") as HTMLDivElement;
     $cliente.classList.remove("d-none");
 
-    const $nombre = $cliente.querySelector(".nombre") as HTMLInputElement;
-    const $documento = $cliente.querySelector(".documento") as HTMLInputElement;
-    const $direccion = $cliente.querySelector(".direccion") as HTMLInputElement;
-    const $descuento = $cliente.querySelector(".descuento") as HTMLInputElement;
-    const $retencion = $cliente.querySelector(".retencion") as HTMLInputElement;
+    const $nombre = $cliente.querySelector(".nombre") as HTMLLabelElement;
+    const $documento = $cliente.querySelector(".documento") as HTMLLabelElement;
+    const $direccion = $cliente.querySelector(".direccion") as HTMLLabelElement;
+    const $descuento = $cliente.querySelector(".descuento") as HTMLLabelElement;
+    const $retencion = $cliente.querySelector(".retencion") as HTMLLabelElement;
 
-    $nombre.value = data.nombre;
-    $documento.value = data.numero_documento;
-    $direccion.value = data.direccion;
-    $descuento.value = data.porcentaje_descuento;
-    $retencion.value = data.retencion ? "Sí" : "No";
+    $nombre.innerHTML = data.nombre;
+    $documento.innerHTML = data.numero_documento;
+    $direccion.innerHTML = data.direccion;
+    $descuento.innerHTML = data.porcentaje_descuento;
+    $retencion.innerHTML = data.retencion ? "Sí" : "No";
   },
   onDiselect() {
     const $cliente = document.getElementById("cliente") as HTMLDivElement;
@@ -77,7 +75,7 @@ tableItems.setMonedaId(parseInt($moneda.value));
 $moneda?.addEventListener("change", () => {
   tableItems.setMonedaId(parseInt($moneda.value));
   $simboloMoneda.forEach((el) => {
-    el.innerHTML = $moneda.value === "1" ? "S/." : "$";
+    el.innerHTML = $moneda.value === "1" ? "S/" : "$";
   });
 });
 
