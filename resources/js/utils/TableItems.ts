@@ -185,7 +185,7 @@ export class TableItems {
       </td>
       <td>
         <button data-bs-toggle="modal" data-bs-target="#modal-imagen" type="button" data-image="${image}">
-          <img class="img-thumbnail" src="${image}" alt="producto" width="100px"/>
+          <img class="img-thumbnail image" src="${image}" alt="producto" width="100px"/>
         </button>
       </td>
       <td>
@@ -260,10 +260,10 @@ export class TableItems {
       });
 
       // Imagen
-      const $image = $row.querySelector("img") as HTMLImageElement;
+      const $image = $row.querySelector(".image") as HTMLImageElement;
       $image.addEventListener("click", () => {
         const $img = document.querySelector(
-          ".modal-content #imagen"
+          ".modal-content img"
         ) as HTMLImageElement;
         $img?.setAttribute("src", $image.src);
       });

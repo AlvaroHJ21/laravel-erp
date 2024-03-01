@@ -28,7 +28,8 @@
           </div>
           <div class="card-body">
 
-            <div id="autocomplete-inventarios" data-placeholder="Buscar producto por nombre, código, almacen" class="mb-3"></div>
+            <div id="autocomplete-inventarios" data-placeholder="Buscar producto por nombre, código, almacen"
+                 class="mb-3"></div>
             <div class="table-responsive">
               <table id="tabla-items" class="table table-hover table-sm mb-3"></table>
             </div>
@@ -93,14 +94,15 @@
 
   </form>
 
-  <!-- Imagen Modal-->
+  {{-- <!-- Imagen Modal-->
   <div class="modal fade" id="modal-imagen" tabindex="-1" aria-labelledby="modal-imagen-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg justify-content-center">
       <div class="modal-content" style="width: 500px;">
         <img id="imagen" src="" alt="" width="">
       </div>
     </div>
-  </div>
+  </div> --}}
+  @include('partials.image-modal')
 
 
 @stop

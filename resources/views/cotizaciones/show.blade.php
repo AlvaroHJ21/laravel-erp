@@ -50,7 +50,9 @@
                       {{ $detalle->descripcion_adicional }}</td>
                     <td>
                       @php
-                        $image = $detalle->producto->imagen ? '/storage/productos/' . $detalle->producto->imagen : '/img/default-image.png';
+                        $image = $detalle->producto->imagen
+                            ? '/storage/productos/' . $detalle->producto->imagen
+                            : '/img/default-image.png';
                       @endphp
                       <button data-bs-toggle="modal" data-bs-target="#modal-imagen" type="button">
                         <img class="img-thumbnail" src="{{ $image }}" alt="producto" width="100px" />
@@ -198,30 +200,5 @@
 
 
 
-  <!-- Imagen Modal-->
-  <div class="modal fade" id="modal-imagen" tabindex="-1" aria-labelledby="modal-imagen-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg justify-content-center">
-      <div class="modal-content" style="width: 500px;">
-        <img id="imagen" src="" alt="" width="">
-      </div>
-    </div>
-  </div>
-
-  {{-- <pre>
-    @json($cotizacion, JSON_PRETTY_PRINT)
-  </pre> --}}
-@stop
-
-@section('js')
-
-  <script>
-    const $images = document.querySelectorAll('.img-thumbnail');
-    $images.forEach($image => {
-      $image.addEventListener('click', (e) => {
-        const src = e.target.src;
-        const $imagen = document.querySelector('#imagen');
-        $imagen.src = src;
-      });
-    });
-  </script>
+  @include('partials.image-modal')
 @stop
