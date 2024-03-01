@@ -8,6 +8,7 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EntidadController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\MonedaController;
+use App\Http\Controllers\OrdenVentaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\TipoCambioController;
@@ -126,4 +127,13 @@ Route::middleware("auth")->group(function () {
     Route::post("/cotizaciones", [CotizacionController::class, "storeJSON"])->name("cotizaciones.store");
     Route::get("/cotizaciones/{cotizacion}", [CotizacionController::class, "show"])->name("cotizaciones.show");
     Route::get("/cotizaciones/{cotizacion}/pdf", [CotizacionController::class, "pdf"])->name("cotizaciones.pdf");
+
+    /**
+     * Ordenes de venta
+     */
+    Route::get("/ventas/ordenes-venta", [OrdenVentaController::class, "index"])->name("ordenes_venta.index");
+    Route::get("/ventas/ordenes-venta/create", [OrdenVentaController::class, "create"])->name("ordenes_venta.create");
+    Route::post("/ordenes-venta", [OrdenVentaController::class, "storeJSON"])->name("ordenes_venta.store");
+    Route::get("/ordenes-venta/{ordenVenta}", [OrdenVentaController::class, "show"])->name("ordenes_venta.show");
+    Route::get("/ordenes-venta/{ordenVenta}/pdf", [OrdenVentaController::class, "pdf"])->name("ordenes_venta.pdf");
 });

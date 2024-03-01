@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Moneda;
-use App\Models\Unidad;
-use App\Models\TipoIgv;
-use App\Models\Cotizacion;
 use App\Models\Empresa;
 use App\Models\Entidad;
+use App\Models\Moneda;
+use App\Models\OrdenVenta;
 use App\Models\Producto;
 use App\Models\TipoCambio;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\TipoDocumentoIdentidad;
+use App\Models\TipoIgv;
+use App\Models\Unidad;
 use App\Utils\Numletras;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class CotizacionController extends Controller
+class OrdenVentaController extends Controller
 {
   public function index()
   {
-    $cotizaciones = Cotizacion::orderBy('created_at', 'desc')->get();
-    return view('cotizaciones.index', compact("cotizaciones"));
+    $ordenesVenta = OrdenVenta::orderBy('created_at', 'desc')->get();
+    return view('ordenes_venta.index', compact("ordenesVenta"));
   }
 
   public function create(Request $request)
@@ -35,17 +35,16 @@ class CotizacionController extends Controller
     $productos = Producto::all();
     $entidades = Entidad::all();
 
-    $cotizacionId = $request->query('cotizacionId');
+    $fromId = $request->query('fromId');
 
-    if ($cotizacionId) {
+    if ($fromId) {
 
-      $cotizacionBase = Cotizacion::with('cliente', 'moneda', 'detalles', 'detalles.producto')->find($cotizacionId);
-
+      $base = OrdenVenta::with('cliente', 'moneda', 'detalles', 'detalles.producto')->find($fromId);
     }
 
-    $cotizacionBase = isset($cotizacionBase) ? $cotizacionBase : null;
+    $base = isset($base) ? $base : null;
 
-    return view("cotizaciones.create", compact(
+    return view("ordenes_venta.create", compact(
       "unidades",
       "tiposIGV",
       "tiposDocumentoIdentidad",
@@ -53,7 +52,7 @@ class CotizacionController extends Controller
       "monedas",
       "productos",
       "entidades",
-      "cotizacionBase"
+      "base"
     ));
   }
 
@@ -61,6 +60,7 @@ class CotizacionController extends Controller
   {
 
     $validator = Validator::make($request->all(), [
+      "numero_orden_compra" => "required",
       "entidad_id" => "required",
       "moneda_id" => "required",
       "total_gravada" => "required",
@@ -82,7 +82,7 @@ class CotizacionController extends Controller
     DB::beginTransaction();
 
     try {
-      $cotizacionCreada = Cotizacion::create($request->all());
+      $ordenVentaCreada = OrdenVenta::create($request->all());
 
       $itemValidator = Validator::make($request->items, [
         "*.producto_id" => "required",
@@ -102,11 +102,11 @@ class CotizacionController extends Controller
         return response()->json(compact("ok", "error"));
       }
 
-      $cotizacionCreada->detalles()->createMany($request->items);
+      $ordenVentaCreada->detalles()->createMany($request->items);
 
       DB::commit();
       $ok = true;
-      $message = "Cotización registrada correctamente";
+      $message = "Orden de venta registrada correctamente";
 
       return response()->json(compact("ok", "message"));
     } catch (\Throwable $th) {
@@ -118,44 +118,44 @@ class CotizacionController extends Controller
     }
   }
 
-  public function show(Cotizacion $cotizacion)
+  public function show(OrdenVenta $ordenVenta)
   {
-    $cotizacion->load('cliente', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipoIgv');
-    return view('cotizaciones.show', compact("cotizacion"));
+    $ordenVenta->load('cliente', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipoIgv');
+    return view('ordenes_venta.show', compact("ordenVenta"));
   }
 
 
-  public function pdf(Cotizacion $cotizacion)
+  public function pdf(OrdenVenta $ordenVenta)
   {
-      //generar un pdf
-      $logo = public_path('img/logo.png');
-      // dd($logo);
-      $cotizacion->load([
-          "cliente",
-          "moneda",
-          "detalles",
-          "detalles.producto",
-      ]);
+    //generar un pdf
+    $logo = public_path('img/logo.png');
+    // dd($logo);
+    $ordenVenta->load([
+      "cliente",
+      "moneda",
+      "detalles",
+      "detalles.producto",
+    ]);
 
-      $entidad = $cotizacion->cliente;
-      $moneda = $cotizacion->moneda;
-      $items = $cotizacion->detalles;
-      $empresa = Empresa::first();
+    $entidad = $ordenVenta->cliente;
+    $moneda = $ordenVenta->moneda;
+    $items = $ordenVenta->detalles;
+    $empresa = Empresa::first();
 
-      $num2letras = new Numletras();
+    $num2letras = new Numletras();
 
-      $totalLetras = $num2letras->getTotalLetras($cotizacion->total_pagar, $moneda->nombre);
+    $totalLetras = $num2letras->getTotalLetras($ordenVenta->total_pagar, $moneda->nombre);
 
-      $pdf = Pdf::loadView("cotizaciones.pdf", compact(
-          "logo",
-          "cotizacion",
-          "items",
-          "empresa",
-          "entidad",
-          "moneda",
-          "totalLetras"
-      ));
+    $pdf = Pdf::loadView("ordenes_venta.pdf", compact(
+      "logo",
+      "ordenVenta",
+      "items",
+      "empresa",
+      "entidad",
+      "moneda",
+      "totalLetras"
+    ));
 
-      return $pdf->stream();
+    return $pdf->stream();
   }
 }

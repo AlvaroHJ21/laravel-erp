@@ -3,5 +3,6 @@ export * from './AutocompleteOption';
 export * from './Cotizacion';
 export * from './Entidad';
 export * from './Inventario';
-export * from './TableRow';
+export * from './OrdenVenta';
 export * from './Producto';
+export * from './TableRow';

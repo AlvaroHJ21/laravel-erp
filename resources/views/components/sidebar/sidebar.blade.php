@@ -36,6 +36,7 @@ $options = [
             [
                 'name' => 'Órdenes de venta',
                 'url' => 'ventas/ordenes_venta',
+                'route' => 'ordenes_venta.index'
             ],
             [
                 'name' => 'Venta',
