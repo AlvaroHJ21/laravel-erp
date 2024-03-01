@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('telefono_movil', 10)->nullable();
             $table->string('correo', 150)->nullable();
             $table->string('logo', 255)->nullable();
+            $table->string('web', 255)->nullable();
             $table->string('codigo_sucursal_sunat', 10)->nullable();
             $table->string('usu_secundario_usuario', 150)->nullable();
             $table->string('usu_secundario_password', 150)->nullable();

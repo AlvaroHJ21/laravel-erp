@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('codigo');
             $table->string('nombre');
-            $table->decimal('precio_compra', 5, 2);
-            $table->decimal('precio_venta', 5, 2);
-            $table->decimal('valor_venta', 5, 2)->nullable();
+            $table->decimal('precio_compra', 10, 4);
+            $table->decimal('precio_venta', 10, 4);
+            $table->decimal('valor_venta', 10, 4)->nullable();
             $table->string('imagen')->nullable();
             $table->foreignId('categoria_id')->constrained('categorias');
             $table->foreignId('unidad_id')->constrained('unidades');

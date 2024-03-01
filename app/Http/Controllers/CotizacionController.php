@@ -6,12 +6,15 @@ use App\Models\Moneda;
 use App\Models\Unidad;
 use App\Models\TipoIgv;
 use App\Models\Cotizacion;
+use App\Models\Empresa;
 use App\Models\Entidad;
 use App\Models\Producto;
 use App\Models\TipoCambio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\TipoDocumentoIdentidad;
+use App\Utils\Numletras;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Validator;
 
 class CotizacionController extends Controller
@@ -121,11 +124,49 @@ class CotizacionController extends Controller
     return view('cotizaciones.show', compact("cotizacion"));
   }
 
+
   public function pdf(Cotizacion $cotizacion)
   {
-    // $pdf = \PDF::loadView('cotizaciones.pdf', compact("cotizacion"));
-    // return $pdf->stream('cotizacion.pdf');
-    //TODO: Generar PDF
-    dd($cotizacion);
+      //generar un pdf
+      $logo = public_path('img/logo.png');
+      // dd($logo);
+      $cotizacion->load([
+          "cliente",
+          "moneda",
+          "detalles",
+          "detalles.producto",
+      ]);
+
+      $entidad = $cotizacion->cliente;
+      $moneda = $cotizacion->moneda;
+      $items = $cotizacion->detalles;
+      $empresa = Empresa::first();
+
+      $num2letras = new Numletras();
+
+      $totalLetras = $num2letras->getTotalLetras($cotizacion->total_pagar, $moneda->nombre);
+
+      // Monto sin impuestos antes del descuento
+      // $subtotal = number_format($cotizacion->total_gravada / (1 - $cotizacion->descuento_porcentaje / 100), 2);
+      // Descuento en monto que se aplicó al subtotal
+      // $descuentos = number_format($cotizacion->total_gravada * (1 / (1 - $cotizacion->descuento_porcentaje / 100) - 1), 2);
+      // Monto con descuento y sin impuestos
+      // $valorVenta = number_format($cotizacion->total_gravada, 2);
+      // Monto del IGV
+      // $igv = number_format($cotizacion->total_igv, 2);
+      // Monto total
+      // $total = number_format($cotizacion->total_pagar, 2);
+
+      $pdf = Pdf::loadView("cotizaciones.pdf", compact(
+          "logo",
+          "cotizacion",
+          "items",
+          "empresa",
+          "entidad",
+          "moneda",
+          "totalLetras"
+      ));
+
+      return $pdf->stream();
   }
 }

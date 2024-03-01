@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
 
     DB::table('empresas')->insert([
       'ruc' => '12345678901',
-      'razon_social' => 'Empresa de Prueba',
-      'nombre_comercial' => 'Prueba Corp',
+      'razon_social' => 'VEGACORP SOLUTIONS',
+      'nombre_comercial' => 'VEGACORP SOLUTIONS',
       'domicilio_fiscal' => 'Calle de Prueba 123',
       'ubigeo' => '010101',
       'urbanizacion' => 'Urbanización Prueba',
@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
       'telefono_fijo' => '123456789',
       'telefono_movil' => '987654321',
       'correo' => 'prueba@empresa.com',
+      'web' => 'www.vegas.com',
       'logo' => 'ruta/al/logo.jpg',
       'codigo_sucursal_sunat' => '123456',
       'usu_secundario_usuario' => 'usuario_prueba',

@@ -76,7 +76,7 @@
           </div>
           <div class="col-3 mb-3">
             <label for="valor_venta" class="form-label">Valor de venta</label>
-            <input id="valor_venta" class="form-control" type="number" name="valor_venta" step="0.001"
+            <input id="valor_venta" class="form-control" type="number" name="valor_venta" step="0.000001"
 
                    value="{{ old('valor_venta', $producto->valor_venta) }}">
           </div>
@@ -113,7 +113,7 @@
           </div>
         </div>
 
-        <button class="btn btn-success" type="submit">AGREGAR</button>
+        <button class="btn btn-success" type="submit">GUARDAR</button>
       </form>
       </p>
     </div>
