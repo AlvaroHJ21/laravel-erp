@@ -1,20 +1,7 @@
 import { TableItems } from "../utils/TableItems";
 import { Autocomplete } from "../utils/Autocomplete";
 import { showError, showSuccess } from "../utils/Swal";
-import type { Entidad, OrdenVenta, Producto } from "../interfaces";
-
-//Funcion de agregar nuevos items
-declare global {
-  interface Window {
-    productos: [Producto];
-    tiposIGV: [any];
-    tipoCambioDolar: string;
-    entidades: [Entidad];
-    base?: OrdenVenta;
-    urlStore: string;
-    urlIndex: string;
-  }
-}
+import type { Entidad, Inventario } from "../interfaces";
 
 //* ENTIDAD
 const entidadAutocomplete = new Autocomplete<Entidad>({
@@ -54,13 +41,13 @@ const tableItems = new TableItems({
   tipoCambioDolar: parseFloat(window.tipoCambioDolar),
 });
 
-new Autocomplete<Producto>({
-  id: "autocomplete-productos",
+new Autocomplete<Inventario>({
+  id: "autocomplete-inventarios",
   preserve: false,
-  allOptions: window.productos.map((producto) => ({
-    value: producto.id,
-    text: ` ${producto.codigo} - ${producto.nombre}`,
-    data: producto,
+  allOptions: window.inventarios.map((inventario) => ({
+    value: inventario.id,
+    text: ` ${inventario.producto.codigo} - ${inventario.producto.nombre} - ${inventario.almacen.nombre} - ${inventario.cantidad}`,
+    data: inventario,
   })),
   onSelect(data) {
     tableItems.addItem(data);
@@ -115,8 +102,8 @@ $form.addEventListener("submit", async (e) => {
 });
 
 //* CARGAR BASE
-if (window.base) {
-  const cliente = window.base.cliente;
+if (window.ordenVentaBase) {
+  const cliente = window.ordenVentaBase.cliente;
   entidadAutocomplete.handleSelect({
     value: cliente.id,
     text: cliente.nombre + " - " + cliente.numero_documento,
@@ -124,7 +111,7 @@ if (window.base) {
   });
 
   tableItems.setItems(
-    window.base.detalles.map((detalle) => ({
+    window.ordenVentaBase.detalles.map((detalle) => ({
       id: detalle.producto_id,
       cantidad: detalle.cantidad,
       codigo: detalle.codigo,
@@ -140,8 +127,8 @@ if (window.base) {
     }))
   );
 
-  if (window.base.nota) {
+  if (window.ordenVentaBase.nota) {
     const $nota = document.getElementById("nota") as HTMLTextAreaElement;
-    $nota.value = window.base.nota;
+    $nota.value = window.ordenVentaBase.nota;
   }
 }

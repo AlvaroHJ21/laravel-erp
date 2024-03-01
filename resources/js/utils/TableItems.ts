@@ -1,4 +1,4 @@
-import type { TableRow as TableRow, Producto } from "../interfaces";
+import type { TableRow as TableRow, Producto, Inventario } from "../interfaces";
 
 interface Props {
   id: string;
@@ -38,27 +38,27 @@ export class TableItems {
     this.render();
   }
 
-  public addItem(producto: Producto) {
-    const exitItem = this.items.find((item) => item.id == producto.id);
+  public addItem(inventario: Inventario) {
+    const exitItem = this.items.find((item) => item.id == inventario.id);
 
     if (exitItem) {
-      this.updateItem(producto.id, {
+      this.updateItem(inventario.id, {
         cantidad: exitItem.cantidad + 1,
       });
     } else {
       this.items.push({
-        id: producto.id,
-        codigo: producto.codigo,
+        id: inventario.id,
+        codigo: inventario.producto.codigo,
         cantidad: 1,
         descripcion_adicional: "",
         tipo_igv_id: 1,
         tipo_igv_porcentaje: 18,
-        producto: producto,
-        valor_venta: producto.precio_venta,
-        subtotal: producto.precio_venta,
-        producto_id: producto.id,
+        producto: inventario.producto,
+        valor_venta: inventario.producto.precio_venta,
+        subtotal: inventario.producto.precio_venta,
+        producto_id: inventario.id,
         porcentaje_descuento: 0,
-        inventario_id: 0,
+        inventario_id: inventario.id,
       });
     }
     this.calcMontos();

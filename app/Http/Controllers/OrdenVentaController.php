@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Empresa;
 use App\Models\Entidad;
+use App\Models\Inventario;
 use App\Models\Moneda;
 use App\Models\OrdenVenta;
-use App\Models\Producto;
 use App\Models\TipoCambio;
 use App\Models\TipoDocumentoIdentidad;
 use App\Models\TipoIgv;
@@ -32,7 +32,7 @@ class OrdenVentaController extends Controller
     $tiposDocumentoIdentidad = TipoDocumentoIdentidad::all();
     $tipoCambioDolar = TipoCambio::obtenerTipoCambioDolarDelDia();
     $monedas = Moneda::active();
-    $productos = Producto::all();
+    $inventarios = Inventario::with('producto', 'almacen')->get();
     $entidades = Entidad::all();
 
     $fromId = $request->query('fromId');
@@ -50,7 +50,7 @@ class OrdenVentaController extends Controller
       "tiposDocumentoIdentidad",
       "tipoCambioDolar",
       "monedas",
-      "productos",
+      "inventarios",
       "entidades",
       "base"
     ));

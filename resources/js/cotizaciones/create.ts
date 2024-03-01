@@ -1,18 +1,7 @@
 import { TableItems } from "../utils/TableItems";
 import { Autocomplete } from "../utils/Autocomplete";
 import { showError, showSuccess } from "../utils/Swal";
-import type { Cotizacion, Entidad, Producto } from "../interfaces";
-
-//Funcion de agregar nuevos items
-declare global {
-  interface Window {
-    productos: [Producto];
-    tiposIGV: [any];
-    tipoCambioDolar: string;
-    entidades: [Entidad];
-    cotizacionBase?: Cotizacion;
-  }
-}
+import type { Entidad, Inventario } from "../interfaces";
 
 //* ENTIDAD
 const entidadAutocomplete = new Autocomplete<Entidad>({
@@ -23,7 +12,6 @@ const entidadAutocomplete = new Autocomplete<Entidad>({
     data: entidad,
   })),
   onSelect(data) {
-
     const $cliente = document.getElementById("cliente") as HTMLDivElement;
     $cliente.classList.remove("d-none");
 
@@ -53,13 +41,13 @@ const tableItems = new TableItems({
   tipoCambioDolar: parseFloat(window.tipoCambioDolar),
 });
 
-new Autocomplete<Producto>({
-  id: "autocomplete-productos",
+new Autocomplete<Inventario>({
+  id: "autocomplete-inventarios",
   preserve: false,
-  allOptions: window.productos.map((producto) => ({
-    value: producto.id,
-    text: ` ${producto.codigo} - ${producto.nombre}`,
-    data: producto,
+  allOptions: window.inventarios.map((inventario) => ({
+    value: inventario.id,
+    text: ` ${inventario.producto.codigo} - ${inventario.producto.nombre} - ${inventario.almacen.nombre} - ${inventario.cantidad}`,
+    data: inventario,
   })),
   onSelect(data) {
     tableItems.addItem(data);

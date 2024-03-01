@@ -28,7 +28,7 @@
           </div>
           <div class="card-body">
 
-            <div id="autocomplete-productos" data-placeholder="Buscar producto por nombre o código" class="mb-3"></div>
+            <div id="autocomplete-inventarios" data-placeholder="Buscar producto por nombre, código, almacen" class="mb-3"></div>
             <div class="table-responsive">
               <table id="tabla-items" class="table table-hover table-sm mb-3"></table>
             </div>
@@ -109,7 +109,7 @@
 
   <script>
     window.entidades = @json($entidades);
-    window.productos = @json($productos);
+    window.inventarios = @json($inventarios);
     window.tiposIGV = @json($tiposIGV);
     window.tipoCambioDolar = @json($tipoCambioDolar->tipo_cambio_venta);
     window.cotizacionBase = @json($cotizacionBase);

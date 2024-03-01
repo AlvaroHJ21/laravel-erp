@@ -8,6 +8,7 @@ use App\Models\TipoIgv;
 use App\Models\Cotizacion;
 use App\Models\Empresa;
 use App\Models\Entidad;
+use App\Models\Inventario;
 use App\Models\Producto;
 use App\Models\TipoCambio;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class CotizacionController extends Controller
     $tiposDocumentoIdentidad = TipoDocumentoIdentidad::all();
     $tipoCambioDolar = TipoCambio::obtenerTipoCambioDolarDelDia();
     $monedas = Moneda::active();
-    $productos = Producto::all();
+    $inventarios = Inventario::with('producto', 'almacen')->get();
     $entidades = Entidad::all();
 
     $cotizacionId = $request->query('cotizacionId');
@@ -40,7 +41,6 @@ class CotizacionController extends Controller
     if ($cotizacionId) {
 
       $cotizacionBase = Cotizacion::with('cliente', 'moneda', 'detalles', 'detalles.producto')->find($cotizacionId);
-
     }
 
     $cotizacionBase = isset($cotizacionBase) ? $cotizacionBase : null;
@@ -51,7 +51,7 @@ class CotizacionController extends Controller
       "tiposDocumentoIdentidad",
       "tipoCambioDolar",
       "monedas",
-      "productos",
+      "inventarios",
       "entidades",
       "cotizacionBase"
     ));
@@ -127,35 +127,35 @@ class CotizacionController extends Controller
 
   public function pdf(Cotizacion $cotizacion)
   {
-      //generar un pdf
-      $logo = public_path('img/logo.png');
-      // dd($logo);
-      $cotizacion->load([
-          "cliente",
-          "moneda",
-          "detalles",
-          "detalles.producto",
-      ]);
+    //generar un pdf
+    $logo = public_path('img/logo.png');
+    // dd($logo);
+    $cotizacion->load([
+      "cliente",
+      "moneda",
+      "detalles",
+      "detalles.producto",
+    ]);
 
-      $entidad = $cotizacion->cliente;
-      $moneda = $cotizacion->moneda;
-      $items = $cotizacion->detalles;
-      $empresa = Empresa::first();
+    $entidad = $cotizacion->cliente;
+    $moneda = $cotizacion->moneda;
+    $items = $cotizacion->detalles;
+    $empresa = Empresa::first();
 
-      $num2letras = new Numletras();
+    $num2letras = new Numletras();
 
-      $totalLetras = $num2letras->getTotalLetras($cotizacion->total_pagar, $moneda->nombre);
+    $totalLetras = $num2letras->getTotalLetras($cotizacion->total_pagar, $moneda->nombre);
 
-      $pdf = Pdf::loadView("cotizaciones.pdf", compact(
-          "logo",
-          "cotizacion",
-          "items",
-          "empresa",
-          "entidad",
-          "moneda",
-          "totalLetras"
-      ));
+    $pdf = Pdf::loadView("cotizaciones.pdf", compact(
+      "logo",
+      "cotizacion",
+      "items",
+      "empresa",
+      "entidad",
+      "moneda",
+      "totalLetras"
+    ));
 
-      return $pdf->stream();
+    return $pdf->stream();
   }
 }
