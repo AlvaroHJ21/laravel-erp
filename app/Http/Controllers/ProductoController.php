@@ -16,6 +16,13 @@ class ProductoController extends Controller
   public function index()
   {
     $productos = Producto::all();
+
+    //add cantidad to each product
+    foreach ($productos as $producto) {
+      $inventarios = Inventario::where("producto_id", $producto->id)->get();
+      $producto->cantidad = $inventarios->sum("cantidad");
+    }
+
     return view("productos.index", compact("productos"));
   }
 
@@ -40,7 +47,7 @@ class ProductoController extends Controller
       "unidad_id" => "required",
       "moneda_id" => "required",
       "tipo_igv_id" => "required",
-      "stock_inicial" => "required|numeric",
+      "stock_inicial" => "required|numeric|min:0",
     ]);
 
     $data = $request->all();

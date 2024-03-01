@@ -211,6 +211,13 @@ class DatabaseSeeder extends Seeder
       "created_at" => now(),
       "updated_at" => now(),
     ]);
+    DB::table('inventarios')->insert([
+      "producto_id" => 2,
+      "almacen_id" => 1,
+      "cantidad" => 20,
+      "created_at" => now(),
+      "updated_at" => now(),
+    ]);
 
     // Tipo de cambio
     DB::table('tipos_cambio')->insert([
