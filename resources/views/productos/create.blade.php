@@ -98,6 +98,12 @@
                    value="{{ old('precio_venta') }}">
           </div>
 
+          <div class="col-3 mb-3">
+            <label for="stock_inicial" class="form-label">Stock inicial</label>
+            <input id="stock_inicial" class="form-control" type="number" name="stock_inicial"
+                   value="{{ old('stock_inicial') }}">
+          </div>
+
           <div class="col-sm-12 mb-3">
 
             <label for="imagen" class="d-block form-label">Cambiar Imagen</label>

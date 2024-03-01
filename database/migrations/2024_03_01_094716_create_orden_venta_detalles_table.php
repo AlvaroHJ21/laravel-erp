@@ -14,6 +14,7 @@ return new class extends Migration
     Schema::create('orden_venta_detalles', function (Blueprint $table) {
       $table->id();
       $table->foreignId('orden_venta_id')->constrained("ordenes_venta")->cascadeOnDelete();
+      $table->foreignId('inventario_id')->constrained("inventarios");
       $table->foreignId('producto_id')->constrained("productos");
       $table->text('descripcion_adicional')->nullable();
       $table->string('codigo', 20)->nullable();

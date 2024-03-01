@@ -14,6 +14,7 @@ class OrdenVentaDetalle extends Model
   protected $fillable = [
     'orden_venta_id',
     'producto_id',
+    'inventario_id',
     'descripcion_adicional',
     'codigo',
     'cantidad',
@@ -26,6 +27,11 @@ class OrdenVentaDetalle extends Model
   public function producto()
   {
     return $this->belongsTo(Producto::class);
+  }
+
+  public function inventario()
+  {
+    return $this->belongsTo(Inventario::class);
   }
 
   public function tipoIgv()

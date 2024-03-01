@@ -86,6 +86,7 @@ class OrdenVentaController extends Controller
 
       $itemValidator = Validator::make($request->items, [
         "*.producto_id" => "required",
+        "*.inventario_id" => "required",
         "*.descripcion_adicional" => "nullable|string",
         "*.codigo" => "required",
         "*.cantidad" => "required",
@@ -103,6 +104,22 @@ class OrdenVentaController extends Controller
       }
 
       $ordenVentaCreada->detalles()->createMany($request->items);
+
+      //actualizar el stock
+      foreach ($request->items as $item) {
+
+        $inventario = Inventario::find($item['inventario_id']);
+        $cantidadSolicitada = $item['cantidad'];
+
+        if ($inventario->cantidad < $cantidadSolicitada) {
+          DB::rollBack();
+          $ok = false;
+          $error = "La cantidad solicitada de {$inventario->producto->nombre} es mayor al stock actual";
+          return response()->json(compact("ok", "error"));
+        }
+
+        $inventario->decrement('cantidad', $cantidadSolicitada);
+      }
 
       DB::commit();
       $ok = true;
