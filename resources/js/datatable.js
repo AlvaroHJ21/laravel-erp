@@ -221,7 +221,7 @@ $("#table-cotizaciones").DataTable({
   ...datatableOptions,
   order: [], // no order by default
 });
-$("#table-ordenes_venta").DataTable({
+$("#table-ordenes-venta").DataTable({
   ...datatableOptions,
   order: [],
 });

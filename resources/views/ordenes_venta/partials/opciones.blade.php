@@ -14,22 +14,9 @@
       </li>
       <li>
         <a class="dropdown-item"
-           href="{{ route('ordenes_venta.pdf', $ordenVenta) }}"
-           target="_blank">
-          Ver PDF
-        </a>
-      </li>
-      <li>
-        <a class="dropdown-item"
            {{-- TODO --}}
            {{-- href="{{ route('ventas.ordenes_venta.nuevo', $cotizacion) }}" --}}>
           Generar venta
-        </a>
-      </li>
-      <li>
-        <a class="dropdown-item"
-           href="{{ route('ordenes_venta.create', ['cotizacionId' => $ordenVenta->id]) }}">
-          Duplicar cotización
         </a>
       </li>
       <li>
@@ -40,12 +27,6 @@
            {{-- TODO --}}
            {{-- data-url="{{ route('ventas.cotizaciones.ver', $cotizacion) }}" --}}>
           Generar Recordatorio
-        </a>
-      </li>
-      <li>
-        <a class="dropdown-item"
-           href="{{ route('ordenes_venta.pdf', $ordenVenta) }}">
-          Descargar
         </a>
       </li>
       <li>

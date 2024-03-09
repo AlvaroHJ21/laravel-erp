@@ -26,7 +26,8 @@
               <th>T.Gravado</th>
               <th>Impuesto</th>
               <th>Total</th>
-              <th>PDF</th>
+              <th>Guía</th>
+              <th>Venta</th>
               <th>Ver</th>
               <th>Estado</th>
               <th>Más</th>
@@ -52,9 +53,10 @@
                 <td style="white-space: nowrap;">{{ $ordenVenta->moneda->simbolo }}
                   {{ $ordenVenta->total_pagar }}</td>
                 <td>
-                  <a href="{{ route('ordenes_venta.pdf', $ordenVenta) }}"
-                     target="_blank"
-                     class="btn btn-secondary btn-sm">PDF</a>
+                  @include('ordenes_venta.partials.opciones_guia')
+                </td>
+                <td>
+                  @include('ordenes_venta.partials.opciones_venta')
                 </td>
                 <td>
                   <a href="{{ route('ordenes_venta.show', $ordenVenta) }}"
