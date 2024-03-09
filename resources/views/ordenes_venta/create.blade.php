@@ -28,7 +28,8 @@
           </div>
           <div class="card-body">
 
-            <div id="autocomplete-inventarios" data-placeholder="Buscar producto por nombre o código" class="mb-3"></div>
+            <div id="autocomplete-inventarios" data-placeholder="Buscar producto por nombre o código" class="mb-3">
+            </div>
             <div class="table-responsive">
               <table id="tabla-items" class="table table-hover table-sm mb-3"></table>
             </div>
@@ -76,19 +77,7 @@
 
               <!-- Moneda -->
               <div class="col-12">
-                <label for="moneda_id" class="form-label">Moneda
-                  <span>({{ $tipoCambioDolar->tipo_cambio_venta }})</span>
-                </label>
-                <select name="moneda_id" id="moneda_id" class="form-select mb-3">
-                  @foreach ($monedas as $moneda)
-                    <option
-                            value="{{ $moneda->id }}"
-                            data-simbolo="{{ $moneda->simbolo }}"
-                            {{ $base?->moneda_id == $moneda->id ? 'selected' : '' }}>
-                      {{ $moneda->abrstandar }} - {{ $moneda->nombre }}
-                    </option>
-                  @endforeach
-                </select>
+                @include('partials.moneda')
               </div>
 
             </div>
@@ -116,13 +105,13 @@
 @section('js')
 
   <script>
-    window.entidades = @json($entidades);
-    window.inventarios = @json($inventarios);
-    window.tiposIGV = @json($tiposIGV);
-    window.tipoCambioDolar = @json($tipoCambioDolar->tipo_cambio_venta);
-    window.ordenVentaBase = @json($base);
-    window.urlStore = @json(route('ordenes_venta.store'));
-    window.urlIndex = @json(route('ordenes_venta.index'));
+    const entidades = @json($entidades);
+    const inventarios = @json($inventarios);
+    const tiposIGV = @json($tiposIGV);
+    const tipoCambioDolar = @json($tipoCambioDolar->tipo_cambio_venta);
+    const base = @json($base);
+    const urlPost = @json(route('ordenes_venta.store'));
+    const urlRedirect = @json(route('ordenes_venta.index'));
   </script>
 
   @vite(['resources/js/ordenes_venta/create.ts'])

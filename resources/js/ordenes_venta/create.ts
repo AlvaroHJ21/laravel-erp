@@ -1,12 +1,20 @@
 import { TableItems } from "../utils/TableItems";
 import { Autocomplete } from "../utils/Autocomplete";
 import { showError, showSuccess } from "../utils/Swal";
-import type { Entidad, Inventario } from "../interfaces";
+import type { Entidad, Inventario, OrdenVenta } from "../interfaces";
+
+declare const entidades: Entidad[];
+declare const tiposIGV: any[];
+declare const tipoCambioDolar: string;
+declare const inventarios: Inventario[];
+declare const urlPost: string;
+declare const urlRedirect: string;
+declare const base: OrdenVenta;
 
 //* ENTIDAD
 const entidadAutocomplete = new Autocomplete<Entidad>({
   id: "autocomplete-entidades",
-  allOptions: window.entidades.map((entidad) => ({
+  allOptions: entidades.map((entidad) => ({
     value: entidad.id,
     text: entidad.nombre + " - " + entidad.numero_documento,
     data: entidad,
@@ -37,14 +45,14 @@ const entidadAutocomplete = new Autocomplete<Entidad>({
 //* ITEMS
 const tableItems = new TableItems({
   id: "tabla-items",
-  tiposIGV: window.tiposIGV,
-  tipoCambioDolar: parseFloat(window.tipoCambioDolar),
+  tiposIGV: tiposIGV,
+  tipoCambioDolar: parseFloat(tipoCambioDolar),
 });
 
 new Autocomplete<Inventario>({
   id: "autocomplete-inventarios",
   preserve: false,
-  allOptions: window.inventarios.map((inventario) => ({
+  allOptions: inventarios.map((inventario) => ({
     value: inventario.id,
     text: ` ${inventario.producto.codigo} - ${inventario.producto.nombre} - ${inventario.almacen.nombre} - ${inventario.cantidad}`,
     data: inventario,
@@ -83,7 +91,7 @@ $form.addEventListener("submit", async (e) => {
     items: tableItems.getItems(),
   };
 
-  const resp = await fetch(window.urlStore, {
+  const resp = await fetch(urlPost, {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -94,7 +102,7 @@ $form.addEventListener("submit", async (e) => {
 
   if (json.ok) {
     showSuccess(json.message, () => {
-      window.location.href = window.urlIndex;
+      window.location.href = urlRedirect;
     });
   } else {
     showError(json.error);
@@ -102,8 +110,8 @@ $form.addEventListener("submit", async (e) => {
 });
 
 //* CARGAR BASE
-if (window.ordenVentaBase) {
-  const cliente = window.ordenVentaBase.cliente;
+if (base) {
+  const cliente = base.cliente;
   entidadAutocomplete.handleSelect({
     value: cliente.id,
     text: cliente.nombre + " - " + cliente.numero_documento,
@@ -111,7 +119,7 @@ if (window.ordenVentaBase) {
   });
 
   tableItems.setItems(
-    window.ordenVentaBase.detalles.map((detalle) => ({
+    base.detalles.map((detalle) => ({
       id: detalle.producto_id,
       cantidad: detalle.cantidad,
       codigo: detalle.codigo,
@@ -127,8 +135,8 @@ if (window.ordenVentaBase) {
     }))
   );
 
-  if (window.ordenVentaBase.nota) {
+  if (base.nota) {
     const $nota = document.getElementById("nota") as HTMLTextAreaElement;
-    $nota.value = window.ordenVentaBase.nota;
+    $nota.value = base.nota;
   }
 }

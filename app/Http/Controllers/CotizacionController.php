@@ -40,10 +40,10 @@ class CotizacionController extends Controller
 
     if ($cotizacionId) {
 
-      $cotizacionBase = Cotizacion::with('cliente', 'moneda', 'detalles', 'detalles.producto')->find($cotizacionId);
+      $base = Cotizacion::with('cliente', 'moneda', 'detalles', 'detalles.producto')->find($cotizacionId);
     }
 
-    $cotizacionBase = isset($cotizacionBase) ? $cotizacionBase : null;
+    $base = isset($base) ? $base : null;
 
     return view("cotizaciones.create", compact(
       "unidades",
@@ -53,7 +53,7 @@ class CotizacionController extends Controller
       "monedas",
       "inventarios",
       "entidades",
-      "cotizacionBase"
+      "base"
     ));
   }
 

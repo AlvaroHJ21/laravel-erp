@@ -37,7 +37,7 @@
           </div>
         </div>
         <!-- NOTAS -->
-        <div class="card" x-data="{ open: {{ $cotizacionBase?->nota ? 'true' : 'false' }} }">
+        <div class="card" x-data="{ open: {{ $base?->nota ? 'true' : 'false' }} }">
           <div class="card-header d-flex gap-2">
             <h5 class="card-title mb-0 d-flex gap-2">
               NOTA
@@ -70,19 +70,7 @@
             <div class="row">
               <!-- Moneda -->
               <div class="col-12">
-                <label for="moneda_id" class="form-label">Moneda
-                  <span>({{ $tipoCambioDolar->tipo_cambio_venta }})</span>
-                </label>
-                <select name="moneda_id" id="moneda_id" class="form-select mb-3">
-                  @foreach ($monedas as $moneda)
-                    <option
-                            value="{{ $moneda->id }}"
-                            data-simbolo="{{ $moneda->simbolo }}"
-                            {{ $cotizacionBase?->moneda_id == $moneda->id ? 'selected' : '' }}>
-                      {{ $moneda->abrstandar }} - {{ $moneda->nombre }}
-                    </option>
-                  @endforeach
-                </select>
+                @include('partials.moneda')
               </div>
             </div>
           </div>
@@ -94,14 +82,6 @@
 
   </form>
 
-  {{-- <!-- Imagen Modal-->
-  <div class="modal fade" id="modal-imagen" tabindex="-1" aria-labelledby="modal-imagen-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg justify-content-center">
-      <div class="modal-content" style="width: 500px;">
-        <img id="imagen" src="" alt="" width="">
-      </div>
-    </div>
-  </div> --}}
   @include('partials.image-modal')
 
 
@@ -110,11 +90,13 @@
 @section('js')
 
   <script>
-    window.entidades = @json($entidades);
-    window.inventarios = @json($inventarios);
-    window.tiposIGV = @json($tiposIGV);
-    window.tipoCambioDolar = @json($tipoCambioDolar->tipo_cambio_venta);
-    window.cotizacionBase = @json($cotizacionBase);
+    const entidades = @json($entidades);
+    const inventarios = @json($inventarios);
+    const tiposIGV = @json($tiposIGV);
+    const tipoCambioDolar = @json($tipoCambioDolar->tipo_cambio_venta);
+    const base = @json($base);
+    const postUrl = @json(route('cotizaciones.store'));
+    const redirectUrl = @json(route('cotizaciones.index'));
   </script>
 
   @vite(['resources/js/cotizaciones/create.ts'])

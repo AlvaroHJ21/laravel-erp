@@ -1,11 +1,7 @@
 import type { Inventario } from "../interfaces";
 import { Autocomplete } from "../utils/Autocomplete";
 
-declare global {
-  interface Window {
-    inventarios: [Inventario];
-  }
-}
+declare const inventarios: Inventario[];
 
 //AUTOCOMPLETE ALMACEN
 const $almacenOrigenSelect = document.getElementById(
@@ -24,7 +20,7 @@ function renderAutocompleteByAlmacenId(almacenId) {
   new Autocomplete<Inventario>({
     id: "inventario-autocomplete",
     filter: almacenId,
-    allOptions: window.inventarios.map((inventario) => ({
+    allOptions: inventarios.map((inventario) => ({
       value: inventario.id,
       text: inventario.producto.nombre,
       filter: inventario.almacen_id,
