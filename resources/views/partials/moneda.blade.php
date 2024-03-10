@@ -1,7 +1,7 @@
 <label for="moneda_id" class="form-label">Moneda
   <span>({{ $tipoCambioDolar->tipo_cambio_venta }})</span>
 </label>
-<select name="moneda_id" id="moneda_id" class="form-select mb-3">
+<select name="moneda_id" id="moneda_id" class="form-select">
   @foreach ($monedas as $moneda)
     <option
             value="{{ $moneda->id }}"

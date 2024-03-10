@@ -38,7 +38,7 @@
             <x-header.header />
             <!-- CONTENT -->
             <main class="content">
-                <div class="container-fluid p-0">
+                <div class="container p-0">
 
                     <x-alert.alert />
 

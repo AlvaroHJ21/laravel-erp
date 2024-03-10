@@ -15,11 +15,11 @@ return new class extends Migration
       $table->id();
       $table->foreignId('entidad_id')->constrained("entidades");
       $table->foreignId('moneda_id')->constrained("monedas");
-      $table->decimal('total_gravada', 10, 2)->nullable();
-      $table->decimal('total_igv', 10, 2)->nullable();
-      $table->decimal('total_pagar', 10, 2)->nullable();
+      $table->decimal('total_gravada', 10, 2);
+      $table->decimal('total_igv', 10, 2);
+      $table->decimal('total_pagar', 10, 2);
       $table->text('nota')->nullable();
-      $table->unsignedSmallInteger('estado')->nullable();
+      $table->unsignedSmallInteger('estado');
       $table->boolean('enviado_cliente')->default(false);
       $table->foreignId('user_id')->constrained("users");
 

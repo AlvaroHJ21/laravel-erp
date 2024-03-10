@@ -31,16 +31,17 @@ $options = [
             [
                 'name' => 'Cotizaciones',
                 'url' => 'ventas/cotizaciones',
-                'route' => 'cotizaciones.index'
+                'route' => 'cotizaciones.index',
             ],
             [
                 'name' => 'Órdenes de venta',
                 'url' => 'ventas/ordenes_venta',
-                'route' => 'ordenes_venta.index'
+                'route' => 'ordenes_venta.index',
             ],
             [
                 'name' => 'Venta',
                 'url' => 'ventas/cpe',
+                'route' => 'ventas.index',
             ],
             [
                 'name' => 'Notas',
@@ -184,44 +185,44 @@ $options = [
 
 <nav id="sidebar" class="sidebar js-sidebar">
 
-    <div class="sidebar-content js-simplebar">
-        <a class="sidebar-brand" href="#">
-            <span class="align-middle">Mini ERP</span>
+  <div class="sidebar-content js-simplebar">
+    <a class="sidebar-brand" href="#">
+      <span class="align-middle">Mini ERP</span>
+    </a>
+
+
+
+    <ul class="sidebar-nav">
+
+      <?php foreach ($options as $option) : ?>
+
+      <li class="sidebar-item <?= $option['active'] ? 'active' : '' ?>">
+
+        <a data-bs-target="#<?= $option['id'] ?>" data-bs-toggle="collapse" class="sidebar-link "
+           aria-expanded="false">
+          <i class="align-middle" data-feather="<?= $option['icon'] ?>"></i> <span
+                class="align-middle"><?= $option['name'] ?></span>
         </a>
 
+        <ul id="<?= $option['id'] ?>"
+            class="sidebar-dropdown list-unstyled collapse <?= $option['expanded'] ? 'show' : '' ?>"
+            data-bs-parent="#sidebar">
 
+          <?php foreach ($option['items'] as $item) : ?>
 
-        <ul class="sidebar-nav">
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ isset($item['route']) ? route($item['route']) : '' }}">
+              <?= $item['name'] ?>
+            </a>
+          </li>
 
-            <?php foreach ($options as $option) : ?>
-
-            <li class="sidebar-item <?= $option['active'] ? 'active' : '' ?>">
-
-                <a data-bs-target="#<?= $option['id'] ?>" data-bs-toggle="collapse" class="sidebar-link "
-                    aria-expanded="false">
-                    <i class="align-middle" data-feather="<?= $option['icon'] ?>"></i> <span
-                        class="align-middle"><?= $option['name'] ?></span>
-                </a>
-
-                <ul id="<?= $option['id'] ?>"
-                    class="sidebar-dropdown list-unstyled collapse <?= $option['expanded'] ? 'show' : '' ?>"
-                    data-bs-parent="#sidebar">
-
-                    <?php foreach ($option['items'] as $item) : ?>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{ isset($item['route']) ? route($item['route']) : '' }}">
-                            <?= $item['name'] ?>
-                        </a>
-                    </li>
-
-                    <?php endforeach; ?>
-
-                </ul>
-            </li>
-
-            <?php endforeach; ?>
+          <?php endforeach; ?>
 
         </ul>
-    </div>
+      </li>
+
+      <?php endforeach; ?>
+
+    </ul>
+  </div>
 </nav>

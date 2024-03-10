@@ -237,5 +237,28 @@ class DatabaseSeeder extends Seeder
       "created_at" => now(),
       "updated_at" => now(),
     ]);
+
+    // Formas de pago
+
+    DB::table('formas_pago')->insert([
+      "nombre" => "Contado",
+    ]);
+
+    DB::table('formas_pago')->insert([
+      "nombre" => "Crédito",
+    ]);
+
+    // Modos de pago
+    DB::table('modos_pago')->insert([
+      "nombre" => "Efectivo",
+      "created_at" => now(),
+      "updated_at" => now(),
+    ]);
+
+    DB::table('modos_pago')->insert([
+      "nombre" => "Tarjeta de crédito",
+      "created_at" => now(),
+      "updated_at" => now(),
+    ]);
   }
 }
