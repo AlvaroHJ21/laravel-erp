@@ -148,6 +148,6 @@
     const urlRedirect = @json(route('ordenes_venta.index'));
   </script>
 
-  @vite(['resources/js/ordenes_venta/create.ts'])
+  @vite(['resources/js/ventas/create.ts'])
 
 @stop

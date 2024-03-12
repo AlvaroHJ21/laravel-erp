@@ -26,17 +26,19 @@
           </select>
         </div>
       </div>
-      <div class="col-12">
+      <div class="col-12" id="pagos_container">
         <label class="form-label">Cuotas</label>
-        <div class="d-flex gap-2 mb-3">
-          <input type="date" name="fecha_pago[]" class="form-control" value="{{ date('Y-m-d') }}" />
-          <input type="number" name="monto_pago[]" class="form-control" />
-          <button class="btn btn-outline-danger" type="button">
-            x
-          </button>
+        <div id="pagos_list">
+          {{-- <div class="d-flex gap-2 mb-3">
+            <input type="date" name="fecha_pago[]" class="form-control" value="{{ date('Y-m-d') }}" />
+            <input type="number" name="monto_pago[]" class="form-control" />
+            <button class="btn btn-outline-danger" type="button">
+              x
+            </button>
+          </div> --}}
         </div>
         <div>
-          <button class="btn btn-sm btn-outline-secondary" type="button" style="width: 100%">
+          <button id="pagos_btn_add" class="btn btn-sm btn-outline-secondary" type="button" style="width: 100%">
             <i data-feather="plus"></i>
           </button>
         </div>
