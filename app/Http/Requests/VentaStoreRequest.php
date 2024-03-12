@@ -22,7 +22,25 @@ class VentaStoreRequest extends FormRequest
   public function rules(): array
   {
     return [
-      //
+      "items" => "required|array",
+      "items.*.producto_id" => "required",
+      "items.*.inventario_id" => "required",
+      "items.*.descripcion_adicional" => "nullable|string",
+      "items.*.codigo" => "required",
+      "items.*.cantidad" => "required",
+      "items.*.valor_venta" => "required",
+      "items.*.subtotal" => "required",
+      "items.*.tipo_igv_id" => "required",
+      "items.*.porcentaje_descuento" => "required",
+      "numero_orden_compra" => "required",
+      "entidad_id" => "required",
+      "moneda_id" => "required",
+      "total_gravada" => "required",
+      "total_igv" => "required",
+      "total_pagar" => "required",
+      "pagos" => "nullable|array",
+      "pagos.*.fecha" => "required",
+      "pagos.*.monto" => "required",
     ];
   }
 }

@@ -144,8 +144,8 @@
     const tiposIGV = @json($tiposIGV);
     const tipoCambioDolar = @json($tipoCambioDolar->tipo_cambio_venta);
     const base = @json($base);
-    const urlPost = @json(route('ordenes_venta.store'));
-    const urlRedirect = @json(route('ordenes_venta.index'));
+    const urlPost = @json(route('ventas.store'));
+    const urlRedirect = @json(route('ventas.index'));
   </script>
 
   @vite(['resources/js/ventas/create.ts'])

@@ -15,6 +15,7 @@ use App\Models\TipoIgv;
 use App\Models\Unidad;
 use App\Models\Venta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
 {
@@ -59,5 +60,27 @@ class VentaController extends Controller
 
   public function store(VentaStoreRequest $request)
   {
+
+    try {
+      DB::beginTransaction();
+
+      $venta = Venta::create($request->all());
+
+      $venta->detalles()->createMany($request->items);
+
+      $venta->pagos()->createMany($request->pagos);
+
+      DB::commit();
+      return response()->json([
+        "message" => "Venta registrada correctamente",
+      ]);
+    } catch (\Throwable $th) {
+      //throw $th;
+      DB::rollBack();
+      return response()->json([
+        "message" => "Error al registrar la venta",
+        "error" => $th->getMessage(),
+      ], 500);
+    }
   }
 }

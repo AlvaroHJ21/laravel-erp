@@ -2,6 +2,7 @@ import { Entidad, Inventario } from "../interfaces";
 import { Autocomplete } from "../utils/Autocomplete";
 import { TablePayments } from "../utils/TablePayments";
 import { TableItems } from "../utils/TableItems";
+import { showError, showSuccess } from "../utils/Swal";
 
 declare const entidades: Entidad[];
 declare const tiposIGV: any[];
@@ -93,25 +94,28 @@ $form.addEventListener("submit", async (e) => {
   const data = {
     ...Object.fromEntries(formData),
     items: tableItems.getItems(),
-    payments: tablePayments.getPayments(),
+    pagos: tablePayments.getPayments(),
   };
+
+  console.log(data);
 
   const resp = await fetch(urlPost, {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
   });
   const json = await resp.json();
 
   console.log(json);
 
-  // if (json.ok) {
-  //   showSuccess(json.message, () => {
-  //     window.location.href = urlRedirect;
-  //   });
-  // } else {
-  //   showError(json.error);
-  // }
+  if (resp.ok) {
+    showSuccess(json.message, () => {
+      window.location.href = urlRedirect;
+    });
+  } else {
+    showError(json.message);
+  }
 });
