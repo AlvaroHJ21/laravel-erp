@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VentaStoreRequest;
+use App\Models\Empresa;
 use App\Models\Entidad;
 use App\Models\FormaPago;
 use App\Models\Inventario;
@@ -15,6 +16,8 @@ use App\Models\TipoDocumentoIdentidad;
 use App\Models\TipoIgv;
 use App\Models\Unidad;
 use App\Models\Venta;
+use App\Utils\Numletras;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -98,5 +101,39 @@ class VentaController extends Controller
   {
     $venta->load('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipoIgv');
     return view('ventas.show', compact("venta"));
+  }
+
+  public function pdf(Venta $venta)
+  {
+    //generar un pdf
+    $logo = public_path('img/logo.png');
+    // dd($logo);
+    $venta->load([
+      "entidad",
+      "moneda",
+      "detalles",
+      "detalles.producto",
+    ]);
+
+    $entidad = $venta->entidad;
+    $moneda = $venta->moneda;
+    $items = $venta->detalles;
+    $empresa = Empresa::first();
+
+    $num2letras = new Numletras();
+
+    $totalLetras = $num2letras->getTotalLetras($venta->total_pagar, $moneda->nombre);
+
+    $pdf = Pdf::loadView("ventas.pdf", compact(
+      "logo",
+      "venta",
+      "items",
+      "empresa",
+      "entidad",
+      "moneda",
+      "totalLetras"
+    ));
+
+    return $pdf->stream();
   }
 }
