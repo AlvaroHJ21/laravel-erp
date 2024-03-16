@@ -51,7 +51,7 @@
           </div>
         </div>
 
-        <div class="d-flex">
+        <div class="d-flex mb-2">
           <div class="flex-fill"></div>
           <button id="btn_generar" class="btn btn-success">Generar</button>
         </div>

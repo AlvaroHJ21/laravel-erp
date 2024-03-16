@@ -36,6 +36,7 @@ class Venta extends Model
     'estado',
     'enviado_cliente',
     'user_id',
+    'orden_venta_id'
   ];
 
   public function entidad()
@@ -81,5 +82,10 @@ class Venta extends Model
   public function pagos()
   {
     return $this->hasMany(Pago::class);
+  }
+
+  public function orden_venta()
+  {
+    return $this->belongsTo(OrdenVenta::class);
   }
 }

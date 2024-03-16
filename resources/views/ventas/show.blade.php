@@ -77,8 +77,8 @@
               <h5 class="card-title">CUOTAS</h5>
               @foreach ($venta->pagos as $pago)
                 <div class="d-flex justify-content-between">
-                  <label>{{ $pago->fecha_pago }}</label>
-                  <label>{{ $pago->monto }}</label>
+                  <label>{{ $pago->fecha }}</label>
+                  <label>{{ $venta->moneda->simbolo }} {{ $pago->monto }}</label>
                 </div>
               @endforeach
             </div>

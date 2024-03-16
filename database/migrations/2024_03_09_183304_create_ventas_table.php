@@ -37,6 +37,7 @@ return new class extends Migration
       $table->unsignedBigInteger('estado')->default(0);
       $table->boolean('enviado_cliente')->default(false);
       $table->foreignId('user_id')->constrained("users");
+      $table->foreignId("orden_venta_id")->nullable()->constrained("orden_ventas");
       $table->timestamps();
     });
   }

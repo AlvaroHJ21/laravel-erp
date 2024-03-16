@@ -25,7 +25,10 @@ class Serie extends Model
   public function generateNumber()
   {
     $numero = $this->ultimo_numero + 1;
+
     $this->ultimo_numero = $numero;
+    $this->save();
+
     return $numero;
   }
 }
