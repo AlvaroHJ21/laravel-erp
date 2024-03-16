@@ -64,10 +64,12 @@
                   </a>
                 </td>
                 <td>
-                  <a href="{{ route('ventas.send_sunnat', $venta) }}"
-                     class="btn btn-sm">
-                    <img src="{{ asset('img/icons/logo_sunat.png') }}" alt="" width="24">
-                  </a>
+                  <form action="{{ route('ventas.send_sunnat', $venta) }}" method="POST">
+                    @csrf
+                    <button class="btn btn-sm">
+                      <img src="{{ asset('img/icons/logo_sunat.png') }}" alt="" width="24">
+                    </button>
+                  </form>
                 </td>
                 <td>
                   @include('ventas.partials.estados')

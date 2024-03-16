@@ -17,7 +17,9 @@ use App\Models\TipoIgv;
 use App\Models\Unidad;
 use App\Models\Venta;
 use App\Utils\Numletras;
+use App\Utils\SendSunnat;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Greenter\See;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -135,5 +137,11 @@ class VentaController extends Controller
     ));
 
     return $pdf->stream();
+  }
+
+  public function sendSunnat(Venta $venta)
+  {
+    SendSunnat::sendSale($venta);
+    return redirect()->route('ventas.index');
   }
 }
