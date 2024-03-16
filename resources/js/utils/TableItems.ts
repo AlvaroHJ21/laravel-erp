@@ -341,6 +341,10 @@ export class TableItems {
   }
 
   public getItems() {
+    if (this.items.length == 0) {
+      throw new Error("No se han agregado productos");
+    }
+
     return this.items;
   }
 
@@ -348,5 +352,9 @@ export class TableItems {
     this.items = items;
     this.calcMontos();
     this.render();
+  }
+
+  public getTotal() {
+    return this.totalPago;
   }
 }

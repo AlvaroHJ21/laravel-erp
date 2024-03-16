@@ -5,6 +5,7 @@ import { TableItems } from "../utils/TableItems";
 import { showError, showSuccess } from "../utils/Swal";
 import { TipoDocumento } from "../interfaces/TipoDocumento";
 import { TypeDocumentSelector } from "../utils/TypeDocumentSelector";
+import { Terms } from "../utils/Terms";
 
 declare const entidades: Entidad[];
 declare const tiposIGV: any[];
@@ -82,47 +83,56 @@ function handleChangeMoneda() {
   });
 }
 
+//* FECHAs Y PLAZO
+
+new Terms();
+
 //* TIPO DOCUMENTO
 
 new TypeDocumentSelector(tiposDocumento);
 
 //* PAGOS
-const tablePayments = new TablePayments();
+const tablePayments = new TablePayments({
+  getTotalPagar: () => tableItems.getTotal(),
+});
 
 //* FORMULARIO
 const $form = document.getElementById("form") as HTMLFormElement;
 $form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+  try {
+    e.preventDefault();
 
-  console.log(tablePayments.getPayments());
+    const formData = new FormData($form);
 
-  const formData = new FormData($form);
+    const data = {
+      ...Object.fromEntries(formData),
+      items: tableItems.getItems(),
+      pagos: tablePayments.getPayments(),
+    };
 
-  const data = {
-    ...Object.fromEntries(formData),
-    items: tableItems.getItems(),
-    pagos: tablePayments.getPayments(),
-  };
+    console.log(data);
 
-  console.log(data);
-
-  const resp = await fetch(urlPost, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-  });
-  const json = await resp.json();
-
-  console.log(json);
-
-  if (resp.ok) {
-    showSuccess(json.message, () => {
-      window.location.href = urlRedirect;
+    const resp = await fetch(urlPost, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     });
-  } else {
-    showError(json.message);
+    const json = await resp.json();
+
+    console.log(json);
+
+    if (resp.ok) {
+      showSuccess(json.message, () => {
+        window.location.href = urlRedirect;
+      });
+    } else {
+      showError(json.message);
+    }
+  } catch (error) {
+    console.log(error);
+    showError(error.message);
   }
 });

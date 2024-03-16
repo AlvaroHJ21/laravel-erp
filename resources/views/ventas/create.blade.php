@@ -85,14 +85,29 @@
                 @include('partials.moneda')
               </div>
 
+              <!-- Plazo -->
+              <div class="col-12 mb-3">
+                <label for="fecha_emision" class="form-label">
+                  Plazo
+                </label>
+                <select name="plazo" id="plazo" class="form-select">
+                  <option value="15">15 días</option>
+                  <option value="30">30 días</option>
+                  <option value="45">45 días</option>
+                  <option value="60">60 días</option>
+                  <option value="90">90 días</option>
+                </select>
+              </div>
               <!-- Fecha Emisión / Vencimiento -->
               <div class="col-12">
                 <label for="fecha_emision" class="form-label">
                   Fecha de Emisión / Vencimiento
                 </label>
                 <div class="d-flex gap-2">
-                  <input type="date" name="fecha_emision" class="form-control" value="{{ date('Y-m-d') }}" />
-                  <input type="date" name="fecha_vencimiento" class="form-control" value="{{ date('Y-m-d') }}" />
+                  <input id="fecha_emision" type="date" name="fecha_emision" class="form-control"
+                         value="{{ date('Y-m-d') }}" />
+                  <input id="fecha_vencimiento" type="date" name="fecha_vencimiento" class="form-control"
+                         value="{{ date('Y-m-d') }}" />
                 </div>
               </div>
 
@@ -100,7 +115,7 @@
           </div>
         </div>
         <!-- DATOS DEL CLIENTE -->
-        @include('entidades.partials.autocomplete')
+        @include('partials.entidad-autocomplete')
 
         <!-- DATOS DE PAGO -->
         @include('partials.pago')
