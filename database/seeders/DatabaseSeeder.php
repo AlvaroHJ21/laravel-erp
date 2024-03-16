@@ -106,6 +106,22 @@ class DatabaseSeeder extends Seeder
       'abreviado' => 'BOL',
     ]);
 
+    // Series
+
+    DB::table('series')->insert([
+      'serie' => 'F001',
+      'tipo_documento_id' => 1,
+      'created_at' => now(),
+      'updated_at' => now(),
+    ]);
+
+    DB::table('series')->insert([
+      'serie' => 'B001',
+      'tipo_documento_id' => 2,
+      'created_at' => now(),
+      'updated_at' => now(),
+    ]);
+
     // Monedas
 
     DB::table('monedas')->insert([

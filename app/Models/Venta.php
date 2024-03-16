@@ -43,7 +43,7 @@ class Venta extends Model
     return $this->belongsTo(Entidad::class);
   }
 
-  public function tipoDocumento()
+  public function tipo_documento()
   {
     return $this->belongsTo(TipoDocumento::class);
   }
@@ -58,12 +58,12 @@ class Venta extends Model
     return $this->belongsTo(Moneda::class);
   }
 
-  public function formaPago()
+  public function forma_pago()
   {
     return $this->belongsTo(FormaPago::class);
   }
 
-  public function modoPago()
+  public function modo_pago()
   {
     return $this->belongsTo(ModoPago::class);
   }

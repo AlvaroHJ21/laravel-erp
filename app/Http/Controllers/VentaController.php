@@ -8,6 +8,7 @@ use App\Models\FormaPago;
 use App\Models\Inventario;
 use App\Models\ModoPago;
 use App\Models\Moneda;
+use App\Models\Serie;
 use App\Models\TipoCambio;
 use App\Models\TipoDocumento;
 use App\Models\TipoDocumentoIdentidad;
@@ -15,6 +16,7 @@ use App\Models\TipoIgv;
 use App\Models\Unidad;
 use App\Models\Venta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
@@ -34,7 +36,7 @@ class VentaController extends Controller
     $monedas = Moneda::active();
     $inventarios = Inventario::with('producto', 'almacen')->get();
     $entidades = Entidad::all();
-    $tiposDocumento = TipoDocumento::all();
+    $tiposDocumento = TipoDocumento::with('series')->get();
     $formasPago = FormaPago::all();
     $modosPago = ModoPago::all();
 
@@ -64,6 +66,14 @@ class VentaController extends Controller
     try {
       DB::beginTransaction();
 
+      $serie = Serie::find($request->serie_id);
+      $numero = $serie->generateNumber();
+      $request->merge([
+        "numero" => $numero,
+        "tipo_operacion" => "01", //TODO: enviar desde el front
+        "user_id" => Auth::id(),
+      ]);
+
       $venta = Venta::create($request->all());
 
       $venta->detalles()->createMany($request->items);
@@ -82,5 +92,11 @@ class VentaController extends Controller
         "error" => $th->getMessage(),
       ], 500);
     }
+  }
+
+  public function show(Venta $venta)
+  {
+    $venta->load('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipoIgv');
+    return view('ventas.show', compact("venta"));
   }
 }

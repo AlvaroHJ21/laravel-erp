@@ -32,11 +32,16 @@ class VentaStoreRequest extends FormRequest
       "items.*.subtotal" => "required",
       "items.*.tipo_igv_id" => "required",
       "items.*.porcentaje_descuento" => "required",
+
+      "serie_id" => "required",
+      "tipo_documento_id" => "required",
+
       "numero_orden_compra" => "required",
       "entidad_id" => "required",
       "moneda_id" => "required",
       "total_gravada" => "required",
       "total_igv" => "required",
+
       "total_pagar" => "required",
       "pagos" => "nullable|array",
       "pagos.*.fecha" => "required",

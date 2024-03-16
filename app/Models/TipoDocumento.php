@@ -10,4 +10,9 @@ class TipoDocumento extends Model
     use HasFactory;
 
     protected $table = "tipos_documento";
+
+    public function series()
+    {
+        return $this->hasMany(Serie::class);
+    }
 }

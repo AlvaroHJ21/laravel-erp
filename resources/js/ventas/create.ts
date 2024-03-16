@@ -3,6 +3,8 @@ import { Autocomplete } from "../utils/Autocomplete";
 import { TablePayments } from "../utils/TablePayments";
 import { TableItems } from "../utils/TableItems";
 import { showError, showSuccess } from "../utils/Swal";
+import { TipoDocumento } from "../interfaces/TipoDocumento";
+import { TypeDocumentSelector } from "../utils/TypeDocumentSelector";
 
 declare const entidades: Entidad[];
 declare const tiposIGV: any[];
@@ -10,6 +12,7 @@ declare const tipoCambioDolar: string;
 declare const inventarios: Inventario[];
 declare const urlPost: string;
 declare const urlRedirect: string;
+declare const tiposDocumento: TipoDocumento[];
 
 //* ENTIDAD
 const entidadAutocomplete = new Autocomplete<Entidad>({
@@ -78,6 +81,10 @@ function handleChangeMoneda() {
     el.innerHTML = simbolo ?? "";
   });
 }
+
+//* TIPO DOCUMENTO
+
+new TypeDocumentSelector(tiposDocumento);
 
 //* PAGOS
 const tablePayments = new TablePayments();

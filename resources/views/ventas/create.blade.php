@@ -69,21 +69,7 @@
             <div class="row">
               <!-- Tipo documento / Serie -->
               <div class="col-12 mb-3">
-                <label for="tipo_documento_id" class="form-label">
-                  Tipo de documento / Serie
-                </label>
-                <div class="d-flex gap-2">
-                  <select name="tipo_documento_id" id="tipo_documento_id" class="form-select">
-                    @foreach ($tiposDocumento as $tipoDocumento)
-                      <option value="{{ $tipoDocumento->id }}">
-                        {{ $tipoDocumento->nombre }}
-                      </option>
-                    @endforeach
-                  </select>
-                  <select name="serie_id" id="serie_id" class="form-select">
-                  </select>
-                  <input id="numero" type="text" class="form-control" readonly>
-                </div>
+                @include('partials.tipo-documento')
               </div>
 
               <!-- Número de orden de compra -->
@@ -146,6 +132,7 @@
     const base = @json($base);
     const urlPost = @json(route('ventas.store'));
     const urlRedirect = @json(route('ventas.index'));
+    const tiposDocumento = @json($tiposDocumento);
   </script>
 
   @vite(['resources/js/ventas/create.ts'])

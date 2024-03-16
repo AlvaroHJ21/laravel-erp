@@ -35,38 +35,45 @@
           <tbody>
             @foreach ($ventas as $index => $venta)
               <tr>
-                <td>{{ $venta->id }}</td>
+                <td>{{ $venta->serie->serie }}-{{ $venta->numero }}</td>
                 <td>
                   <button class="btn btn-sm">
-                    {{ $venta->cliente->nombre }} -
-                    {{ $venta->cliente->numero_documento }}
+                    {{ $venta->entidad->nombre }} -
+                    {{ $venta->entidad->numero_documento }}
                   </button>
                 </td>
-                <td class="text-sm"
-                    style="white-space: nowrap;">{{ $venta->created_at }}
+                <td>
+                  {{ $venta->tipo_documento->nombre }}
                 </td>
-                <td style="white-space: nowrap;">{{ $venta->moneda->simbolo }}
-                  {{ $venta->total_gravada }}</td>
-                <td style="white-space: nowrap;">{{ $venta->moneda->simbolo }}
-                  {{ $venta->total_igv }}</td>
+                <td class="text-sm"
+                    style="white-space: nowrap;">{{ $venta->fecha_emision }}
+                </td>
                 <td style="white-space: nowrap;">{{ $venta->moneda->simbolo }}
                   {{ $venta->total_pagar }}</td>
                 <td>
-                  @include('ordenes_venta.partials.opciones_guia')
+                  <a href="{{ route('ventas.pdf', $venta) }}"
+                     target="_blank"
+                     class="btn btn-secondary btn-sm">
+                    PDF
+                  </a>
                 </td>
                 <td>
-                  @include('ordenes_venta.partials.opciones_venta')
+                  <a href="{{ route('ventas.show', $venta) }}"
+                     class="btn btn-sm">
+                    <i class="" data-feather="eye"></i>
+                  </a>
                 </td>
                 <td>
-                  <a href="{{ route('ordenes_venta.show', $venta) }}"
-                     class="btn btn-sm"><i class=""
-                       data-feather="eye"></i></a>
+                  <a href="{{ route('ventas.send_sunnat', $venta) }}"
+                     class="btn btn-sm">
+                    <img src="{{ asset('img/icons/logo_sunat.png') }}" alt="" width="24">
+                  </a>
                 </td>
                 <td>
-                  @include('ordenes_venta.partials.estados')
+                  @include('ventas.partials.estados')
                 </td>
                 <td>
-                  @include('ordenes_venta.partials.opciones')
+                  @include('ventas.partials.opciones')
                 </td>
               </tr>
             @endforeach

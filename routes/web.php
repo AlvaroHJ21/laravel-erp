@@ -144,4 +144,7 @@ Route::middleware("auth")->group(function () {
   Route::get("/ventas", [VentaController::class, "index"])->name("ventas.index");
   Route::get("/ventas/create", [VentaController::class, "create"])->name("ventas.create");
   Route::post("/ventas/store", [VentaController::class, "store"])->name("ventas.store");
+  Route::get("/ventas/{venta}", [VentaController::class, "show"])->name("ventas.show");
+  Route::get("/ventas/{venta}/pdf", [VentaController::class, "pdf"])->name("ventas.pdf");
+  Route::post("/ventas/{venta}/send-sunnat", [VentaController::class, "sendSunnat"])->name("ventas.send_sunnat");
 });
