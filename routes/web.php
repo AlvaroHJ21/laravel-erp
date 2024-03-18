@@ -34,8 +34,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login.login');
-Route::get('/logout', [LoginController::class, 'logout'])->name('login.logout');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');
 
 Route::middleware("auth")->group(function () {
 
