@@ -25,6 +25,8 @@ class Venta extends Model
     'tipo_operacion',
     'forma_pago_id',
     'modo_pago_id',
+    'xml_path',
+    'cdr_path',
     'firma_sunat',
     'ticket_baja',
     'detraccion_codigo',

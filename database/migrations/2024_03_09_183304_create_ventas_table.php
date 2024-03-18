@@ -26,6 +26,8 @@ return new class extends Migration
       $table->string('tipo_operacion', 4);
       $table->unsignedBigInteger('forma_pago_id');
       $table->unsignedBigInteger('modo_pago_id');
+      $table->string('xml_path', 100)->nullable();
+      $table->string('cdr_path', 100)->nullable();
       $table->string('firma_sunat', 100)->nullable();
       $table->string('ticket_baja', 15)->nullable();
       $table->string('detraccion_codigo', 4)->nullable();

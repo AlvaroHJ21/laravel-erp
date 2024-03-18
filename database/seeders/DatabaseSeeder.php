@@ -97,12 +97,12 @@ class DatabaseSeeder extends Seeder
     // Tipos de documento
 
     DB::table('tipos_documento')->insert([
-      'codigo' => 1,
+      'codigo' => '01',
       'nombre' => 'Factura',
       'abreviado' => 'FAC',
     ]);
     DB::table('tipos_documento')->insert([
-      'codigo' => 3,
+      'codigo' => '03',
       'nombre' => 'Boleta',
       'abreviado' => 'BOL',
     ]);

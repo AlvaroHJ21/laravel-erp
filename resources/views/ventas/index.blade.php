@@ -27,7 +27,7 @@
               <th>Total</th>
               <th>PDF</th>
               <th>Ver</th>
-              <th>Sunnat</th>
+              <th>SUNNAT</th>
               <th>Estado</th>
               <th>Más</th>
             </tr>

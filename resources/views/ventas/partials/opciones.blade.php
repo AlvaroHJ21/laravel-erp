@@ -15,10 +15,10 @@
         <a class="dropdown-item" href="{{ route('ventas.pdf', $venta) }}">Ver PDF</a>
       </li>
       <li>
-        <a class="dropdown-item" href="{{ route('ventas.pdf', $venta) }}">Ver XML</a>
+        <a class="dropdown-item" href="{{ route('ventas.xml', $venta) }}" target="_blank">Ver XML</a>
       </li>
       <li>
-        <a class="dropdown-item" href="{{ route('ventas.pdf', $venta) }}">Ver CDR</a>
+        <a class="dropdown-item" href="{{ route('ventas.cdr', $venta) }}" target="_blank">Ver CDR</a>
       </li>
       <li>
         <a class="dropdown-item"

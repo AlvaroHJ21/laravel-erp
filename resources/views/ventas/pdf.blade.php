@@ -49,7 +49,7 @@
         <tr>
           <td>1</td>
           <td>{{ $item->codigo }}</td>
-          <td>{{ $item->descripcion }}</td>
+          <td>{{ $item->producto->nombre . " " . $item->producto->codigo . " " . $item->descripcion_adicional }}</td>
           <td>{{ $item->cantidad }}</td>
           <td>{{ $item->producto->unidad->unidad }}</td>
           <td class="text-right">{{ number_format($item->valor_venta, 2) }}</td>

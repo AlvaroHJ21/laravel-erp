@@ -5,8 +5,12 @@
           $clase = 'bg-primary';
           break;
       case 1: // O\V generada
-          $estado = 'O\V generada';
+          $estado = 'Enviado y Aceptado';
           $clase = 'bg-success';
+          break;
+      case 2: // O\V generada
+          $estado = 'Enviado y Rechazado';
+          $clase = 'bg-error';
           break;
       default:
           $estado = 'Desconocido';

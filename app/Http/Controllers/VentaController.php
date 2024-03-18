@@ -101,7 +101,7 @@ class VentaController extends Controller
 
   public function show(Venta $venta)
   {
-    $venta->load('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipoIgv');
+    $venta->load('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipo_igv');
     return view('ventas.show', compact("venta"));
   }
 
@@ -141,7 +141,26 @@ class VentaController extends Controller
 
   public function sendSunnat(Venta $venta)
   {
-    SendSunnat::sendSale($venta);
-    return redirect()->route('ventas.index');
+    try {
+      SendSunnat::sendSale($venta);
+      return redirect()->route('ventas.index');
+    } catch (\Throwable $th) {
+      return back()->with('error', $th->getMessage());
+    }
+  }
+
+  public function xml(Venta $venta)
+  {
+    if ($venta->xml_path) {
+      return response()->file(storage_path($venta->xml_path));
+    }
+  }
+
+  public function cdr(Venta $venta)
+  {
+    dd($venta->cdr_path);
+    if ($venta->cdr_path) {
+      return response()->file(storage_path($venta->cdr_path));
+    }
   }
 }

@@ -34,7 +34,7 @@ class VentaDetalle extends Model
     return $this->belongsTo(Inventario::class);
   }
 
-  public function tipoIgv()
+  public function tipo_igv()
   {
     return $this->belongsTo(TipoIgv::class);
   }

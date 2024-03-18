@@ -99,7 +99,7 @@
         <tr>
           <td>1</td>
           <td>{{ $item->codigo }}</td>
-          <td>{{ $item->descripcion }}</td>
+          <td>{{ $item->producto->nombre . " " . $item->producto->codigo . " " . $item->descripcion_adicional }}</td>
           <td>
             @if ($item->producto->imagen == null)
               <img src="{{ public_path('img/default-image.png') }}" width="100">

@@ -147,4 +147,6 @@ Route::middleware("auth")->group(function () {
   Route::get("/ventas/{venta}", [VentaController::class, "show"])->name("ventas.show");
   Route::get("/ventas/{venta}/pdf", [VentaController::class, "pdf"])->name("ventas.pdf");
   Route::post("/ventas/{venta}/send-sunnat", [VentaController::class, "sendSunnat"])->name("ventas.send_sunnat");
+  Route::get("/ventas/{venta}/xml", [VentaController::class, "xml"])->name("ventas.xml");
+  Route::get("/ventas/{venta}/cdr", [VentaController::class, "cdr"])->name("ventas.cdr");
 });
