@@ -23,6 +23,7 @@ use Greenter\See;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class VentaController extends Controller
 {
@@ -151,16 +152,42 @@ class VentaController extends Controller
 
   public function xml(Venta $venta)
   {
-    if ($venta->xml_path) {
-      return response()->file(storage_path($venta->xml_path));
+    if ($venta->nombre_archivo) {
+
+      if (Storage::disk('local')->exists('xml/' . $venta->nombre_archivo . '.xml')) {
+        return response()
+          ->file(
+            storage_path(
+              'app/xml/' . $venta->nombre_archivo . '.xml'
+            )
+          );
+      } else {
+        return response()->json([
+          "message" => "Archivo no encontrado"
+        ], 404);
+      }
+    } else {
+      return response()->json([
+        "message" => "Archivo no encontrado"
+      ], 404);
     }
   }
 
   public function cdr(Venta $venta)
   {
-    dd($venta->cdr_path);
-    if ($venta->cdr_path) {
-      return response()->file(storage_path($venta->cdr_path));
+    if ($venta->nombre_archivo) {
+
+      if (Storage::disk('local')->exists('cdr/R-' . $venta->nombre_archivo . '.zip')) {
+        return response()->download(
+          storage_path(
+            'app/cdr/R-' . $venta->nombre_archivo . '.zip'
+          )
+        );
+      }
+    } else {
+      return response()->json([
+        "message" => "Archivo no encontrado"
+      ], 404);
     }
   }
 }

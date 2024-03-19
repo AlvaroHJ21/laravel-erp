@@ -14,18 +14,20 @@
       <li>
         <a class="dropdown-item" href="{{ route('ventas.pdf', $venta) }}">Ver PDF</a>
       </li>
-      <li>
-        <a class="dropdown-item" href="{{ route('ventas.xml', $venta) }}" target="_blank">Ver XML</a>
-      </li>
-      <li>
-        <a class="dropdown-item" href="{{ route('ventas.cdr', $venta) }}" target="_blank">Ver CDR</a>
-      </li>
-      <li>
-        <a class="dropdown-item"
-           href="{{ route('ordenes_venta.pdf', $venta) }}">
-          Enviar por email
-        </a>
-      </li>
+      @if ($venta->estado == 1)
+        <li>
+          <a class="dropdown-item" href="{{ route('ventas.xml', $venta) }}" target="_blank">Ver XML</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="{{ route('ventas.cdr', $venta) }}" target="_blank">Descargar CDR</a>
+        </li>
+        <li>
+          <a class="dropdown-item"
+             href="{{ route('ordenes_venta.pdf', $venta) }}">
+            Enviar por email
+          </a>
+        </li>
+      @endif
       <li>
         <a class="dropdown-item btn_generar_recordatorio"
            href="#"

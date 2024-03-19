@@ -177,8 +177,7 @@ class SendSunnat
         $firma = self::getFirma($xmlStorePath);
         $venta->update([
           "estado" => 1,
-          "xml_path" => $xmlStorePath,
-          "cdr_path" => $cdrStorePath,
+          "nombre_archivo" => $invoice->getName(),
           "firma_sunat" => $firma,
         ]);
       } else if ($code >= 2000 && $code <= 3999) {
