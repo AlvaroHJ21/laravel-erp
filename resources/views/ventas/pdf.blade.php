@@ -49,7 +49,7 @@
         <tr>
           <td>1</td>
           <td>{{ $item->codigo }}</td>
-          <td>{{ $item->producto->nombre . " " . $item->producto->codigo . " " . $item->descripcion_adicional }}</td>
+          <td>{{ $item->producto->nombre . ' ' . $item->producto->codigo . ' ' . $item->descripcion_adicional }}</td>
           <td>{{ $item->cantidad }}</td>
           <td>{{ $item->producto->unidad->unidad }}</td>
           <td class="text-right">{{ number_format($item->valor_venta, 2) }}</td>
@@ -85,4 +85,12 @@
       {{ $totalLetras }}
     </div>
   </div>
+
+  {{-- QR --}}
+  @if ($venta->estado == 1)
+    <div class="text-center py-8">
+      <img src="data:image/png;base64, {!! base64_encode($qr) !!} " style="margin: 0 auto">
+      <p>{{ $venta->firma_sunat }}</p>
+    </div>
+  @endif
 @endsection

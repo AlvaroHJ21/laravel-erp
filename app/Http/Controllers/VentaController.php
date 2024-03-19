@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class VentaController extends Controller
 {
@@ -127,6 +128,20 @@ class VentaController extends Controller
 
     $totalLetras = $num2letras->getTotalLetras($venta->total_pagar, $moneda->nombre);
 
+    $qrText = '';
+    $qrText .= $empresa->ruc . "|"; //RUC EMPRESA
+    $qrText .= $venta->tipo_documento->codigo . "|"; //TIPO DE DOCUMENTO
+    $qrText .= $venta->serie->serie . "|"; //SERIE
+    $qrText .= $venta->numero . "|"; //NUMERO
+    $qrText .= $venta->total_igv . "|"; //MTO TOTAL IGV
+    $qrText .= $venta->total_pagar . "|"; //MTO TOTAL DEL COMPROBANTE
+    $qrText .= $venta->fecha_emision . "|"; //FECHA DE EMISION
+    $qrText .= $entidad->documento_identidad->codigo . "|"; //TIPO DE DOCUMENTO ADQUIRENTE
+    $qrText .= $entidad->numero_documento . "|"; //NUMERO DE DOCUMENTO ADQUIRENTE
+    $qrText .= $venta->firma_sunat;
+
+    $qr = QrCode::size(100)->generate($qrText);
+
     $pdf = Pdf::loadView("ventas.pdf", compact(
       "logo",
       "venta",
@@ -134,7 +149,8 @@ class VentaController extends Controller
       "empresa",
       "entidad",
       "moneda",
-      "totalLetras"
+      "totalLetras",
+      "qr"
     ));
 
     return $pdf->stream();
