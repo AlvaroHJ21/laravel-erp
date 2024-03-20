@@ -6,6 +6,7 @@ interface Payment {
 
 interface Props {
   getTotalPagar?: () => number;
+  getFechaEmision?: () => string;
 }
 
 export class TablePayments {
@@ -17,8 +18,9 @@ export class TablePayments {
   private $pagosBtnBalancear: HTMLButtonElement;
   private payments: Payment[] = [];
   private getTotalPagar: () => number;
+  private getFechaEmision: () => string;
 
-  constructor({ getTotalPagar }: Props) {
+  constructor({ getTotalPagar, getFechaEmision }: Props) {
     this.$selectFormapagoId = document.getElementById(
       "forma_pago_id"
     ) as HTMLSelectElement;
@@ -40,6 +42,7 @@ export class TablePayments {
     this.$total = document.getElementById("pagos_total") as HTMLLabelElement;
 
     this.getTotalPagar = getTotalPagar ?? (() => 0);
+    this.getFechaEmision = getFechaEmision ?? (() => "");
 
     this.init();
     this.startListeners();
@@ -171,6 +174,19 @@ export class TablePayments {
       // Validar que no haya pagos con monto 0
       if (this.payments.some((p) => p.monto == 0)) {
         throw new Error("No puede haber pagos con monto 0");
+      }
+
+      // Validar que no haya pagos con fecha vacía
+      if (this.payments.some((p) => p.fecha.length == 0)) {
+        throw new Error("No puede haber pagos con fecha vacía");
+      }
+
+      // Validar que las fechas no sean igual o mayor a la fecha de emisión
+      const emisionDate = new Date(this.getFechaEmision());
+      if (this.payments.some((p) => new Date(p.fecha) <= emisionDate)) {
+        throw new Error(
+          "La fecha del pago no puede ser igual o menor a la fecha de emisión"
+        );
       }
     }
 

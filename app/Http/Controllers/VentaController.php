@@ -123,6 +123,7 @@ class VentaController extends Controller
     $moneda = $venta->moneda;
     $items = $venta->detalles;
     $empresa = Empresa::first();
+    $cuotas = $venta->pagos;
 
     $num2letras = new Numletras();
 
@@ -150,6 +151,7 @@ class VentaController extends Controller
       "entidad",
       "moneda",
       "totalLetras",
+      "cuotas",
       "qr"
     ));
 

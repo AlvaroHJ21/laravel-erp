@@ -30,4 +30,8 @@ export class Terms {
 
     this.$fechaVencimiento.value = fechaVencimiento.toISOString().slice(0, 10);
   }
+
+  public getFechaEmision() {
+    return this.$fechaEmision.value;
+  }
 }

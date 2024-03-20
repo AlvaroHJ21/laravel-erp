@@ -7,29 +7,37 @@
       'identificadorDocumento' => $venta->serie->serie . '-' . $venta->numero,
   ])
 
-  {{-- Datos del documento --}}
-  <table class="table-document-info">
-    <tr>
-      <td>Fecha de Emisión </td>
-      <td>:</td>
-      <td>{{ date('d/m/Y', strtotime($venta->created_at)) }}</td>
-    </tr>
-    <tr>
-      <td>Señor(es)</td>
-      <td>:</td>
-      <td>{{ $entidad->nombre }}</td>
-    </tr>
-    <tr>
-      <td>Dirección del Cliente</td>
-      <td>:</td>
-      <td>{{ $entidad->direccion }}</td>
-    </tr>
-    <tr>
-      <td>Tipo de Moneda</td>
-      <td>:</td>
-      <td class="uppercase">{{ $moneda->nombre }}</td>
-    </tr>
-  </table>
+  <div class="relative">
+    {{-- Datos del documento --}}
+    <table class="table-document-info">
+      <tr>
+        <td>Fecha de Emisión </td>
+        <td>:</td>
+        <td>{{ date('d/m/Y', strtotime($venta->created_at)) }}</td>
+      </tr>
+      <tr>
+        <td>Señor(es)</td>
+        <td>:</td>
+        <td>{{ $entidad->nombre }}</td>
+      </tr>
+      <tr>
+        <td>Dirección del Cliente</td>
+        <td>:</td>
+        <td>{{ $entidad->direccion }}</td>
+      </tr>
+      <tr>
+        <td>Tipo de Moneda</td>
+        <td>:</td>
+        <td class="uppercase">{{ $moneda->nombre }}</td>
+      </tr>
+    </table>
+
+    {{-- Datos adicionales --}}
+    <div class="absolute top-0 right-0">
+      Forma de pago: {{ $venta->forma_pago->nombre }} <br>
+    </div>
+  </div>
+
 
   {{-- Tabla de detalles --}}
   <table class="table-details">
@@ -85,6 +93,74 @@
       {{ $totalLetras }}
     </div>
   </div>
+
+
+  {{-- Cuotas --}}
+  @if ($venta->forma_pago_id == 2)
+    <div class="gap-4"></div>
+    <div>
+      <div class="w-25 font-bold">Información del crédito</div>
+      <table>
+        <tbody>
+          <tr>
+            <td>Monto neto pendiente de pago</td>
+            @php
+              $totalCuotas = 0;
+              foreach ($cuotas as $cuota) {
+                  $totalCuotas += $cuota->monto;
+              }
+            @endphp
+            <td>
+              : {{ $moneda->simbolo . ' ' . number_format($totalCuotas, 2) }}
+            </td>
+          </tr>
+          <tr>
+            <td># total de cuotas</td>
+            <td>: {{ count($cuotas) }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="gap-4"></div>
+
+      <table>
+        <thead>
+          <tr class="">
+            <th class=" p-1 text-center font-bold">
+              Nº Cuota
+            </th>
+            <th class=" p-1 text-center font-bold">
+              Fecha Vencimiento
+            </th>
+            <th class=" p-1 text-center font-bold">
+              Monto
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @foreach ($cuotas as $index => $cuota)
+            <tr class="">
+              <td class="text-center">{{ $index + 1 }}</td>
+              <td class="text-center">{{ date('d/m/Y', strtotime($cuota->fecha)) }}</td>
+              <td class="text-center"> {{ $moneda->simbolo . ' ' . number_format($cuota->monto, 2) }}</td>
+            </tr>
+          @endforeach
+        </tbody>
+
+
+      </table>
+    </div>
+  @endif
+
+  {{-- Notas --}}
+  @if ($venta->nota)
+    <div class="gap-4"></div>
+    <div class="w-25 font-bold">Notas</div>
+    <p class="text-justify">
+      {{ $venta->nota }}
+    </p>
+  @endif
 
   {{-- QR --}}
   @if ($venta->estado == 1)

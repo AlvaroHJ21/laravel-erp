@@ -7,6 +7,7 @@ use Greenter\Model\Client\Client;
 use Greenter\Model\Company\Address;
 use Greenter\Model\Company\Company;
 use Greenter\Model\Response\BillResult;
+use Greenter\Model\Sale\Cuota;
 use Greenter\Model\Sale\FormaPagos\FormaPagoContado;
 use Greenter\Model\Sale\FormaPagos\FormaPagoCredito;
 use Greenter\Model\Sale\Invoice;
@@ -86,8 +87,13 @@ class SendSunnat
     $serie = $venta->serie->serie;
     $correlativo = $venta->numero;
     $fechaEmision = new \DateTime($venta->fecha_emision);
-    $formaPago = $venta->forma_pago_id == 1 ? new FormaPagoContado() : new FormaPagoCredito();
+    $formaPago = $venta->forma_pago_id == 1 ? new FormaPagoContado() : new FormaPagoCredito(
+      $venta->total_pagar,
+      $venta->moneda->abrstandar,
+    );
     $tipoMoneda = $venta->moneda->abrstandar;
+
+
     /**
      * mtoOperGravadas  -> TaxTotal / TaxSubtotal / TaxableAmount	  . 100
      * mtoIGV 		      -> TaxTotal / TaxSubtotal / TaxAmount		    . 18
@@ -121,6 +127,21 @@ class SendSunnat
       ->setValorVenta($valorVenta)
       ->setSubTotal($subtotal)
       ->setMtoImpVenta($mtoImpVenta);
+
+    if ($venta->forma_pago_id == 2) {
+      $cuotas = [];
+      foreach ($venta->pagos as $cuota) {
+        $item = new Cuota();
+        $item->setMoneda($venta->moneda->abrstandar);
+        $item->setMonto($cuota->monto);
+        $item->setFechaPago(new \DateTime($cuota->fecha));
+        $cuotas[] = $item;
+      }
+      $invoice->setCuotas($cuotas);
+      $invoice->setFecVencimiento(new \DateTime($venta->fecha_vencimiento));
+    }
+
+    // dd($invoice);
 
     //Detalles
     $items = [];

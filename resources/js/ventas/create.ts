@@ -85,7 +85,7 @@ function handleChangeMoneda() {
 
 //* FECHAs Y PLAZO
 
-new Terms();
+const terms = new Terms();
 
 //* TIPO DOCUMENTO
 
@@ -94,6 +94,7 @@ new TypeDocumentSelector(tiposDocumento);
 //* PAGOS
 const tablePayments = new TablePayments({
   getTotalPagar: () => tableItems.getTotal(),
+  getFechaEmision: () => terms.getFechaEmision(),
 });
 
 //* FORMULARIO

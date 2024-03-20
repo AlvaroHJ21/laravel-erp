@@ -36,7 +36,7 @@ class VentaStoreRequest extends FormRequest
       "serie_id" => "required",
       "tipo_documento_id" => "required",
 
-      "numero_orden_compra" => "required",
+      "numero_orden_compra" => "nullable",
       "entidad_id" => "required",
       "moneda_id" => "required",
       "total_gravada" => "required",

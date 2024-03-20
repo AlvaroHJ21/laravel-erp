@@ -34,7 +34,7 @@ return new class extends Migration
       $table->decimal('retencion_porcentaje', 10, 2)->nullable();
       $table->text('nota')->nullable();
       $table->text('nota_pago')->nullable();
-      $table->string('numero_orden_compra');
+      $table->string('numero_orden_compra')->nullable();
       $table->unsignedBigInteger('estado')->default(0);
       $table->boolean('enviado_cliente')->default(false);
       $table->foreignId('user_id')->constrained("users");
