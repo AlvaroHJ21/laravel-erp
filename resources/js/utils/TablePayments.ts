@@ -184,9 +184,11 @@ export class TablePayments {
           "La fecha del pago no puede ser igual o menor a la fecha de emisión"
         );
       }
+
+      return this.payments;
     }
 
-    return this.payments;
+    return [];
   }
 
   setPayments(payments: Cuota[]) {
