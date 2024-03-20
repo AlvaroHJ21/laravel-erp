@@ -19,6 +19,6 @@ class Pago extends Model
 
 
   protected $casts = [
-    'monto' => 'decimal:2',
+    'monto' => 'float',
   ];
 }

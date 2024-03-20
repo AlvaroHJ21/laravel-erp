@@ -24,6 +24,13 @@ class VentaDetalle extends Model
     'porcentaje_descuento',
   ];
 
+  //cast
+  protected $casts = [
+    'valor_venta' => 'float',
+    'subtotal' => 'float',
+    'porcentaje_descuento' => 'float',
+  ];
+
   public function producto()
   {
     return $this->belongsTo(Producto::class);

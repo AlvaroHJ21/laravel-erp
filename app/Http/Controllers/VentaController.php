@@ -49,7 +49,7 @@ class VentaController extends Controller
 
     $ventaId = $request->query('ventaId');
     if ($ventaId) {
-      $base = Venta::with('cliente', 'moneda', 'detalles', 'detalles.producto')->find($ventaId);
+      $base = Venta::with('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipo_igv', 'pagos',)->find($ventaId);
     }
     $base = isset($base) ? $base : null;
     return view('ventas.create', compact(

@@ -1,8 +1,4 @@
-interface Payment {
-  id: number;
-  fecha: string;
-  monto: number;
-}
+import { Cuota } from "../interfaces/Payment";
 
 interface Props {
   getTotalPagar?: () => number;
@@ -16,7 +12,7 @@ export class TablePayments {
   private $pagosbtnAdd: HTMLButtonElement;
   private $total: HTMLLabelElement;
   private $pagosBtnBalancear: HTMLButtonElement;
-  private payments: Payment[] = [];
+  private payments: Cuota[] = [];
   private getTotalPagar: () => number;
   private getFechaEmision: () => string;
 
@@ -191,5 +187,11 @@ export class TablePayments {
     }
 
     return this.payments;
+  }
+
+  setPayments(payments: Cuota[]) {
+    this.payments = payments;
+    this.render();
+    this.renderTotal();
   }
 }

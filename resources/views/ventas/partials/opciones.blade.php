@@ -29,6 +29,9 @@
         </li>
       @endif
       <li>
+        <a class="dropdown-item" href="{{ route('ventas.create', ['ventaId' => $venta->id]) }}">Duplicar venta</a>
+      </li>
+      <li>
         <a class="dropdown-item btn_generar_recordatorio"
            href="#"
            data-tipo-documento="1"

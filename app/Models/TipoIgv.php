@@ -7,9 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoIgv extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = "tipos_igv";
+  protected $table = "tipos_igv";
 
-    public $timestamps = false;
+  public $timestamps = false;
+
+  //cast
+  protected $casts = [
+    'porcentaje' => 'float',
+  ];
 }

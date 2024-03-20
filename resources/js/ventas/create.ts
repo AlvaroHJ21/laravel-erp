@@ -6,6 +6,7 @@ import { showError, showSuccess } from "../utils/Swal";
 import { TipoDocumento } from "../interfaces/TipoDocumento";
 import { TypeDocumentSelector } from "../utils/TypeDocumentSelector";
 import { Terms } from "../utils/Terms";
+import { Venta } from "../interfaces/Venta";
 
 declare const entidades: Entidad[];
 declare const tiposIGV: any[];
@@ -14,6 +15,7 @@ declare const inventarios: Inventario[];
 declare const urlPost: string;
 declare const urlRedirect: string;
 declare const tiposDocumento: TipoDocumento[];
+declare const base: Venta | undefined;
 
 //* ENTIDAD
 const entidadAutocomplete = new Autocomplete<Entidad>({
@@ -137,3 +139,38 @@ $form.addEventListener("submit", async (e) => {
     showError(error.message);
   }
 });
+
+/*
+ * Cargar la venta base
+ */
+if (base) {
+  // Cargar los items
+  tableItems.setItems(
+    base.detalles.map((detalle) => ({
+      cantidad: detalle.cantidad,
+      codigo: detalle.codigo,
+      descripcion_adicional: detalle.descripcion_adicional ?? "",
+      id: detalle.inventario_id,
+      inventario_id: detalle.producto_id,
+      porcentaje_descuento: detalle.porcentaje_descuento,
+      producto: detalle.producto,
+      producto_id: detalle.producto_id,
+      subtotal: detalle.subtotal,
+      tipo_igv_id: detalle.tipo_igv_id,
+      tipo_igv_porcentaje: detalle.tipo_igv.porcentaje,
+      valor_venta: detalle.valor_venta,
+    }))
+  );
+
+  // Cargar el cliente
+  entidadAutocomplete.handleSelect({
+    data: base.entidad,
+    text: base.entidad.nombre + " - " + base.entidad.numero_documento,
+    value: base.entidad.id,
+  });
+
+  // Cargar los pagos
+  if (base.pagos) {
+    tablePayments.setPayments(base.pagos);
+  }
+}
