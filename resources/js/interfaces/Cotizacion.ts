@@ -1,5 +1,7 @@
 import { Entidad } from "./Entidad";
 import { Producto } from "./Producto";
+import { Moneda } from "./Moneda";
+
 export interface Cotizacion {
   id: number;
   entidad_id: number;
@@ -13,15 +15,8 @@ export interface Cotizacion {
   user_id: number;
   created_at: string;
   updated_at: string;
-  cliente: Entidad;
-  moneda: {
-    id: number;
-    nombre: "Dólares";
-    abreviado: "dol";
-    abrstandar: "USD";
-    simbolo: "$";
-    activo: number;
-  };
+  entidad: Entidad;
+  moneda: Moneda;
   detalles: [CotizacionDetalle];
 }
 
@@ -31,7 +26,7 @@ export interface CotizacionDetalle {
   producto_id: number;
   producto: Producto;
   descripcion_adicional?: string;
-  codigo: "P002";
+  codigo: string;
   cantidad: number;
   valor_venta: number;
   subtotal: number;

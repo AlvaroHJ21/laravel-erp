@@ -116,7 +116,7 @@ $form.addEventListener("submit", async (e) => {
 
 //* CARGAR COTIZACION BASE
 if (base) {
-  const cliente = base.cliente;
+  const cliente = base.entidad;
   entidadAutocomplete.handleSelect({
     value: cliente.id,
     text: cliente.nombre + " - " + cliente.numero_documento,

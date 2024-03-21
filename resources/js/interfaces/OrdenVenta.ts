@@ -1,5 +1,7 @@
 import { Entidad } from "./Entidad";
+import { Moneda } from "./Moneda";
 import { Producto } from "./Producto";
+
 export interface OrdenVenta {
   id: number;
   entidad_id: number;
@@ -13,15 +15,8 @@ export interface OrdenVenta {
   user_id: number;
   created_at: string;
   updated_at: string;
-  cliente: Entidad;
-  moneda: {
-    id: number;
-    nombre: string;
-    abreviado: string;
-    abrstandar: string;
-    simbolo: string;
-    activo: number;
-  };
+  entidad: Entidad;
+  moneda: Moneda;
   detalles: [OrdenVentaDetalle];
 
   numero_orden_compra: string;
