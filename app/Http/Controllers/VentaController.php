@@ -9,6 +9,7 @@ use App\Models\FormaPago;
 use App\Models\Inventario;
 use App\Models\ModoPago;
 use App\Models\Moneda;
+use App\Models\OrdenVenta;
 use App\Models\Serie;
 use App\Models\TipoCambio;
 use App\Models\TipoDocumento;
@@ -52,6 +53,8 @@ class VentaController extends Controller
       $base = Venta::with('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipo_igv', 'pagos',)->find($ventaId);
     }
     $base = isset($base) ? $base : null;
+    $ordenVenta = null;
+
     return view('ventas.create', compact(
       "unidades",
       "tiposIGV",
@@ -61,9 +64,42 @@ class VentaController extends Controller
       "monedas",
       "inventarios",
       "entidades",
-      "base",
       "formasPago",
       "modosPago",
+      "base",
+      'ordenVenta'
+    ));
+  }
+
+  public function createByOrdenVenta(OrdenVenta $ordenVenta)
+  {
+    $unidades = Unidad::all();
+    $tiposIGV = TipoIgv::all();
+    $tiposDocumentoIdentidad = TipoDocumentoIdentidad::all();
+    $tipoCambioDolar = TipoCambio::obtenerTipoCambioDolarDelDia();
+    $monedas = Moneda::active();
+    $inventarios = Inventario::with('producto', 'almacen')->get();
+    $entidades = Entidad::all();
+    $tiposDocumento = TipoDocumento::with('series')->get();
+    $formasPago = FormaPago::all();
+    $modosPago = ModoPago::all();
+
+    $base =  null;
+    $ordenVenta->load('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipo_igv');
+
+    return view('ventas.create', compact(
+      "unidades",
+      "tiposIGV",
+      "tiposDocumento",
+      "tiposDocumentoIdentidad",
+      "tipoCambioDolar",
+      "monedas",
+      "inventarios",
+      "entidades",
+      "formasPago",
+      "modosPago",
+      "base",
+      'ordenVenta'
     ));
   }
 

@@ -77,7 +77,7 @@
                 <label for="moneda_id" class="form-label">
                   Número de orden de compra
                 </label>
-                <input type="text" name="numero_orden_compra" class="form-control" />
+                <input id="numero_orden_compra" type="text" name="numero_orden_compra" class="form-control" />
               </div>
 
               <!-- Moneda -->
@@ -144,10 +144,11 @@
     const inventarios = @json($inventarios);
     const tiposIGV = @json($tiposIGV);
     const tipoCambioDolar = @json($tipoCambioDolar->tipo_cambio_venta);
-    const base = @json($base);
     const urlPost = @json(route('ventas.store'));
     const urlRedirect = @json(route('ventas.index'));
     const tiposDocumento = @json($tiposDocumento);
+    const base = @json($base);
+    const ordenVenta = @json($ordenVenta);
   </script>
 
   @vite(['resources/js/ventas/create.ts'])

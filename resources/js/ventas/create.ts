@@ -1,4 +1,4 @@
-import { Entidad, Inventario } from "../interfaces";
+import { Entidad, Inventario, OrdenVenta } from "../interfaces";
 import { Autocomplete } from "../utils/Autocomplete";
 import { TablePayments } from "../utils/TablePayments";
 import { TableItems } from "../utils/TableItems";
@@ -15,7 +15,8 @@ declare const inventarios: Inventario[];
 declare const urlPost: string;
 declare const urlRedirect: string;
 declare const tiposDocumento: TipoDocumento[];
-declare const base: Venta | undefined;
+declare const base: Venta | null;
+declare const ordenVenta: OrdenVenta | null;
 
 //* ENTIDAD
 const entidadAutocomplete = new Autocomplete<Entidad>({
@@ -113,7 +114,9 @@ $form.addEventListener("submit", async (e) => {
       pagos: tablePayments.getPayments(),
     };
 
-    console.log(data);
+    if (ordenVenta) {
+      data["orden_venta_id"] = ordenVenta.id;
+    }
 
     const resp = await fetch(urlPost, {
       method: "POST",
@@ -173,4 +176,40 @@ if (base) {
   if (base.pagos) {
     tablePayments.setPayments(base.pagos);
   }
+}
+
+//* CARGAR ORDEN DE VENTA
+
+if (ordenVenta) {
+  // Cargar el numero de orden de compra
+  const $ordenCompra = document.getElementById(
+    "numero_orden_compra"
+  ) as HTMLInputElement;
+  $ordenCompra.value = ordenVenta.numero_orden_compra;
+
+  // Cargar los items
+  tableItems.setItems(
+    ordenVenta.detalles.map((detalle) => ({
+      cantidad: detalle.cantidad,
+      codigo: detalle.codigo,
+      descripcion_adicional: detalle.descripcion_adicional ?? "",
+      id: detalle.inventario_id,
+      inventario_id: detalle.producto_id,
+      porcentaje_descuento: detalle.porcentaje_descuento,
+      producto: detalle.producto,
+      producto_id: detalle.producto_id,
+      subtotal: detalle.subtotal,
+      tipo_igv_id: detalle.tipo_igv_id,
+      tipo_igv_porcentaje: detalle.tipo_igv.porcentaje,
+      valor_venta: detalle.valor_venta,
+    }))
+  );
+
+  // Cargar el cliente
+  entidadAutocomplete.handleSelect({
+    data: ordenVenta.entidad,
+    text:
+      ordenVenta.entidad.nombre + " - " + ordenVenta.entidad.numero_documento,
+    value: ordenVenta.entidad.id,
+  });
 }
