@@ -42,7 +42,7 @@
 
       {{-- CLIENTE --}}
       @include('partials.entidad-preview', [
-          'entidad' => $cotizacion->cliente,
+          'entidad' => $cotizacion->entidad,
       ])
 
     </div>

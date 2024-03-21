@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CotizacionStoreRequest;
 use App\Models\Moneda;
 use App\Models\Unidad;
 use App\Models\TipoIgv;
@@ -9,14 +10,12 @@ use App\Models\Cotizacion;
 use App\Models\Empresa;
 use App\Models\Entidad;
 use App\Models\Inventario;
-use App\Models\Producto;
 use App\Models\TipoCambio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\TipoDocumentoIdentidad;
 use App\Utils\Numletras;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Validator;
 
 class CotizacionController extends Controller
 {
@@ -40,7 +39,7 @@ class CotizacionController extends Controller
 
     if ($cotizacionId) {
 
-      $base = Cotizacion::with('cliente', 'moneda', 'detalles', 'detalles.producto')->find($cotizacionId);
+      $base = Cotizacion::with('entidad', 'moneda', 'detalles', 'detalles.producto')->find($cotizacionId);
     }
 
     $base = isset($base) ? $base : null;
@@ -57,51 +56,14 @@ class CotizacionController extends Controller
     ));
   }
 
-  public function storeJSON(Request $request)
+  public function store(CotizacionStoreRequest $request)
   {
-
-    $validator = Validator::make($request->all(), [
-      "entidad_id" => "required",
-      "moneda_id" => "required",
-      "total_gravada" => "required",
-      "total_igv" => "required",
-      "total_pagar" => "required",
-      "items" => "required",
-    ]);
-
-    if ($validator->fails()) {
-      $ok = false;
-      $error = $validator->errors()->all();
-      return response()->json(compact("ok", "error"));
-    }
-
-    $request->merge([
-      "user_id" => auth()->id(),
-    ]);
-
-    DB::beginTransaction();
-
     try {
-      $cotizacionCreada = Cotizacion::create($request->all());
+      $data = $request->validated();
+      $data["user_id"] = auth()->id();
 
-      $itemValidator = Validator::make($request->items, [
-        "*.producto_id" => "required",
-        "*.descripcion_adicional" => "nullable|string",
-        "*.codigo" => "required",
-        "*.cantidad" => "required",
-        "*.valor_venta" => "required",
-        "*.subtotal" => "required",
-        "*.tipo_igv_id" => "required",
-        "*.porcentaje_descuento" => "required",
-      ]);
-
-      if ($itemValidator->fails()) {
-        DB::rollBack();
-        $ok = false;
-        $error = $itemValidator->errors()->all();
-        return response()->json(compact("ok", "error"));
-      }
-
+      DB::beginTransaction();
+      $cotizacionCreada = Cotizacion::create($data);
       $cotizacionCreada->detalles()->createMany($request->items);
 
       DB::commit();
@@ -113,14 +75,14 @@ class CotizacionController extends Controller
       DB::rollBack();
       return response()->json([
         "ok" => false,
-        "error" => $th->getMessage()
+        "message" => $th->getMessage()
       ]);
     }
   }
 
   public function show(Cotizacion $cotizacion)
   {
-    $cotizacion->load('cliente', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipoIgv');
+    $cotizacion->load('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipoIgv');
     return view('cotizaciones.show', compact("cotizacion"));
   }
 
@@ -131,13 +93,13 @@ class CotizacionController extends Controller
     $logo = public_path('img/logo.png');
     // dd($logo);
     $cotizacion->load([
-      "cliente",
+      "entidad",
       "moneda",
       "detalles",
       "detalles.producto",
     ]);
 
-    $entidad = $cotizacion->cliente;
+    $entidad = $cotizacion->entidad;
     $moneda = $cotizacion->moneda;
     $items = $cotizacion->detalles;
     $empresa = Empresa::first();

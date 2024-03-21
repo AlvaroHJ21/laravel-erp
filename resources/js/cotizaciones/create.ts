@@ -82,30 +82,35 @@ function handleChangeMoneda() {
 //* FORMULARIO
 const $form = document.getElementById("form") as HTMLFormElement;
 $form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+  try {
+    e.preventDefault();
 
-  const formData = new FormData($form);
+    const formData = new FormData($form);
 
-  const data = {
-    ...Object.fromEntries(formData),
-    items: tableItems.getItems(),
-  };
+    const data = {
+      ...Object.fromEntries(formData),
+      items: tableItems.getItems(),
+    };
 
-  const resp = await fetch(postUrl, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const json = await resp.json();
-
-  if (json.ok) {
-    showSuccess(json.message, () => {
-      window.location.href = redirectUrl;
+    const resp = await fetch(postUrl, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     });
-  } else {
-    showError(json.error);
+    const json = await resp.json();
+
+    if (json.ok) {
+      showSuccess(json.message, () => {
+        window.location.href = redirectUrl;
+      });
+    } else {
+      showError(json.message);
+    }
+  } catch (error) {
+    showError(error);
   }
 });
 

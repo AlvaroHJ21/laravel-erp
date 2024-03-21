@@ -38,8 +38,8 @@
                 <td>{{ $cotizacion->id }}</td>
                 <td>
                   <button class="btn btn-sm">
-                    {{ $cotizacion->cliente->nombre }} -
-                    {{ $cotizacion->cliente->numero_documento }}
+                    {{ $cotizacion->entidad->nombre }} -
+                    {{ $cotizacion->entidad->numero_documento }}
                   </button>
                 </td>
                 <td class="text-sm"

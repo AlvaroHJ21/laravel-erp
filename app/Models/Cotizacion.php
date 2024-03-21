@@ -23,7 +23,7 @@ class Cotizacion extends Model
     'user_id'
   ];
 
-  public function cliente()
+  public function entidad()
   {
     return $this->belongsTo(Entidad::class, 'entidad_id');
   }
