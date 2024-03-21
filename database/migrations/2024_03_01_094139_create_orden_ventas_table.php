@@ -19,7 +19,7 @@ return new class extends Migration
       $table->decimal('total_igv', 10, 2);
       $table->decimal('total_pagar', 10, 2);
       $table->text('nota')->nullable();
-      $table->unsignedSmallInteger('estado');
+      $table->unsignedSmallInteger('estado')->default(0);
       $table->boolean('enviado_cliente')->default(false);
       $table->foreignId('user_id')->constrained("users");
 

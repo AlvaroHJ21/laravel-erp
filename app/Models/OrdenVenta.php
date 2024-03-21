@@ -26,7 +26,7 @@ class OrdenVenta extends Model
   ];
 
 
-  public function cliente()
+  public function entidad()
   {
     return $this->belongsTo(Entidad::class, 'entidad_id');
   }

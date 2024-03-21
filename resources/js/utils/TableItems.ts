@@ -184,9 +184,9 @@ export class TableItems {
         </div>
       </td>
       <td>
-        <button data-bs-toggle="modal" data-bs-target="#modal-imagen" type="button" data-image="${image}">
+        <div data-bs-toggle="modal" data-bs-target="#modal-imagen" type="button" data-image="${image}" class="">
           <img class="img-thumbnail image" src="${image}" alt="producto" width="100px"/>
-        </button>
+        </div>
       </td>
       <td>
         <input type="text" class="codigo form-control text-sm" style="max-width: 100px;" placeholder="T001" value="${

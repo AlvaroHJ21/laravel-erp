@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrdenVentaStoreRequest;
 use App\Models\Empresa;
 use App\Models\Entidad;
 use App\Models\Inventario;
@@ -15,7 +16,6 @@ use App\Utils\Numletras;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 class OrdenVentaController extends Controller
 {
@@ -39,7 +39,7 @@ class OrdenVentaController extends Controller
 
     if ($fromId) {
 
-      $base = OrdenVenta::with('cliente', 'moneda', 'detalles', 'detalles.producto')->find($fromId);
+      $base = OrdenVenta::with('entidad', 'moneda', 'detalles', 'detalles.producto')->find($fromId);
     }
 
     $base = isset($base) ? $base : null;
@@ -56,53 +56,14 @@ class OrdenVentaController extends Controller
     ));
   }
 
-  public function storeJSON(Request $request)
+  public function store(OrdenVentaStoreRequest $request)
   {
-
-    $validator = Validator::make($request->all(), [
-      "numero_orden_compra" => "required",
-      "entidad_id" => "required",
-      "moneda_id" => "required",
-      "total_gravada" => "required",
-      "total_igv" => "required",
-      "total_pagar" => "required",
-      "items" => "required",
-    ]);
-
-    if ($validator->fails()) {
-      $ok = false;
-      $error = $validator->errors()->all();
-      return response()->json(compact("ok", "error"));
-    }
-
-    $request->merge([
-      "user_id" => auth()->id(),
-    ]);
-
-    DB::beginTransaction();
-
     try {
-      $ordenVentaCreada = OrdenVenta::create($request->all());
+      DB::beginTransaction();
+      $data = $request->validated();
+      $data['user_id'] = auth()->id();
 
-      $itemValidator = Validator::make($request->items, [
-        "*.producto_id" => "required",
-        "*.inventario_id" => "required",
-        "*.descripcion_adicional" => "nullable|string",
-        "*.codigo" => "required",
-        "*.cantidad" => "required",
-        "*.valor_venta" => "required",
-        "*.subtotal" => "required",
-        "*.tipo_igv_id" => "required",
-        "*.porcentaje_descuento" => "required",
-      ]);
-
-      if ($itemValidator->fails()) {
-        DB::rollBack();
-        $ok = false;
-        $error = $itemValidator->errors()->all();
-        return response()->json(compact("ok", "error"));
-      }
-
+      $ordenVentaCreada = OrdenVenta::create($data);
       $ordenVentaCreada->detalles()->createMany($request->items);
 
       //actualizar el stock
@@ -112,10 +73,7 @@ class OrdenVentaController extends Controller
         $cantidadSolicitada = $item['cantidad'];
 
         if ($inventario->cantidad < $cantidadSolicitada) {
-          DB::rollBack();
-          $ok = false;
-          $error = "La cantidad solicitada de {$inventario->producto->nombre} es mayor al stock actual";
-          return response()->json(compact("ok", "error"));
+          throw new \Exception("La cantidad solicitada de {$inventario->producto->nombre} es mayor al stock actual");
         }
 
         $inventario->decrement('cantidad', $cantidadSolicitada);
@@ -137,7 +95,7 @@ class OrdenVentaController extends Controller
 
   public function show(OrdenVenta $ordenVenta)
   {
-    $ordenVenta->load('cliente', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipoIgv');
+    $ordenVenta->load('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipoIgv');
     return view('ordenes_venta.show', compact("ordenVenta"));
   }
 
@@ -148,13 +106,13 @@ class OrdenVentaController extends Controller
     $logo = public_path('img/logo.png');
     // dd($logo);
     $ordenVenta->load([
-      "cliente",
+      "entidad",
       "moneda",
       "detalles",
       "detalles.producto",
     ]);
 
-    $entidad = $ordenVenta->cliente;
+    $entidad = $ordenVenta->entidad;
     $moneda = $ordenVenta->moneda;
     $items = $ordenVenta->detalles;
     $empresa = Empresa::first();

@@ -34,7 +34,7 @@
                       ? '/storage/productos/' . $detalle->producto->imagen
                       : '/img/default-image.png';
                 @endphp
-                <button data-bs-toggle="modal" data-bs-target="#modal-imagen" type="button">
+                <button data-bs-toggle="modal" data-bs-target="#modal-imagen" type="button" class="btn">
                   <img class="img-thumbnail" src="{{ $image }}" alt="producto" width="100px" />
                 </button>
               </td>

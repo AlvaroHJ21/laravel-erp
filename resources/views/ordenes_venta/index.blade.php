@@ -39,8 +39,8 @@
                 <td>{{ $ordenVenta->id }}</td>
                 <td>
                   <button class="btn btn-sm">
-                    {{ $ordenVenta->cliente->nombre }} -
-                    {{ $ordenVenta->cliente->numero_documento }}
+                    {{ $ordenVenta->entidad->nombre }} -
+                    {{ $ordenVenta->entidad->numero_documento }}
                   </button>
                 </td>
                 <td class="text-sm"
