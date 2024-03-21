@@ -45,7 +45,7 @@
                    class="form-label">Tipo de Documento</label>
             <select id="tipo_documento_id"
                     name="tipo_documento_id"
-                    class="form-control">
+                    class="form-select">
               @foreach ($tiposDocumentosIdentidad as $tipo)
                 <option value="{{ $tipo->id }}"
                         {{ $entidad->tipo_documento_id == $tipo->id ? 'selected' : '' }}>{{ $tipo->nombre }}
@@ -106,7 +106,7 @@
             <label for="tipo"
                    class="form-label">Seleccione tipo</label>
             <select name="tipo"
-                    class="form-control"
+                    class="form-select"
                     value="{{ $entidad->tipo }}">
               <option value="1"
                       {{ old('tipo', $entidad->tipo) == '1' ? 'selected' : '' }}>CLIENTE</option>
@@ -128,18 +128,18 @@
                    required
                    value="{{ old('telefono', $entidad->telefono) }}">
           </div>
-          <div class="col-sm-4 form-check form-switch">
 
+          <div class="col-sm-4 form-check form-switch">
             <input type="hidden" name="retencion" value="0">
-            <input type="checkbox"
-                   id="retencion"
-                   name="retencion"
-                   {{ $entidad->retencion ? 'checked' : '' }} value="1">
+            <input id="retencion"
+                   class="form-check-input"
+                   type="checkbox"
+                   {{ $entidad->retencion ? 'checked' : '' }} value="1"
+                   name="retencion">
             <label class="form-check-label"
-                   for="retencion">
-              Agente de retención
-            </label>
+                   for="retencion">Agente de retención</label>
           </div>
+
         </div>
         <div class="form-group row mb-3">
           <div class="col-sm-8">
