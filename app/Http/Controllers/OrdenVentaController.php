@@ -120,7 +120,7 @@ class OrdenVentaController extends Controller
 
   public function show(OrdenVenta $ordenVenta)
   {
-    $ordenVenta->load('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipoIgv');
+    $ordenVenta->load('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipo_igv');
     return view('ordenes_venta.show', compact("ordenVenta"));
   }
 
