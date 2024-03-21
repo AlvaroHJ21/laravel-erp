@@ -6,7 +6,7 @@
     <option
             value="{{ $moneda->id }}"
             data-simbolo="{{ $moneda->simbolo }}"
-            {{ $base?->moneda_id == $moneda->id ? 'selected' : '' }}>
+            {{ isset($base) && $base?->moneda_id == $moneda->id ? 'selected' : '' }}>
       {{ $moneda->abrstandar }} - {{ $moneda->nombre }}
     </option>
   @endforeach

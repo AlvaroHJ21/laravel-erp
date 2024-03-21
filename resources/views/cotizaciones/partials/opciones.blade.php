@@ -21,8 +21,7 @@
       </li>
       <li>
         <a class="dropdown-item"
-           {{-- TODO --}}
-           {{-- href="{{ route('ventas.ordenes_venta.nuevo', $cotizacion) }}" --}}>
+           href="{{ route('ordenes_venta.create_by_cotizacion', $cotizacion) }}">
           Generar orden de venta
         </a>
       </li>

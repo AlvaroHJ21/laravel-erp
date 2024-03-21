@@ -37,7 +37,7 @@
           </div>
         </div>
         <!-- NOTAS -->
-        <div class="card" x-data="{ open: {{ $base?->nota ? 'true' : 'false' }} }">
+        <div class="card" x-data="{ open: {{ isset($base) && $base?->nota ? 'true' : 'false' }} }">
           <div class="card-header d-flex gap-2">
             <h5 class="card-title mb-0 d-flex gap-2">
               NOTA
@@ -109,9 +109,12 @@
     const inventarios = @json($inventarios);
     const tiposIGV = @json($tiposIGV);
     const tipoCambioDolar = @json($tipoCambioDolar->tipo_cambio_venta);
-    const base = @json($base);
     const urlPost = @json(route('ordenes_venta.store'));
     const urlRedirect = @json(route('ordenes_venta.index'));
+
+    const base = @json(isset($base) ? $base : null);
+    const cotizacion = @json(isset($cotizacion) ? $cotizacion : null);
+    console.log(cotizacion);
   </script>
 
   @vite(['resources/js/ordenes_venta/create.ts'])

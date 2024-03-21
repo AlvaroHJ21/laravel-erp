@@ -29,6 +29,7 @@ class CotizacionStoreRequest extends FormRequest
       "total_pagar" => "required",
       "items" => "required",
       "items.*.producto_id" => "required",
+      "items.*.inventario_id" => "required",
       "items.*.descripcion_adicional" => "nullable|string",
       "items.*.codigo" => "required",
       "items.*.cantidad" => "required",

@@ -134,6 +134,7 @@ Route::middleware("auth")->group(function () {
    */
   Route::get("/ventas/ordenes-venta", [OrdenVentaController::class, "index"])->name("ordenes_venta.index");
   Route::get("/ventas/ordenes-venta/create", [OrdenVentaController::class, "create"])->name("ordenes_venta.create");
+  Route::get("/ventas/ordenes-venta/create/by-cotizacion/{cotizacion}", [OrdenVentaController::class, "createByCotizacion"])->name("ordenes_venta.create_by_cotizacion");
   Route::post("/ordenes-venta", [OrdenVentaController::class, "store"])->name("ordenes_venta.store");
   Route::get("/ordenes-venta/{ordenVenta}", [OrdenVentaController::class, "show"])->name("ordenes_venta.show");
   Route::get("/ordenes-venta/{ordenVenta}/pdf", [OrdenVentaController::class, "pdf"])->name("ordenes_venta.pdf");

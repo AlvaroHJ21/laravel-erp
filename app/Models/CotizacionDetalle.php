@@ -14,6 +14,7 @@ class CotizacionDetalle extends Model
   protected $fillable = [
     'cotizacion_id',
     'producto_id',
+    'inventario_id',
     'descripcion_adicional',
     'codigo',
     'cantidad',
@@ -28,7 +29,12 @@ class CotizacionDetalle extends Model
     return $this->belongsTo(Producto::class);
   }
 
-  public function tipoIgv()
+  public function inventario()
+  {
+    return $this->belongsTo(Inventario::class);
+  }
+
+  public function tipo_igv()
   {
     return $this->belongsTo(TipoIgv::class);
   }

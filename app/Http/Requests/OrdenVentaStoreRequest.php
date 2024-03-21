@@ -28,6 +28,7 @@ class OrdenVentaStoreRequest extends FormRequest
       "total_gravada" => "required",
       "total_igv" => "required",
       "total_pagar" => "required",
+      "cotizacion_id" => "nullable",
 
       "items" => "required",
       "items.*.producto_id" => "required",

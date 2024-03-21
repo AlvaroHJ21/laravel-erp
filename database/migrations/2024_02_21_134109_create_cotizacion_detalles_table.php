@@ -15,6 +15,7 @@ return new class extends Migration
       $table->id();
       $table->foreignId('cotizacion_id')->constrained("cotizaciones")->cascadeOnDelete();
       $table->foreignId('producto_id')->constrained("productos");
+      $table->foreignId('inventario_id')->constrained("inventarios");
       $table->text('descripcion_adicional')->nullable();
       $table->string('codigo', 20)->nullable();
       $table->unsignedBigInteger('cantidad')->nullable();

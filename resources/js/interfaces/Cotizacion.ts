@@ -1,6 +1,7 @@
 import { Entidad } from "./Entidad";
 import { Producto } from "./Producto";
 import { Moneda } from "./Moneda";
+import { TipoIgv } from "./TipoIgv";
 
 export interface Cotizacion {
   id: number;
@@ -24,7 +25,9 @@ export interface CotizacionDetalle {
   id: number;
   cotizacion_id: number;
   producto_id: number;
+  inventario_id: number;
   producto: Producto;
+  tipo_igv: TipoIgv;
   descripcion_adicional?: string;
   codigo: string;
   cantidad: number;

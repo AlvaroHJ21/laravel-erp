@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrdenVentaStoreRequest;
+use App\Models\Cotizacion;
 use App\Models\Empresa;
 use App\Models\Entidad;
 use App\Models\Inventario;
@@ -39,7 +40,7 @@ class OrdenVentaController extends Controller
 
     if ($fromId) {
 
-      $base = OrdenVenta::with('entidad', 'moneda', 'detalles', 'detalles.producto')->find($fromId);
+      $base = OrdenVenta::with('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipo_igv')->find($fromId);
     }
 
     $base = isset($base) ? $base : null;
@@ -53,6 +54,30 @@ class OrdenVentaController extends Controller
       "inventarios",
       "entidades",
       "base"
+    ));
+  }
+
+  public function createByCotizacion(Cotizacion $cotizacion)
+  {
+    $unidades = Unidad::all();
+    $tiposIGV = TipoIgv::all();
+    $tiposDocumentoIdentidad = TipoDocumentoIdentidad::all();
+    $tipoCambioDolar = TipoCambio::obtenerTipoCambioDolarDelDia();
+    $monedas = Moneda::active();
+    $inventarios = Inventario::with('producto', 'almacen')->get();
+    $entidades = Entidad::all();
+
+    $cotizacion->load('entidad', 'moneda', 'detalles', 'detalles.producto', 'detalles.tipo_igv');
+
+    return view("ordenes_venta.create", compact(
+      "unidades",
+      "tiposIGV",
+      "tiposDocumentoIdentidad",
+      "tipoCambioDolar",
+      "monedas",
+      "inventarios",
+      "entidades",
+      "cotizacion"
     ));
   }
 
@@ -88,8 +113,8 @@ class OrdenVentaController extends Controller
       DB::rollBack();
       return response()->json([
         "ok" => false,
-        "error" => $th->getMessage()
-      ]);
+        "message" => $th->getMessage()
+      ], 500);
     }
   }
 

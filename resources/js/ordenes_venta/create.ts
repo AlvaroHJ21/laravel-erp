@@ -1,7 +1,12 @@
 import { TableItems } from "../utils/TableItems";
 import { Autocomplete } from "../utils/Autocomplete";
 import { showError, showSuccess } from "../utils/Swal";
-import type { Entidad, Inventario, OrdenVenta } from "../interfaces";
+import type {
+  Cotizacion,
+  Entidad,
+  Inventario,
+  OrdenVenta,
+} from "../interfaces";
 
 declare const entidades: Entidad[];
 declare const tiposIGV: any[];
@@ -9,7 +14,8 @@ declare const tipoCambioDolar: string;
 declare const inventarios: Inventario[];
 declare const urlPost: string;
 declare const urlRedirect: string;
-declare const base: OrdenVenta;
+declare const base: OrdenVenta | null;
+declare const cotizacion: Cotizacion | null;
 
 //* ENTIDAD
 const entidadAutocomplete = new Autocomplete<Entidad>({
@@ -92,6 +98,12 @@ $form.addEventListener("submit", async (e) => {
       items: tableItems.getItems(),
     };
 
+    if (cotizacion) {
+      data["cotizacion_id"] = cotizacion.id;
+    }
+
+    console.log(data);
+
     const resp = await fetch(urlPost, {
       method: "POST",
       body: JSON.stringify(data),
@@ -130,13 +142,13 @@ if (base) {
       cantidad: detalle.cantidad,
       codigo: detalle.codigo,
       descripcion_adicional: detalle.descripcion_adicional ?? "",
-      inventario_id: 0,
+      inventario_id: detalle.inventario_id,
       porcentaje_descuento: detalle.porcentaje_descuento,
       producto: detalle.producto,
       producto_id: detalle.producto_id,
       subtotal: detalle.subtotal,
       tipo_igv_id: detalle.tipo_igv_id,
-      tipo_igv_porcentaje: 18,
+      tipo_igv_porcentaje: detalle.tipo_igv.porcentaje,
       valor_venta: detalle.valor_venta,
     }))
   );
@@ -144,5 +156,37 @@ if (base) {
   if (base.nota) {
     const $nota = document.getElementById("nota") as HTMLTextAreaElement;
     $nota.value = base.nota;
+  }
+}
+
+//* CARGAR COTIZACION
+if (cotizacion) {
+  const cliente = cotizacion.entidad;
+  entidadAutocomplete.handleSelect({
+    value: cliente.id,
+    text: cliente.nombre + " - " + cliente.numero_documento,
+    data: cliente,
+  });
+
+  tableItems.setItems(
+    cotizacion.detalles.map((detalle) => ({
+      id: detalle.producto_id,
+      cantidad: detalle.cantidad,
+      codigo: detalle.codigo,
+      descripcion_adicional: detalle.descripcion_adicional ?? "",
+      inventario_id: detalle.inventario_id,
+      porcentaje_descuento: detalle.porcentaje_descuento,
+      producto: detalle.producto,
+      producto_id: detalle.producto_id,
+      subtotal: detalle.subtotal,
+      tipo_igv_id: detalle.tipo_igv_id,
+      tipo_igv_porcentaje: detalle.tipo_igv.porcentaje,
+      valor_venta: detalle.valor_venta,
+    }))
+  );
+
+  if (cotizacion.nota) {
+    const $nota = document.getElementById("nota") as HTMLTextAreaElement;
+    $nota.value = cotizacion.nota;
   }
 }

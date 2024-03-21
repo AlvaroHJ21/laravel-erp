@@ -1,6 +1,7 @@
 import { Entidad } from "./Entidad";
 import { Moneda } from "./Moneda";
 import { Producto } from "./Producto";
+import { TipoIgv } from "./TipoIgv";
 
 export interface OrdenVenta {
   id: number;
@@ -26,7 +27,9 @@ export interface OrdenVentaDetalle {
   id: number;
   cotizacion_id: number;
   producto_id: number;
+  inventario_id: number;
   producto: Producto;
+  tipo_igv: TipoIgv;
   descripcion_adicional?: string;
   codigo: string;
   cantidad: number;
