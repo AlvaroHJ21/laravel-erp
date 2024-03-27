@@ -92,7 +92,7 @@ const terms = new Terms();
 
 //* TIPO DOCUMENTO
 
-new TypeDocumentSelector(tiposDocumento);
+const tipoDocumentoSelector = new TypeDocumentSelector(tiposDocumento);
 
 //* PAGOS
 const tablePayments = new TablePayments({
@@ -107,6 +107,13 @@ $form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const formData = new FormData($form);
+
+    const entidad = entidadAutocomplete.getSelectedData();
+    const tipoDocumentoId = tipoDocumentoSelector.getTipoDocumentoId();
+
+    if (entidad && entidad.tipo_documento_id == 1 && tipoDocumentoId == 1) {
+      throw new Error("No se puede emitir una factura a un cliente con DNI");
+    }
 
     const data = {
       ...Object.fromEntries(formData),

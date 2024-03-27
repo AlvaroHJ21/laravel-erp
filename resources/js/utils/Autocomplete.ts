@@ -18,7 +18,7 @@ export class Autocomplete<T = any> {
   private allOptions: AutocompleteOption<T>[];
   private resultsOptions: AutocompleteOption<T>[];
   private value: string | number;
-  private selected?: AutocompleteOption;
+  private selected?: AutocompleteOption<T>;
   private onSelect?: (data: T) => void;
   private onDiselect?: () => void;
   private name: string;
@@ -207,5 +207,17 @@ export class Autocomplete<T = any> {
 
       this.$dropdownBody?.appendChild(btn);
     });
+  }
+
+  public getValue() {
+    return this.value;
+  }
+
+  public getSelected() {
+    return this.selected;
+  }
+
+  public getSelectedData() {
+    return this.selected?.data;
   }
 }

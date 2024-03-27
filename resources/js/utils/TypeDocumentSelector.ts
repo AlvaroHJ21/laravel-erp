@@ -66,4 +66,8 @@ export class TypeDocumentSelector {
   renderNumero(numero: number) {
     this.$numero.value = numero.toString();
   }
+
+  getTipoDocumentoId() {
+    return parseInt(this.$tipoDocumentoId.value);
+  }
 }
