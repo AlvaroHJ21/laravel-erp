@@ -102,10 +102,25 @@ class SendSunnat
      * subtotal 	      -> LegalMonetaryTotal / TaxInclusiveAmount	. 118
      * mtoImpVenta  	  -> LegalMonetaryTotal / PayableAmount		    . 118
      */
-    $mtoOperGravadas = $venta->total_gravada;
+
+    //Calculo de montos
+    $mtoOperGravadas = 0;
+    $mtoExoneradas = 0;
+    $mtoGratuitas = 0;
+    foreach ($venta->detalles as $detalle) {
+      if ($detalle->tipo_igv->codigo == "10") {
+        $mtoOperGravadas += $detalle->valor_venta * $detalle->cantidad;
+      } else if ($detalle->tipo_igv->codigo == "20") {
+        $mtoExoneradas += $detalle->valor_venta * $detalle->cantidad;
+      } else {
+        $mtoGratuitas += $detalle->valor_venta * $detalle->cantidad;
+      }
+    }
+
     $mtoIGV = $venta->total_igv;
+
     $totalImpuestos = $venta->total_igv;
-    $valorVenta = $venta->total_gravada;
+    $valorVenta = $mtoOperGravadas + $mtoExoneradas + $mtoGratuitas;
     $subtotal = $venta->total_pagar;
     $mtoImpVenta = $venta->total_pagar;
 
@@ -123,10 +138,15 @@ class SendSunnat
       ->setClient($client)
       ->setMtoOperGravadas($mtoOperGravadas)
       ->setMtoIGV($mtoIGV)
+      ->setMtoOperExoneradas($mtoExoneradas)
+      ->setMtoOperGratuitas($mtoGratuitas)
+      ->setMtoIGVGratuitas(0)
       ->setTotalImpuestos($totalImpuestos)
       ->setValorVenta($valorVenta)
       ->setSubTotal($subtotal)
       ->setMtoImpVenta($mtoImpVenta);
+
+    // dd($invoice);
 
     if ($venta->forma_pago_id == 2) {
       $cuotas = [];
@@ -158,7 +178,7 @@ class SendSunnat
       $item->setMtoBaseIgv($detalle->valor_venta * $detalle->cantidad);
       $item->setPorcentajeIgv($detalle->tipo_igv->porcentaje);
       $item->setIgv($totalIgv);
-      $item->setTipAfeIgv('10');
+      $item->setTipAfeIgv($detalle->tipo_igv->codigo);
       $item->setTotalImpuestos($totalIgv);
       $item->setMtoValorVenta($detalle->valor_venta * $detalle->cantidad);
       $item->setMtoPrecioUnitario($detalle->valor_venta * (1 + $detalle->tipo_igv->porcentaje / 100));
@@ -183,6 +203,8 @@ class SendSunnat
     file_put_contents(storage_path($xmlStorePath), $see->getFactory()->getLastXml());
 
     if (!$result->isSuccess()) {
+      // Guardar XML de error
+      file_put_contents(storage_path('app/xml/Error-' . $invoice->getName() . '.xml'), $see->getFactory()->getLastXml());
       throw new \Exception($result->getError()->getMessage());
     }
 

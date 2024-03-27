@@ -156,7 +156,7 @@ class DatabaseSeeder extends Seeder
     // Tipos igv
 
     DB::table('tipos_igv')->insert([
-      'codigo' => 1,
+      'codigo' => '10',
       'tipo_igv' => 'Gravado',
       'codigo_de_tributo' => '1000',
       'activo' => 1,
@@ -164,7 +164,7 @@ class DatabaseSeeder extends Seeder
     ]);
 
     DB::table('tipos_igv')->insert([
-      'codigo' => 2,
+      'codigo' => '20',
       'tipo_igv' => 'Exonerado',
       'codigo_de_tributo' => '9997',
       'activo' => 1,
