@@ -1,12 +1,22 @@
-import { Entidad, Inventario, OrdenVenta } from "../interfaces";
-import { Autocomplete } from "../utils/Autocomplete";
-import { TablePayments } from "../utils/TablePayments";
-import { TableItems } from "../utils/TableItems";
-import { showError, showSuccess } from "../utils/Swal";
-import { TipoDocumento } from "../interfaces/TipoDocumento";
-import { TypeDocumentSelector } from "../utils/TypeDocumentSelector";
-import { Terms } from "../utils/Terms";
-import { Venta } from "../interfaces/Venta";
+import {
+  EntidadAutocomplete,
+  InventarioAutocomplete,
+  MonedaSelector,
+  TableItems,
+  TablePayments,
+  Terms,
+  TypeDocumentSelector,
+  showError,
+  showSuccess,
+} from "../utils";
+
+import type {
+  Entidad,
+  Inventario,
+  OrdenVenta,
+  TipoDocumento,
+  Venta,
+} from "../interfaces";
 
 declare const entidades: Entidad[];
 declare const tiposIGV: any[];
@@ -19,79 +29,32 @@ declare const base: Venta | null;
 declare const ordenVenta: OrdenVenta | null;
 
 //* ENTIDAD
-const entidadAutocomplete = new Autocomplete<Entidad>({
-  id: "autocomplete-entidades",
-  allOptions: entidades.map((entidad) => ({
-    value: entidad.id,
-    text: entidad.nombre + " - " + entidad.numero_documento,
-    data: entidad,
-  })),
-  onSelect(data) {
-    const $cliente = document.getElementById("cliente") as HTMLDivElement;
-    $cliente.classList.remove("d-none");
-
-    const $nombre = $cliente.querySelector(".nombre") as HTMLLabelElement;
-    const $documento = $cliente.querySelector(".documento") as HTMLLabelElement;
-    const $direccion = $cliente.querySelector(".direccion") as HTMLLabelElement;
-    const $descuento = $cliente.querySelector(".descuento") as HTMLLabelElement;
-    const $retencion = $cliente.querySelector(".retencion") as HTMLLabelElement;
-
-    $nombre.innerHTML = data.nombre;
-    $documento.innerHTML = data.numero_documento;
-    $direccion.innerHTML = data.direccion;
-    $descuento.innerHTML = data.porcentaje_descuento;
-    $retencion.innerHTML = data.retencion ? "Sí" : "No";
-  },
-  onDiselect() {
-    const $cliente = document.getElementById("cliente") as HTMLDivElement;
-
-    $cliente.classList.add("d-none");
-  },
-});
+const entidadAutocomplete = new EntidadAutocomplete(entidades);
 
 //* ITEMS
 const tableItems = new TableItems({
-  id: "tabla-items",
   tiposIGV: tiposIGV,
   tipoCambioDolar: parseFloat(tipoCambioDolar),
 });
 
-new Autocomplete<Inventario>({
-  id: "autocomplete-inventarios",
-  preserve: false,
-  allOptions: inventarios.map((inventario) => ({
-    value: inventario.id,
-    text: ` ${inventario.producto.codigo} - ${inventario.producto.nombre} - ${inventario.almacen.nombre} - ${inventario.cantidad}`,
-    data: inventario,
-  })),
+//* INVENTARIOS
+new InventarioAutocomplete(inventarios, {
   onSelect(data) {
     tableItems.addItem(data);
   },
 });
 
 //* MONEDA
-const $moneda = document.getElementById("moneda_id") as HTMLSelectElement;
-handleChangeMoneda();
-$moneda?.addEventListener("change", () => {
-  handleChangeMoneda();
+new MonedaSelector({
+  onChangeMoneda(monedaId) {
+    tableItems.setMonedaId(monedaId);
+  },
 });
-function handleChangeMoneda() {
-  tableItems.setMonedaId(parseInt($moneda.value));
-  const simbolo = $moneda.options[$moneda.selectedIndex].dataset.simbolo;
-  const $simbolos = document.querySelectorAll(
-    ".simbolo_moneda"
-  ) as NodeListOf<HTMLElement>;
-  $simbolos.forEach((el) => {
-    el.innerHTML = simbolo ?? "";
-  });
-}
 
-//* FECHAs Y PLAZO
-
+//* FECHAS Y PLAZO
 const terms = new Terms();
 
 //* TIPO DOCUMENTO
-
 const tipoDocumentoSelector = new TypeDocumentSelector(tiposDocumento);
 
 //* PAGOS
@@ -108,15 +71,16 @@ $form.addEventListener("submit", async (e) => {
 
     const formData = new FormData($form);
 
-    const entidad = entidadAutocomplete.getSelectedData();
+    const entidad = entidadAutocomplete.getEntidad();
     const tipoDocumentoId = tipoDocumentoSelector.getTipoDocumentoId();
 
-    if (entidad && entidad.tipo_documento_id == 1 && tipoDocumentoId == 1) {
+    if (entidad.tipo_documento_id == 1 && tipoDocumentoId == 1) {
       throw new Error("No se puede emitir una factura a un cliente con DNI");
     }
 
     const data = {
       ...Object.fromEntries(formData),
+      entidad_id: entidad.id,
       items: tableItems.getItems(),
       pagos: tablePayments.getPayments(),
     };
@@ -150,9 +114,7 @@ $form.addEventListener("submit", async (e) => {
   }
 });
 
-/*
- * Cargar la venta base
- */
+//* CARGAR VENTA BASE
 if (base) {
   // Cargar los items
   tableItems.setItems(
@@ -173,11 +135,7 @@ if (base) {
   );
 
   // Cargar el cliente
-  entidadAutocomplete.handleSelect({
-    data: base.entidad,
-    text: base.entidad.nombre + " - " + base.entidad.numero_documento,
-    value: base.entidad.id,
-  });
+  entidadAutocomplete.setEntidad(base.entidad);
 
   // Cargar los pagos
   if (base.pagos) {
@@ -186,7 +144,6 @@ if (base) {
 }
 
 //* CARGAR ORDEN DE VENTA
-
 if (ordenVenta) {
   // Cargar el numero de orden de compra
   const $ordenCompra = document.getElementById(
@@ -213,10 +170,5 @@ if (ordenVenta) {
   );
 
   // Cargar el cliente
-  entidadAutocomplete.handleSelect({
-    data: ordenVenta.entidad,
-    text:
-      ordenVenta.entidad.nombre + " - " + ordenVenta.entidad.numero_documento,
-    value: ordenVenta.entidad.id,
-  });
+  entidadAutocomplete.setEntidad(ordenVenta.entidad);
 }

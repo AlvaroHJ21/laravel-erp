@@ -1,7 +1,6 @@
 import type { TableRow as TableRow, Producto, Inventario } from "../interfaces";
 
 interface Props {
-  id: string;
   items?: TableRow[];
   disabled?: boolean;
   limited?: boolean;
@@ -21,9 +20,9 @@ export class TableItems {
   private monedaId: number;
 
   constructor(props: Props) {
-    const { id, items, tiposIGV, tipoCambioDolar } = props;
+    const { items, tiposIGV, tipoCambioDolar } = props;
 
-    this.$table = document.getElementById(id);
+    this.$table = document.getElementById("tabla-items");
     this.items = items || [];
     this.tiposIGV = tiposIGV || [];
 
