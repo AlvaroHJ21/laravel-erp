@@ -64,12 +64,14 @@
                   </a>
                 </td>
                 <td>
-                  <form action="{{ route('ventas.send_sunnat', $venta) }}" method="POST">
-                    @csrf
-                    <button class="btn btn-sm">
-                      <img src="{{ asset('img/icons/logo_sunat.png') }}" alt="" width="24">
-                    </button>
-                  </form>
+                  @if ($venta->estado == 0)
+                    <form action="{{ route('ventas.send_sunnat', $venta) }}" method="POST">
+                      @csrf
+                      <button class="btn btn-sm">
+                        <img src="{{ asset('img/icons/logo_sunat.png') }}" alt="" width="24">
+                      </button>
+                    </form>
+                  @endif
                 </td>
                 <td>
                   @include('ventas.partials.estados')

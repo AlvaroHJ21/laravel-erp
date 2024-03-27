@@ -12,7 +12,7 @@
         <a class="dropdown-item" href="{{ route('ventas.show', $venta) }}">Ver</a>
       </li>
       <li>
-        <a class="dropdown-item" href="{{ route('ventas.pdf', $venta) }}">Ver PDF</a>
+        <a class="dropdown-item" href="{{ route('ventas.pdf', $venta) }}" target="_blank">Ver PDF</a>
       </li>
       @if ($venta->estado == 1)
         <li>
