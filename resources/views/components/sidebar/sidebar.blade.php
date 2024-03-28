@@ -63,6 +63,7 @@ $options = [
             [
                 'name' => 'Vehículos',
                 'url' => 'guias/vehiculos',
+                'route' => 'vehiculos.index',
             ],
             [
                 'name' => 'Conductores',

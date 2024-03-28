@@ -13,8 +13,9 @@ export default defineConfig({
         "resources/js/cotizaciones/create.ts",
         "resources/js/ordenes_venta/create.ts",
         "resources/js/ventas/create.ts",
+        "resources/js/vehiculos/index.ts",
       ],
-      refresh: ["resources/views/**/*.blade.php", "config/adminlte.php"],
+      refresh: ["resources/views/**/*.blade.php"],
     }),
   ],
 });

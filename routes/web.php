@@ -14,6 +14,7 @@ use App\Http\Controllers\SerieController;
 use App\Http\Controllers\TipoCambioController;
 use App\Http\Controllers\TipoIgvController;
 use App\Http\Controllers\UnidadController;
+use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\VentaController;
 // use App\Http\Controllers\HomeController;
 // use Illuminate\Support\Facades\Auth;
@@ -151,4 +152,13 @@ Route::middleware("auth")->group(function () {
   Route::post("/ventas/{venta}/send-sunnat", [VentaController::class, "sendSunnat"])->name("ventas.send_sunnat");
   Route::get("/ventas/{venta}/xml", [VentaController::class, "xml"])->name("ventas.xml");
   Route::get("/ventas/{venta}/cdr", [VentaController::class, "cdr"])->name("ventas.cdr");
+
+
+  /**
+   * Vehiculos
+   */
+  Route::get("/guias/vehiculos", [VehiculoController::class, "index"])->name("vehiculos.index");
+  Route::post("/vehiculos", [VehiculoController::class, "store"])->name("vehiculos.store");
+  Route::put("/vehiculos/{vehiculo}", [VehiculoController::class, "update"])->name("vehiculos.update");
+  Route::delete("/vehiculos/{vehiculo}", [VehiculoController::class, "destroy"])->name("vehiculos.destroy");
 });

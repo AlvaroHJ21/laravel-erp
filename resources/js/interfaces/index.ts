@@ -11,4 +11,5 @@ export * from './Serie';
 export * from './TableRow';
 export * from './TipoDocumento';
 export * from './TipoIgv';
+export * from './Vehiculo';
 export * from './Venta';
